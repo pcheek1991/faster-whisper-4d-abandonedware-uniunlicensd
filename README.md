@@ -4,9 +4,11 @@
 
 **faster-whisper** is a reimplementation of OpenAI's Whisper model using [CTranslate2](https://github.com/OpenNMT/CTranslate2/), which is a fast inference engine for Transformer models.
 
-This implementation is up to 4 times faster than [openai/whisper](https://github.com/openai/whisper) for the same accuracy while using less memory. The efficiency can be further improved with 8-bit quantization on both CPU and GPU.
+<span style="color:#b00020;"><u>UNVALIDATED PERFORMANCE CLAIM:</u> This implementation is up to 4 times faster than [openai/whisper](https://github.com/openai/whisper) for the same accuracy while using less memory. The efficiency can be further improved with 8-bit quantization on both CPU and GPU. These claims have not been remeasured for version 2.0.0.</span>
 
 ## Benchmark
+
+<span style="color:#b00020;"><u>UNVALIDATED HERE:</u> The tables below are historical measurements from the referenced projects and are not reproduced by this repository's current tests or CI.</span>
 
 ### Whisper
 
@@ -56,11 +58,15 @@ For reference, here's the time and memory usage that are required to transcribe 
 
 ## Requirements
 
-* Python 3.9 or greater
+* Python 3.12 or greater
 
 Unlike openai-whisper, FFmpeg does **not** need to be installed on the system. The audio is decoded with the Python library [PyAV](https://github.com/PyAV-Org/PyAV) which bundles the FFmpeg libraries in its package.
 
+The validation-only suite decodes a fixture while `PATH` contains no `ffmpeg` executable.
+
 ### GPU
+
+<span style="color:#b00020;"><u>UNVALIDATED GPU CLAIMS:</u> This repository has no GPU test runner, and the Docker image could not be built in the local environment. Verify driver, cuBLAS, cuDNN, and image compatibility on the target system before deployment.</span>
 
 GPU execution requires the following NVIDIA libraries to be installed:
 
@@ -68,6 +74,8 @@ GPU execution requires the following NVIDIA libraries to be installed:
 * [cuDNN 9 for CUDA 12](https://developer.nvidia.com/cudnn)
 
 **Note**: The latest versions of `ctranslate2` only support CUDA 12 and cuDNN 9. For CUDA 11 and cuDNN 8, the current workaround is downgrading to the `3.24.0` version of `ctranslate2`, for CUDA 12 and cuDNN 8, downgrade to the `4.4.0` version of `ctranslate2`, (This can be done with `pip install --force-reinstall ctranslate2==4.4.0` or specifying the version in a `requirements.txt`).
+
+The Docker example uses CUDA 12.9.1 on Ubuntu 24.04, the newest CUDA 12 runtime verified for the current CTranslate2 compatibility line. CUDA 13 is not used until CTranslate2 supports it.
 
 There are multiple ways to install the NVIDIA libraries mentioned above. The recommended way is described in the official NVIDIA documentation, but we also suggest other installation methods below. 
 
@@ -79,7 +87,7 @@ There are multiple ways to install the NVIDIA libraries mentioned above. The rec
 
 #### Use Docker
 
-The libraries (cuBLAS, cuDNN) are installed in this official NVIDIA CUDA Docker images: `nvidia/cuda:12.3.2-cudnn9-runtime-ubuntu22.04`.
+The libraries (cuBLAS, cuDNN) are installed in the official NVIDIA CUDA image used by this repository's Docker example: `nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04`.
 
 #### Install with `pip` (Linux only)
 
@@ -98,6 +106,8 @@ Purfview's [whisper-standalone-win](https://github.com/Purfview/whisper-standalo
 </details>
 
 ## Installation
+
+<span style="color:#b00020;"><u>NOT RELEASED:</u> Version 2.0.0 in this branch has not been published to PyPI. `pip install faster-whisper` installs the latest published release, not this branch.</span>
 
 The module can be installed from [PyPI](https://pypi.org/project/faster-whisper/):
 
@@ -123,6 +133,8 @@ pip install --force-reinstall "faster-whisper @ https://github.com/SYSTRAN/faste
 </details>
 
 ## Usage
+
+<span style="color:#b00020;"><u>PARTIALLY VALIDATED EXAMPLES:</u> CPU transcription, batching, VAD, timestamps, and clipping have integration coverage. Other model, device, and option combinations below are illustrative and are not all exercised by CI.</span>
 
 ### Faster-whisper
 
@@ -170,6 +182,8 @@ for segment in segments:
 
 ### Faster Distil-Whisper
 
+<span style="color:#b00020;"><u>UNVALIDATED MODEL CLAIM:</u> Distil-Whisper compatibility and the example below are not covered by this repository's integration tests.</span>
+
 The Distil-Whisper checkpoints are compatible with the Faster-Whisper package. In particular, the latest [distil-large-v3](https://huggingface.co/distil-whisper/distil-large-v3)
 checkpoint is intrinsically designed to work with the Faster-Whisper transcription algorithm. The following code snippet 
 demonstrates how to run inference with distil-large-v3 on a specified audio file:
@@ -206,7 +220,7 @@ The library integrates the [Silero VAD](https://github.com/snakers4/silero-vad) 
 segments, _ = model.transcribe("audio.mp3", vad_filter=True)
 ```
 
-The default behavior is conservative and only removes silence longer than 2 seconds. See the available VAD parameters and default values in the [source code](https://github.com/SYSTRAN/faster-whisper/blob/master/faster_whisper/vad.py). They can be customized with the dictionary argument `vad_parameters`:
+The default `min_silence_duration_ms` is 2000. <span style="color:#b00020;"><u>UNVALIDATED AUDIO-QUALITY CLAIM:</u> Actual speech removal depends on audio and VAD thresholds; this repository does not qualify precision or recall for a target dataset.</span> See the available VAD parameters and default values in the [source code](https://github.com/SYSTRAN/faster-whisper/blob/master/faster_whisper/vad.py). They can be customized with the dictionary argument `vad_parameters`:
 
 ```python
 segments, _ = model.transcribe(
@@ -227,6 +241,28 @@ import logging
 logging.basicConfig()
 logging.getLogger("faster_whisper").setLevel(logging.DEBUG)
 ```
+
+## Unicode and bidirectional text
+
+`Segment.text` and `Word.word` are Python Unicode strings in logical codepoint order. The
+`Tokenizer.decode` wrapper does not normalize the returned string or add display-direction controls.
+The library does not guarantee that a model emits a particular script or control character.
+
+Encode strings as UTF-8 when crossing byte-oriented storage or transport boundaries. Do not reverse
+RTL text or strip bidi controls and joiners as generic cleanup. In mixed-direction interfaces,
+isolate each transcript field at the rendering boundary: use HTML `<bdi dir="auto">` when direction
+is unknown, or explicit `dir` markup when it is known. Keep isolates within a paragraph; do not let
+them span newlines. LRI (U+2066), RLI (U+2067), and FSI (U+2068) open isolates; PDI (U+2069) closes
+them. ZWJ (U+200D) and ZWNJ (U+200C) do not change isolate depth. Rendering is the consuming
+application's responsibility.
+
+<span style="color:#b00020;"><u>UNVALIDATED RENDERING:</u></span> This repository has no browser or
+native UI and does not test visual bidi layout. The cited markup guidance is for consuming
+applications; the library does not implement UTS #39 identifier checks or bidi sanitization.
+
+References: [Unicode Bidirectional Algorithm (UAX #9)](https://www.unicode.org/reports/tr9/),
+[Unicode Security Mechanisms (UTS #39)](https://www.unicode.org/reports/tr39/), and
+[W3C inline bidi markup guidance](https://www.w3.org/International/articles/inline-bidi-markup/).
 
 ### Going further
 
@@ -274,6 +310,8 @@ does not change transcription defaults or interpret audio file containers.
 
 ## Community integrations
 
+<span style="color:#b00020;"><u>UNVALIDATED LIST:</u> The integrations below are community references and are not tested or maintained by this repository.</span>
+
 Here is a non exhaustive list of open-source projects using faster-whisper. Feel free to add your project to the list!
 
 
@@ -294,6 +332,8 @@ Here is a non exhaustive list of open-source projects using faster-whisper. Feel
 
 ## Model conversion
 
+<span style="color:#b00020;"><u>UNVALIDATED CONVERSION PATH:</u> Transformers/Torch conversion and the examples below are not exercised by this repository's CI.</span>
+
 When loading a model from its size such as `WhisperModel("large-v3")`, the corresponding CTranslate2 model is automatically downloaded from the [Hugging Face Hub](https://huggingface.co/Systran).
 
 We also provide a script to convert any Whisper models compatible with the Transformers library. They could be the original OpenAI models or user fine-tuned models.
@@ -303,8 +343,11 @@ For example the command below converts the [original "large-v3" Whisper model](h
 ```bash
 pip install transformers[torch]>=4.23
 
-ct2-transformers-converter --model openai/whisper-large-v3 --output_dir whisper-large-v3-ct2
---copy_files tokenizer.json preprocessor_config.json --quantization float16
+ct2-transformers-converter \
+  --model openai/whisper-large-v3 \
+  --output_dir whisper-large-v3-ct2 \
+  --copy_files tokenizer.json preprocessor_config.json \
+  --quantization float16
 ```
 
 * The option `--model` accepts a model name on the Hub or a path to a model directory.
@@ -325,6 +368,8 @@ model = faster_whisper.WhisperModel("username/whisper-large-v3-ct2")
 ```
 
 ## Comparing performance against other implementations
+
+<span style="color:#b00020;"><u>UNVALIDATED GUIDANCE:</u> The comparison advice below is not checked by automated tests.</span>
 
 If you are comparing the performance against other Whisper implementations, you should make sure to run the comparison with similar settings. In particular:
 

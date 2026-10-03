@@ -1,5 +1,7 @@
 import os
 
+import pytest
+
 from faster_whisper import available_models, download_model
 
 
@@ -9,6 +11,7 @@ def test_available_models():
     assert "tiny" in models
 
 
+@pytest.mark.integration
 def test_download_model(tmpdir):
     output_dir = str(tmpdir.join("model"))
 
@@ -23,6 +26,7 @@ def test_download_model(tmpdir):
         assert not os.path.islink(path)
 
 
+@pytest.mark.integration
 def test_download_model_in_cache(tmpdir):
     cache_dir = str(tmpdir.join("model"))
     download_model("tiny", cache_dir=cache_dir)

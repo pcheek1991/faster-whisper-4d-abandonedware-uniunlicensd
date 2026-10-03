@@ -2,3 +2,5 @@ include faster_whisper/assets/silero_vad_v6.onnx
 include faster_whisper/assets/Convert-AnythingToCoreoFloat.ps1
 include requirements.txt
 include requirements.conversion.txt
+include CONTRIBUTING.md
+include VALIDATION.md
