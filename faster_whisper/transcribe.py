@@ -4,7 +4,7 @@ import logging
 import os
 import zlib
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from inspect import signature
 from math import ceil
 from typing import BinaryIO, Iterable, List, Optional, Tuple, Union
@@ -401,12 +401,17 @@ class BatchedInferencePipeline:
                         min_silence_duration_ms=160,
                     )
                 elif isinstance(vad_parameters, dict):
-                    if "max_speech_duration_s" in vad_parameters.keys():
-                        vad_parameters.pop("max_speech_duration_s")
-
+                    vad_parameters = dict(vad_parameters)
+                    vad_parameters.pop("max_speech_duration_s", None)
                     vad_parameters = VadOptions(
                         **vad_parameters, max_speech_duration_s=chunk_length
                     )
+                elif isinstance(vad_parameters, VadOptions):
+                    vad_parameters = replace(
+                        vad_parameters, max_speech_duration_s=chunk_length
+                    )
+                else:
+                    raise TypeError("vad_parameters must be a dict or VadOptions")
 
                 clip_timestamps = get_speech_timestamps(audio, vad_parameters)
             # run the audio if it is less than 30 sec even without clip_timestamps
@@ -672,6 +677,7 @@ class WhisperModel:
 
         tokenizer_bytes, preprocessor_bytes = None, None
         if files:
+            files = dict(files)
             model_path = model_size_or_path
             tokenizer_bytes = files.pop("tokenizer.json", None)
             preprocessor_bytes = files.pop("preprocessor_config.json", None)

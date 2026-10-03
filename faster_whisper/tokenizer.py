@@ -93,6 +93,7 @@ class Tokenizer:
         return self.tokenizer.encode(text, add_special_tokens=False).ids
 
     def decode(self, tokens: List[int]) -> str:
+        """Decode tokens to Unicode text without applying display-direction changes."""
         text_tokens = [token for token in tokens if token < self.eot]
         return self.tokenizer.decode(text_tokens)
 
