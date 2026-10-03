@@ -2,8 +2,11 @@ import inspect
 import os
 
 import numpy as np
+import pytest
 
 from faster_whisper import BatchedInferencePipeline, WhisperModel, decode_audio
+
+pytestmark = pytest.mark.integration
 
 
 def test_supported_languages():
