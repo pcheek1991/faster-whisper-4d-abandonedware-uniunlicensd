@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04@sha256:d02c4310b6d57ca0b16cd80298bdb33a74187baafe2eccd8a6a16180ddc90802
+FROM nvidia/cuda:13.4.2-cudnn-runtime-ubuntu24.04@sha256:2aa09bb7626c4bff7d0a08b0028edb8dc254d0252a8b67cd386966a864fafac2
 RUN apt-get update -y \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends passwd python3.12-venv \
