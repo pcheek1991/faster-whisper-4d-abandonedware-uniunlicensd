@@ -92,6 +92,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[security]"
           python -m pip_audit -r requirements.txt
+          python -m pip_audit -r requirements.conversion.txt
 
   build-and-push-package:
     runs-on: ubuntu-latest
