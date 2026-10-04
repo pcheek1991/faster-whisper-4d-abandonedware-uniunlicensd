@@ -12,9 +12,10 @@ qualification provide the missing evidence.
 ## Scope and intended use
 
 The repository provides a Python speech-to-text library using CTranslate2, PyAV, Hugging Face Hub
-model downloads, and an optional Silero VAD model. This baseline covers source changes, package
-behavior, and the repository's CI checks. It does not validate a particular deployment, hardware
-configuration, transcript's suitability for a regulated decision, or any downstream system.
+model downloads, optional Silero VAD, and a separate raw-stream Coreo converter invoked through
+PowerShell. This baseline covers source changes, package behavior, and the repository's CI checks.
+It does not validate a particular deployment, hardware configuration, transcript's suitability for
+a regulated decision, or any downstream system.
 The intended use and acceptance criteria for a deployed system must be established by its owner.
 Transcript rendering is outside this library's scope; consuming interfaces must preserve Unicode
 logical order and handle bidirectional isolation at the rendering boundary.
@@ -39,6 +40,7 @@ The identifiers below are repository-level verification assertions, not approved
 | SV-09 | PyAV decodes sample audio without an `ffmpeg` executable on `PATH`. | `tests/test_failure_modes.py::test_audio_decode_does_not_require_ffmpeg_cli` |
 | SV-10 | The documented default VAD minimum silence duration is 2000 ms. | `tests/test_failure_modes.py::test_vad_default_minimum_silence_duration` |
 | SV-11 | The optional Transformers-to-CTranslate2 conversion entrypoint can convert a small checkpoint. | Manual CPU smoke conversion of `openai/whisper-tiny` with Transformers 5.18.0, Torch 2.14.1, and CTranslate2 4.8.2 |
+| SV-12 | Coreo raw-stream conversion preserves its sample mapping and rejects malformed input. | `tests/test_coreo.py` on PowerShell 7.6.6 |
 
 ## Verification procedure
 
@@ -75,6 +77,9 @@ first run.
   supports it.
 - <span style="color:#b00020;"><u>OS PACKAGES NOT AUDITED:</u></span> `pip-audit` scans Python
   requirements, not the Docker base image's OpenSSL or other operating-system packages.
+- <span style="color:#b00020;"><u>COREO CI RUNTIME NOT QUALIFIED:</u></span> Coreo tests skip if
+  `pwsh` is unavailable. They passed locally on PowerShell 7.6.6; the GitHub runner's PowerShell
+  availability has not been verified.
 - CI action references are pinned to immutable commit IDs and use a read-only repository token.
   Dependabot is configured for weekly action, Python dependency, and Docker base-image update PRs;
   each update requires review and the normal verification checks.
