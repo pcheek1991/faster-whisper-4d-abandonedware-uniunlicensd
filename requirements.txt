@@ -1,4 +1,4 @@
-ctranslate2>=4.8.2,<5
+ctranslate2>=4.8.3,<5
 huggingface_hub>=2.0.0,<3
 tokenizers>=0.23.2,<1
 onnxruntime>=1.30.0,<2
