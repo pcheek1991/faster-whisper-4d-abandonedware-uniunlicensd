@@ -74,8 +74,13 @@ jobs:
       - name: Run validation-only tests
         run: python -m pytest -q -m "not integration" --junitxml=evidence/validation.xml
 
-      - name: Run model integration tests
-        run: python -m pytest -v -m integration --junitxml=evidence/integration.xml
+      # Model-weight integration tests are intentionally unavailable in
+      # this weight-free experiment. Do not label an unrun test PASS.
+      - name: Record intentionally unrun model integration scope
+        shell: pwsh
+        run: |
+          'NOT RUN: integration tests require pretrained model weights.' |
+            Tee-Object -FilePath evidence/integration-not-run.txt
 
       - name: Capture Python test provenance even on failure
         if: always()
