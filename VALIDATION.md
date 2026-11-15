@@ -1,3 +1,13 @@
+> **Checkpoint 10 update (2026-11-15):** The primary Fastest-Whisper-10D
+> PowerShell 7 experiment is model-weight-free. The tenth dimension is
+> [Stability](docs/STABILITY.md), the three-ring nine-ligand six-byte
+> witness. Original Python/CTranslate2 inference and its historical
+> model-dependent results are legacy records, not evidence of model-free
+> speech transcription. CI does not treat unavailable model-integration
+> tests as passed. The source now includes mixed-license notices; see
+> [RIGHTS_REVIEW.md](docs/RIGHTS_REVIEW.md). Cross-platform results are
+> commit-scoped and must be checked for each change.
+
 # Software validation baseline
 
 This document records a GAMP 4-oriented software validation approach for this repository. Release
