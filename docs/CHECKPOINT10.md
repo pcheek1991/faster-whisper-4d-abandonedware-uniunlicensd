@@ -13,9 +13,23 @@ Whisper transcription or CTranslate2 inference.
 | Forward, reverse and Z-fold witnesses | Compare all four Coreo lanes with the original synthetic frames | No XOR probability formula is imported into audio |
 | One scalar, no averaging away failure | Maximum of all channel discrepancies | Zero is internal consistency, not authenticity |
 | Failure remains evidence | Upload pre-flight and converter logs on failures | No retroactive synthetic hashes for older CI |
-| Portability is tested rather than assumed | PowerShell 7 converter checks on Windows and Linux | GPU transcription and macOS remain outside this new matrix |
+| Portability is tested rather than assumed | PowerShell 7 checks on Windows, Linux and macOS | GPU transcription remains outside this matrix |
 | Entire output is distributable only with rights | Auto-PyPI publishing disabled until legal review | No automatic 0BSD grant over upstream sources or models |
 | No paused debug-only code in production | Source pre-flight rejects explicit debugger stops | Normal safety checks, runtime guards and evidence remain |
+
+## Stability and Android experiment (latest extension)
+
+The tenth PowerShell acoustic output is now [Stability](STABILITY.md):
+three interlocked Pentagonal XOR rings over nine normalized ligands,
+with three quantized `uint16` witnesses constituting a six-byte
+little-endian hexabyte. The source's previous tenth Pearson statistic
+is retained as diagnostic metadata.
+
+[Android experimental APK](ANDROID.md) implements the same
+`Stability-9L3PX5-U16LE-v1` topology in pure Java 17, without
+model weights or network permissions. The PowerShell 7 test matrix
+also includes macOS Apple Silicon. These are **new** experiments,
+not evidence of trained speech-to-text.
 
 ## Exact mathematical inspection
 
@@ -78,7 +92,7 @@ PowerShell audit does not pretend to replace those tests.
 
 ## Run-specific SHA-256 provenance
 
-The `checkpoint10.yml` workflow runs Windows x64 and Linux x64.
+The `checkpoint10.yml` workflow runs Windows x64, Linux x64 and macOS ARM64.
 Each job creates the `evidence/` directory before validation, then
 attempts to collect files even if a preceding step fails.
 
