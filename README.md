@@ -1,6 +1,36 @@
-[![CI](https://github.com/SYSTRAN/faster-whisper/workflows/CI/badge.svg)](https://github.com/SYSTRAN/faster-whisper/actions?query=workflow%3ACI) [![PyPI version](https://badge.fury.io/py/faster-whisper.svg)](https://badge.fury.io/py/faster-whisper)
+[Project CI](https://github.com/pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd/actions) | [Checkpoint 10](.github/workflows/checkpoint10.yml)
 
-# Faster Whisper transcription with CTranslate2
+# Fastest-Whisper-10D · weight-free PowerShell 7 acoustic laboratory
+
+**Experimental release branch.** The primary entry is
+[`Fastest-Whisper-10D.ps1`](Fastest-Whisper-10D.ps1) using PowerShell 7
+with `Set-StrictMode -Version 2.0`. It works without a trained model for
+reversible stereo signal conversion and nine acoustic measurements.
+The tenth dimension is now **Stability**: three interlocked five-input
+Pentagonal XOR rings over nine normalized acoustic ligands, encoded into
+a **six-byte little-endian hexabyte**, then summarized by a bounded
+ring-agreement scalar.
+
+[Full Stability specification](docs/STABILITY.md) |
+[Checkpoint 10 evidence](docs/CHECKPOINT10.md) |
+[Mixed MIT/0BSD rights](docs/RIGHTS_REVIEW.md)
+
+```powershell
+pwsh.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Fastest-Whisper-10D.ps1 -Analyze10D -RawStereoFloat32Path .\stereo-float32le.raw
+```
+
+The output is JSON and retains source SHA-256 plus the original nine
+measurements, three ring scores and the explicit six bytes. The model-free
+experiment **does not yet transcribe spoken words**. The pretrained Silero
+ONNX weights were removed; automatic model and tokenizer downloads are
+disabled. An explicitly supplied local model remains a separate legacy
+inference option, not part of the default PowerShell 7 interface.
+
+## Legacy Faster Whisper/CTranslate2 reference
+
+The following material documents the inherited Python inference library.
+Historical benchmarks and model demonstrations are **not** performance
+claims for the new model-free 10D experiment.
 
 **faster-whisper** is a reimplementation of OpenAI's Whisper model using [CTranslate2](https://github.com/OpenNMT/CTranslate2/), which is a fast inference engine for Transformer models.
 
