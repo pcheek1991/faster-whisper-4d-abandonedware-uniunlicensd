@@ -4,6 +4,22 @@
 source-and-license provenance checklist, not legal advice or a claim that
 the repository is prohibited from all uses.
 
+## Update: mixed license notices on the feature branch
+
+The branch now includes `LICENSE`, `LICENSE-MIT-UPSTREAM`,
+`LICENSE-0BSD` and `NOTICE`. The exact SYSTRAN/faster-whisper MIT
+license text is preserved for inherited portions, and newly authored
+additions marked 0BSD refer to the supporting project's 0BSD terms.
+**Neither notice transfers rights to an unrelated third-party tool.**
+The bundled DUNGU-derived converter and any separately sourced media
+still require their own provenance review. The original absence of a
+`LICENSE` on master at the referenced commit remains historical
+evidence below, not a description of the current feature branch.
+
+The experimental Android app contains original Java sources, no
+pretrained models or network permission. Android SDK/Gradle build tools
+are external dependencies and are not relicensed by the project.
+
 ## Observed source record (master at 8e379afb)
 
 - No tracked `LICENSE` file is present.
