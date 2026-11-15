@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: 0BSD
 # Copyright (c) 2026 Paul Allen Cheek
-# Fastest-Whisper-10D: ten descriptive acoustic measurements, no trained model.
+# Fastest-Whisper-10D: nine measured acoustic inputs and Stability, no trained model.
 # Input: raw interleaved stereo IEEE-754 float32 little-endian; output: JSON.
 # This script does NOT decode words or substitute a feature vector for text.
 [CmdletBinding()]
@@ -12,6 +12,9 @@ param(
 
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
+
+# This is the only definition of the ninth-input / three-ring transformation.
+. (Join-Path $PSScriptRoot 'Stability.ps1')
 
 $source = [IO.Path]::GetFullPath($RawStereoFloat32Path)
 if (!(Test-Path -LiteralPath $source -PathType Leaf)) { throw "Input not found: $source" }
@@ -76,35 +79,48 @@ try {
     }
     $rmsL = [Math]::Sqrt($powerL / $n)
     $rmsR = [Math]::Sqrt($powerR / $n)
-    $vector = @(
-        [double]$n,
-        [double]$meanL,
-        [double]$meanR,
-        [double]$rmsL,
-        [double]$rmsR,
-        [double]$peakL,
-        [double]$peakR,
-        [double]$crossL,
-        [double]$crossR,
-        [double]$correlation
+    # Keep the measured acoustic CORE unchanged. Derive ligands and three
+    # interlocked Pentagonal XOR witnesses without overwriting that CORE.
+    $measurements = [double[]]@(
+        $n, $meanL, $meanR, $rmsL, $rmsR,
+        $peakL, $peakR, $crossL, $crossR
     )
-    foreach ($component in $vector) {
+    foreach ($component in $measurements) {
         if ([double]::IsNaN($component) -or [double]::IsInfinity($component)) {
             throw 'Numeric overflow in the 10D feature vector.'
         }
     }
 
+    $ligands = ConvertTo-StabilityLigands -Measurements $measurements
+    $stability = Get-Stability10D -Ligands $ligands
+    $vector = @($measurements) + @([double]$stability.stability)
+
     $record = [ordered]@{
-        schema = 'Fastest-Whisper-10D-acoustic-v1'
+        schema = 'Fastest-Whisper-10D-acoustic-v2-Stability'
         trained_model_used = $false
         transcript_generated = $false
         input_format = 'stereo-float32le'
         input_sha256 = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
         dimensions = @('frame_count','mean_left','mean_right',
                        'rms_left','rms_right','peak_left','peak_right',
-                       'zero_crossings_left','zero_crossings_right','pearson_lr')
+                       'zero_crossings_left','zero_crossings_right','Stability')
         vector = $vector
-        note = 'Descriptive waveform statistics, not lexical recognition. Zero-variance correlation uses 0 by convention.'
+        Stability = [ordered]@{
+            protocol = $stability.protocol
+            scalar = [double]$stability.stability
+            ligand_indices = @(
+                @(0,1,2,3,4), @(3,4,5,6,7), @(6,7,8,0,1)
+            )
+            normalized_ligands = $ligands
+            ring_probabilities = $stability.ring_probabilities
+            ring_u16 = $stability.ring_u16
+            hexabyte = $stability.hexabyte
+            hexabyte_bytes_le = @($stability.hexabyte_bytes_le | ForEach-Object { [int]$_ })
+        }
+        diagnostics = [ordered]@{
+            legacy_pearson_lr = [double]$correlation
+        }
+        note = 'Stability is ring-score agreement, not physical stability, speech recognition or cryptographic proof.'
     }
     $record | ConvertTo-Json -Depth 5
 } finally {
