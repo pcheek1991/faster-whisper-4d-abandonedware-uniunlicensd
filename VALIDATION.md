@@ -32,6 +32,17 @@ logical order and handle bidirectional isolation at the rendering boundary.
 native UI test for visual bidi layout and does not implement UTS #39 identifier checks or bidi
 sanitization.
 
+## Experimental Stability V2 validation extension
+
+The tenth dimension is now **Stability**, defined in
+[docs/STABILITY.md](docs/STABILITY.md). Independent Pentagonal XOR
+odd-minterm reference tests verify exact six-byte golden vectors.
+[docs/ANDROID.md](docs/ANDROID.md) defines an experimental offline
+native Android implementation. PowerShell 7 validation runs on Windows,
+Linux and macOS. The older Python model-weight integration suite
+is **NOT RUN** under the new weight-free policy, not a passing
+substitute for speech recognition.
+
 ## Risk-based traceability
 
 The identifiers below are repository-level verification assertions, not approved user requirements.
