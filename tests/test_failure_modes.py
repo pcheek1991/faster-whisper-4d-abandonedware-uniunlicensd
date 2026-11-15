@@ -118,20 +118,16 @@ def test_model_files_argument_is_not_mutated(monkeypatch):
     assert captured["files"] == {"model.bin": b"weights"}
 
 
-def test_hub_download_failure_is_propagated(monkeypatch):
-    error = ConnectionError("hub unavailable")
-
-    def fail_download(*args, **kwargs):
-        raise error
-
-    monkeypatch.setattr(
-        utils_module.huggingface_hub, "snapshot_download", fail_download
-    )
-
-    with pytest.raises(ConnectionError, match="hub unavailable") as exc_info:
+def test_automatic_model_download_is_disabled():
+    with pytest.raises(RuntimeError, match="disables model weight downloads"):
         utils_module.download_model("tiny")
 
-    assert exc_info.value is error
+
+def test_automatic_vad_weight_loading_is_disabled():
+    from faster_whisper.vad import get_vad_model
+
+    with pytest.raises(RuntimeError, match="weights are intentionally absent"):
+        get_vad_model()
 
 
 def test_audio_open_failure_is_propagated(monkeypatch):
