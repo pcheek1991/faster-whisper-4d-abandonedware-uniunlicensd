@@ -27,11 +27,23 @@ param(
     [int] $FramesPerBlock = 16384,
 
     [Parameter(Mandatory = $true, ParameterSetName = 'StreamSelfTest')]
-    [switch] $StreamSelfTest
+    [switch] $StreamSelfTest,
+
+    [Parameter(Mandatory = $true, ParameterSetName = 'Analyze10D')]
+    [switch] $Analyze10D,
+
+    [Parameter(Mandatory = $true, ParameterSetName = 'Analyze10D')]
+    [ValidateNotNullOrEmpty()]
+    [string] $RawStereoFloat32Path
 )
 
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
+
+if ($PSCmdlet.ParameterSetName -eq 'Analyze10D') {
+    & (Join-Path $PSScriptRoot 'ci/Measure-10D.ps1') -RawStereoFloat32Path $RawStereoFloat32Path
+    return
+}
 
 $converter = Join-Path $PSScriptRoot 'faster_whisper/assets/Convert-AnythingToCoreoFloat.ps1'
 if (!(Test-Path -LiteralPath $converter -PathType Leaf)) {
@@ -59,4 +71,3 @@ if ($PSCmdlet.ParameterSetName -eq 'StreamSelfTest') {
 
 # The raw-stdio route must never emit incidental text to stdout.
 & $converter @forward
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
