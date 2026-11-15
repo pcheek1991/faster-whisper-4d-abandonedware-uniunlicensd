@@ -10,3 +10,9 @@ include LICENSE
 include LICENSE-0BSD
 include LICENSE-MIT-UPSTREAM
 include NOTICE
+include Fastest-Whisper-10D.ps1
+include docs/STABILITY.md
+include ci/Stability.ps1
+include ci/Measure-10D.ps1
+include ci/Test-Stability.ps1
+include ci/Test-10D.ps1
