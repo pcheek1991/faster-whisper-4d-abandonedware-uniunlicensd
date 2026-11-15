@@ -41,7 +41,26 @@ try {
     Assert-Near $record.vector[6] 30 'peak right'
     Assert-Near $record.vector[7] 0 'zero crossings left'
     Assert-Near $record.vector[8] 0 'zero crossings right'
-    Assert-Near $record.vector[9] 1 'cross-channel Pearson'
+    if ($record.dimensions[9] -cne 'Stability' -or
+        $record.schema -cne 'Fastest-Whisper-10D-acoustic-v2-Stability') {
+        throw 'Tenth output dimension is not Stability.'
+    }
+    if ($record.Stability.protocol -cne 'Stability-9L3PX5-U16LE-v1' -or
+        $record.Stability.normalized_ligands.Count -ne 9 -or
+        $record.Stability.ring_probabilities.Count -ne 3 -or
+        $record.Stability.ring_u16.Count -ne 3 -or
+        $record.Stability.hexabyte_bytes_le.Count -ne 6 -or
+        $record.Stability.hexabyte.Length -ne 12) {
+        throw 'Malformed nine-ligand, three-ring, six-byte Stability witness.'
+    }
+    Assert-Near $record.vector[9] $record.Stability.scalar 'Stability dimension'
+    Assert-Near $record.diagnostics.legacy_pearson_lr 1 'preserved Pearson diagnostic'
+    $maxRing = ($record.Stability.ring_probabilities | Measure-Object -Maximum).Maximum
+    $minRing = ($record.Stability.ring_probabilities | Measure-Object -Minimum).Minimum
+    Assert-Near $record.Stability.scalar (1.0 - ($maxRing - $minRing)) 'ring agreement'
+    if ($record.Stability.scalar -lt 0.0 -or $record.Stability.scalar -gt 1.0) {
+        throw 'Stability scalar is outside [0,1].'
+    }
     $original = (Get-FileHash -LiteralPath $temp -Algorithm SHA256).Hash.ToLowerInvariant()
     if ($record.input_sha256 -cne $original) { throw 'Source hash mismatch.' }
 
@@ -58,7 +77,7 @@ try {
     try { $null = & $main -Analyze10D -RawStereoFloat32Path $temp } catch { $failedNaN = $true }
     if (!$failedNaN) { throw 'Nonfinite source must fail.' }
 
-    Write-Output 'PASS zero-weight Fastest-Whisper-10D: 10 acoustic dimensions, source SHA-256 and failure guards'
+    Write-Output 'PASS zero-weight Fastest-Whisper-10D: Stability pinned at dimension 10, SHA-256 and failure guards'
 } finally {
     Remove-Item -LiteralPath $temp -ErrorAction SilentlyContinue
 }
