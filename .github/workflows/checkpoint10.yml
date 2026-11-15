@@ -25,12 +25,26 @@ jobs:
         include:
           - { name: 'Windows x64 · native PowerShell 7', runner: windows-2022, platform: windows-x64 }
           - { name: 'Linux x64 · native PowerShell 7', runner: ubuntu-24.04, platform: linux-x64 }
+          - { name: 'macOS Apple Silicon · PowerShell 7', runner: macos-15, platform: macos-arm64 }
 
     steps:
       - name: 'Checkout exact source'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+
+      - name: 'Verify PowerShell 7 availability'
+        shell: bash
+        run: |
+          if ! command -v pwsh >/dev/null 2>&1; then
+            if [ "${{ runner.os }}" = "macOS" ]; then
+              brew install --cask powershell
+            else
+              echo "PowerShell 7 is unavailable" >&2
+              exit 1
+            fi
+          fi
+          pwsh -NoLogo -NoProfile -Command '$PSVersionTable.PSVersion.ToString()'
 
       - name: 'Prepare evidence directory before any test'
         shell: pwsh
@@ -45,6 +59,18 @@ jobs:
         shell: pwsh
         run: |
           ./ci/Test-CoreoContract.ps1 *>&1 | Tee-Object -FilePath evidence/coreo-contract.log
+
+      - name: 'Stability · 3 interlocked Pentagonal XOR rings / 9 ligands / 6 bytes'
+        shell: pwsh
+        run: |
+          ./ci/Test-Stability.ps1 *>&1 | Tee-Object -FilePath evidence/stability.log
+          if (!$?) { exit 1 }
+
+      - name: 'Fastest-Whisper-10D · inspect dimension 10'
+        shell: pwsh
+        run: |
+          ./ci/Test-10D.ps1 *>&1 | Tee-Object -FilePath evidence/10d.log
+          if (!$?) { exit 1 }
 
       - name: 'Capture hashes and toolchain identity, including failures'
         if: always()
