@@ -30,19 +30,18 @@ conversion_requires = get_requirements(
 )
 
 setup(
-    name="faster-whisper",
+    name="fastest-whisper-10d",
     version=get_project_version(),
-    license="MIT",
-    description="Faster Whisper transcription with CTranslate2",
+    license="MIT AND 0BSD",
+    description="Fastest-Whisper-10D experimental weight-free PowerShell Coreo with legacy compatibility",
     long_description=get_long_description(),
     long_description_content_type="text/markdown",
     author="Guillaume Klein",
-    url="https://github.com/SYSTRAN/faster-whisper",
+    url="https://github.com/pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
-        "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.12",
@@ -50,7 +49,7 @@ setup(
         "Programming Language :: Python :: 3.14",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
-    keywords="openai whisper speech ctranslate2 inference quantization transformer",
+    keywords="coreo audio 10d powershell waveform ctranslate2 legacy",
     python_requires=">=3.12",
     install_requires=install_requires,
     extras_require={
