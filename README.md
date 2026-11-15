@@ -11,6 +11,7 @@ Pentagonal XOR rings over nine normalized acoustic ligands, encoded into
 a **six-byte little-endian hexabyte**, then summarized by a bounded
 ring-agreement scalar.
 
+[Android experimental APK](docs/ANDROID.md) |
 [Full Stability specification](docs/STABILITY.md) |
 [Checkpoint 10 evidence](docs/CHECKPOINT10.md) |
 [Mixed MIT/0BSD rights](docs/RIGHTS_REVIEW.md)
