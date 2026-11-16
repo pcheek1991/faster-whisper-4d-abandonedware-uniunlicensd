@@ -159,3 +159,19 @@ if(BUILD_TESTING)
 endif()
 install(FILES native/pentagonal_gates.hpp DESTINATION include/swe)
 install(FILES docs/PENTAGONAL_GATE_CASCADE.md DESTINATION share/doc/diamond)
+
+
+# Separate research CLI. Native DIAMOND default path is untouched.
+add_executable(pentagonal_control native/pentagonal_control.cpp)
+target_include_directories(pentagonal_control PRIVATE
+  native external/pentagonal-xor-cpp20/shared)
+target_compile_features(pentagonal_control PRIVATE cxx_std_20)
+install(TARGETS pentagonal_control RUNTIME DESTINATION bin)
+if(BUILD_TESTING)
+  add_test(NAME diamond_pentagonal_control_json COMMAND pentagonal_control 0x3fffffff 0x3fffffff or)
+  set_tests_properties(diamond_pentagonal_control_json PROPERTIES
+    PASS_REGULAR_EXPRESSION "logical_evaluations")
+  add_test(NAME diamond_depth_three_benchmark COMMAND pentagonal_gates_integration_benchmark)
+  set_tests_properties(diamond_depth_three_benchmark PROPERTIES
+    PASS_REGULAR_EXPRESSION "Interpretation")
+endif()
