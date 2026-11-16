@@ -338,7 +338,7 @@ bool piped_stdin() {
 }
 } // namespace
 
-int main(int argc,char** argv) {
+int diamond_main(int argc,char** argv) {
     try {
         Options options{};
         for(int i=1;i<argc;++i) {
@@ -368,3 +368,40 @@ int main(int argc,char** argv) {
         return 2;
     }
 }
+
+
+#if defined(_WIN32)
+// Windows narrow argv uses the active ANSI codepage, not necessarily UTF-8.
+// Read the OS UTF-16 command line and encode Unicode scalars explicitly;
+// refuse unpaired surrogate sequences. No lossy fallback.
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+int wmain(int argc, wchar_t** wide_argv) {
+    std::vector<std::string> arguments;
+    std::vector<char*> pointers;
+    arguments.reserve(static_cast<std::size_t>(argc));
+    pointers.reserve(static_cast<std::size_t>(argc));
+    for (int i=0;i<argc;++i) {
+        const int size = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS,
+            wide_argv[i], -1, nullptr, 0, nullptr, nullptr);
+        if(size<=0) {
+            std::cerr << "diamond rejected malformed UTF-16 CLI argument\n";
+            return 2;
+        }
+        std::string value(static_cast<std::size_t>(size), '\0');
+        const int written = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS,
+            wide_argv[i], -1, value.data(), size, nullptr, nullptr);
+        if(written != size) {
+            std::cerr << "diamond rejected malformed UTF-16 CLI argument\n";
+            return 2;
+        }
+        value.pop_back(); // Remove only the NUL terminator.
+        arguments.push_back(std::move(value));
+    }
+    for (auto& value:arguments) pointers.push_back(value.data());
+    return diamond_main(argc, pointers.data());
+}
+#else
+int main(int argc,char** argv) { return diamond_main(argc,argv); }
+#endif
