@@ -107,9 +107,55 @@ jobs:
         run: |
           if (Test-Path external/pentagonal-xor-cpp20/evidence/SHA256SUMS) { Get-Content external/pentagonal-xor-cpp20/evidence/SHA256SUMS }
 
+  package:
+    name: 'Dry-run numerical release packaging · no publication'
+    needs: [native, docker]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Checkout exact commit and immutable canonical submodule
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($env:GITHUB_REPOSITORY -cne 'pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd') { throw 'Unexpected repository' }
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin 'https://github.com/pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd.git'
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git -c advice.detachedHead=false fetch --no-tags --depth 1 origin $env:GITHUB_REF
+          if ($LASTEXITCODE -ne 0) { throw 'git exact ref fetch failed' }
+          & git -c advice.detachedHead=false checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $sha = ((& git rev-parse HEAD) | Out-String).Trim()
+          if ($LASTEXITCODE -ne 0 -or $sha -cne $env:GITHUB_SHA) { throw "Checkout mismatch $sha versus $env:GITHUB_SHA" }
+          & git submodule sync --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'submodule sync failed' }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'pinned source submodule fetch failed' }
+          Write-Host "Verified target commit $sha"
+      - name: Repeat canonical tests and install original source, guard and bridge
+        shell: pwsh
+        run: ./ci/Invoke-SharedGuard.ps1 -Mode Package
+      - name: Inspect ZIP, complete original source snapshot, SHA-256 and evidence
+        shell: pwsh
+        run: |
+          $archive='dist-pxor/fastest-whisper-10d-pentagonal-xor-linux-x64.zip'
+          $manifest='dist-pxor/SHA256SUMS'
+          $original='dist-pxor/stage/share/source/pentagonal-xor-cpp20/shared/pentagonal_xor_std_free.h'
+          $guard='dist-pxor/stage/bin/swe_guard'
+          foreach ($path in @($archive,$manifest,$original,$guard)) {
+            if (!(Test-Path -LiteralPath $path -PathType Leaf)) { throw "Release component absent: $path" }
+          }
+          $hash=(Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+          $lines=Get-Content -LiteralPath $manifest
+          if ($lines -notmatch $hash) { throw 'Release ZIP checksum mismatch' }
+          Write-Host "PASS original-source release package SHA256 $hash"
+          if ($env:GITHUB_STEP_SUMMARY) {
+            Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY -Value "Release ZIP dry-run PASS: SHA256 $hash; not published."
+          }
   release:
     name: 'Deploy checksummed numerical module · tag only'
-    needs: [native, docker]
+    needs: [native, docker, package]
     if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && github.repository == 'pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd' }}
     runs-on: ubuntu-24.04
     permissions:
