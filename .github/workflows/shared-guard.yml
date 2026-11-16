@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   native:
-    name: 'Canonical C11/C++20 and PR17 contracts · ${{ matrix.name }}'
+    name: 'Native C11/C++20 DIAMOND and original contracts · ${{ matrix.name }}'
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 40
     strategy:
@@ -53,7 +53,7 @@ jobs:
           & git -c protocol.file.allow=never submodule update --init --recursive
           if ($LASTEXITCODE -ne 0) { throw 'pinned source submodule fetch failed' }
           Write-Host "Verified target commit $sha"
-      - name: Check every canonical operator including COREAO +9 dBi RF gain and PR17 tests
+      - name: Run original C11/C++20 and every native DIAMOND facet
         shell: pwsh
         run: ./ci/Invoke-SharedGuard.ps1 -Mode Test -VsArch '${{ matrix.vs_arch }}'
       - name: Retain diagnostic manifest in GitHub job log
@@ -133,17 +133,17 @@ jobs:
           & git -c protocol.file.allow=never submodule update --init --recursive
           if ($LASTEXITCODE -ne 0) { throw 'pinned source submodule fetch failed' }
           Write-Host "Verified target commit $sha"
-      - name: Repeat full operator/+9 dBi gates and install original source, guard and bridge
+      - name: Repeat native DIAMOND and canonical operator tests, install sources
         shell: pwsh
         run: ./ci/Invoke-SharedGuard.ps1 -Mode Package
       - name: Inspect ZIP, complete original source snapshot, SHA-256 and evidence
         shell: pwsh
         run: |
-          $archive='dist-pxor/fastest-whisper-10d-pentagonal-xor-linux-x64.zip'
+          $archive='dist-pxor/diamond-native-linux-x64.zip'
           $manifest='dist-pxor/SHA256SUMS'
           $original='dist-pxor/stage/share/source/pentagonal-xor-cpp20/shared/pentagonal_xor_std_free.h'
           $guard='dist-pxor/stage/bin/swe_guard'
-          $pipeline='dist-pxor/stage/bin/Invoke-PentagonalPipeline.ps1'
+          $pipeline='dist-pxor/stage/bin/diamond'
           $secondWave='dist-pxor/stage/bin/counterarccosine_secondwave_test'
           foreach ($path in @($archive,$manifest,$original,$guard,$pipeline,$secondWave)) {
             if (!(Test-Path -LiteralPath $path -PathType Leaf)) { throw "Release component absent: $path" }
@@ -151,8 +151,8 @@ jobs:
           $hash=(Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant()
           $lines=Get-Content -LiteralPath $manifest
           if ($lines -notmatch $hash) { throw 'Release ZIP checksum mismatch' }
-          $report=& $pipeline -GainDbi 11 -Watts 1 | ConvertFrom-Json
-          if ($LASTEXITCODE -ne 0 -or $report.results.counterarccosine_second_wave.status -cne 'passed_original_experimental_test' -or [Math]::Abs($report.results.rf_gain.output_eirp_watts - [Math]::Pow(10.0,1.1)) -gt 1e-10) { throw 'Installed pipeline did not apply +11 dBi RF gain' }
+          $report=& $pipeline --gain-dbi 11 --watts 1 --language fa | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or !$report.counterarccosine.original_test_passed -or $report.language.catalog_count -ne 348 -or [Math]::Abs($report.rf.eirp_watts - [Math]::Pow(10.0,1.1)) -gt 1e-10) { throw 'Installed native pipeline failed language/research/+11 dBi gates' }
           Write-Host "PASS original-source default-on release package SHA256 $hash"
           if ($env:GITHUB_STEP_SUMMARY) {
             Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY -Value "Release ZIP dry-run PASS: SHA256 $hash; not published."

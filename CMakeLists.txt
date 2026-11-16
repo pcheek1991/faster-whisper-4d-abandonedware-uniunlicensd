@@ -70,14 +70,7 @@ install(DIRECTORY "${SWE_UPSTREAM_ROOT}/"
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/PENTAGONAL_XOR_PROVENANCE.md"
   DESTINATION share/doc/fastest-whisper-10d)
 
-# Bundle one-command operation and its original acoustic measurement support.
-# Installed path is bin/ and subdirectory bin/ci, preserving script-relative paths.
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/Invoke-PentagonalPipeline.ps1"
-  DESTINATION bin)
-install(FILES
-  "${CMAKE_CURRENT_SOURCE_DIR}/ci/Measure-10D.ps1"
-  "${CMAKE_CURRENT_SOURCE_DIR}/ci/Stability.ps1"
-  DESTINATION bin/ci)
+# The native diamond binary is the only installed default entry point.
 
 # The second-wave white-paper operator is research-only in the pinned source.
 # Ship and run its VERBATIM executable test, never a reimplementation.

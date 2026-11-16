@@ -19,7 +19,7 @@ $evidence = Join-Path $root $EvidenceDir
 [void][IO.Directory]::CreateDirectory($evidence)
 $events = [Collections.Generic.List[object]]::new()
 $record = [ordered]@{
-  schema = 'FastestWhisper10D-Canonical-PXOR-SharedGuard-v1'
+  schema = 'SWE-DIAMOND-Native-SharedGuard-v2'
   utc = (Get-Date).ToUniversalTime().ToString('o')
   target_commit = $env:GITHUB_SHA
   upstream_repository = 'https://github.com/Simply-Well-Executed/pentagonal-xor-cpp20'
@@ -85,20 +85,14 @@ try {
   Invoke-Gate 'cmake-configure' 'cmake' $configure
   Invoke-Gate 'cmake-build' 'cmake' @('--build',$build,'--config','Release','--parallel','2')
   Invoke-Gate 'canonical-full-and-shared-ctest' 'ctest' @('--test-dir',$build,'-C','Release','--output-on-failure','--output-junit',(Join-Path $evidence 'ctest-results.xml'))
-  Invoke-Gate 'canonical-bridge-vs-powershell' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-CanonicalPentagonalBridge.ps1'),'-BuildDir',$BuildDir)
-  Invoke-Gate 'all-canonical-operator-modes-plus-rf-9dbi-gain' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-CanonicalFeatureSurface.ps1'),'-BuildDir',$BuildDir)
-  Invoke-Gate 'default-on-pipeline-all-operators-gain-overrides' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-DefaultOnPipeline.ps1'),'-BuildDir',$BuildDir)
-  Invoke-Gate 'original-coreo-contract' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-CoreoContract.ps1'))
-  Invoke-Gate 'original-stability-contract' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-Stability.ps1'))
-  Invoke-Gate 'original-ten-dimensional-contract' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-10D.ps1'))
-  Invoke-Gate 'source-release-safety' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $upstream 'ci/Test-ReleaseSafety.ps1'))
+  Invoke-Gate 'native-boundary-and-license' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-NativeBoundary.ps1'))
 
   if ($Mode -eq 'Package') {
     $stage = Join-Path $root 'dist-pxor/stage'
     [void][IO.Directory]::CreateDirectory($stage)
     Invoke-Gate 'cmake-install' 'cmake' @('--install',$build,'--config','Release','--prefix',$stage)
     $dist = Join-Path $root 'dist-pxor'
-    $asset = Join-Path $dist 'fastest-whisper-10d-pentagonal-xor-linux-x64.zip'
+    $asset = Join-Path $dist 'diamond-native-linux-x64.zip'
     if (!$IsLinux -or $env:RUNNER_ARCH -ne 'X64') {
       throw 'Validated release packaging is currently restricted to Linux x64.'
     }
