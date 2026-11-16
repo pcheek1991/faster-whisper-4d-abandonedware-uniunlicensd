@@ -19,7 +19,7 @@ from tqdm import tqdm
 from faster_whisper.audio import decode_audio, pad_or_trim
 from faster_whisper.feature_extractor import FeatureExtractor
 from faster_whisper.tokenizer import _LANGUAGE_CODES, Tokenizer
-from faster_whisper.utils import download_model, format_timestamp, get_end, get_logger
+from faster_whisper.utils import format_timestamp, get_end, get_logger
 from faster_whisper.vad import (
     SpeechTimestampsMap,
     VadOptions,
@@ -286,7 +286,7 @@ class BatchedInferencePipeline:
         prepend_punctuations: str = "\"'“¿([{-",
         append_punctuations: str = "\"'.。,，!！?？:：”)]}、",
         multilingual: bool = False,
-        vad_filter: bool = True,
+        vad_filter: bool = False,
         vad_parameters: Optional[Union[dict, VadOptions]] = None,
         max_new_tokens: Optional[int] = None,
         chunk_length: Optional[int] = None,
@@ -646,7 +646,7 @@ class WhisperModel:
             large-v2, large-v3, large, distil-large-v2, distil-large-v3, large-v3-turbo, or turbo),
             a path to a converted model directory, or a CTranslate2-converted Whisper model ID from
             the HF Hub. When a size or a model ID is configured, the converted model is downloaded
-            from the Hugging Face Hub.
+            from the Hugging Face Hub (disabled in this weight-free build).
           device: Device to use for computation ("cpu", "cuda", "auto").
           device_index: Device ID to use.
             The model can also be loaded on multiple GPUs by passing a list of IDs
@@ -684,12 +684,12 @@ class WhisperModel:
         elif os.path.isdir(model_size_or_path):
             model_path = model_size_or_path
         else:
-            model_path = download_model(
-                model_size_or_path,
-                local_files_only=local_files_only,
-                cache_dir=download_root,
-                revision=revision,
-                use_auth_token=use_auth_token,
+            raise FileNotFoundError(
+                "Fastest-Whisper-10D does not bundle or automatically "
+                "download pretrained models. A model alias or remote ID "
+                "cannot be used here. The weight-free Coreo transform "
+                "runs without WhisperModel; the legacy inference backend "
+                "requires an explicitly supplied local model directory."
             )
 
         self.model = ctranslate2.models.Whisper(
@@ -709,8 +709,9 @@ class WhisperModel:
         elif os.path.isfile(tokenizer_file):
             self.hf_tokenizer = tokenizers.Tokenizer.from_file(tokenizer_file)
         else:
-            self.hf_tokenizer = tokenizers.Tokenizer.from_pretrained(
-                "openai/whisper-tiny" + ("" if self.model.is_multilingual else ".en")
+            raise FileNotFoundError(
+                "Tokenizer data is missing locally; automatic tokenizer "
+                "downloads are disabled in Fastest-Whisper-10D."
             )
         self.feat_kwargs = self._get_feature_kwargs(model_path, preprocessor_bytes)
         self.feature_extractor = FeatureExtractor(**self.feat_kwargs)

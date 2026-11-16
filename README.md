@@ -1,6 +1,37 @@
-[![CI](https://github.com/SYSTRAN/faster-whisper/workflows/CI/badge.svg)](https://github.com/SYSTRAN/faster-whisper/actions?query=workflow%3ACI) [![PyPI version](https://badge.fury.io/py/faster-whisper.svg)](https://badge.fury.io/py/faster-whisper)
+[Project CI](https://github.com/pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd/actions) | [Checkpoint 10](.github/workflows/checkpoint10.yml)
 
-# Faster Whisper transcription with CTranslate2
+# Fastest-Whisper-10D · weight-free PowerShell 7 acoustic laboratory
+
+**Experimental release branch.** The primary entry is
+[`Fastest-Whisper-10D.ps1`](Fastest-Whisper-10D.ps1) using PowerShell 7
+with `Set-StrictMode -Version 2.0`. It works without a trained model for
+reversible stereo signal conversion and nine acoustic measurements.
+The tenth dimension is now **Stability**: three interlocked five-input
+Pentagonal XOR rings over nine normalized acoustic ligands, encoded into
+a **six-byte little-endian hexabyte**, then summarized by a bounded
+ring-agreement scalar.
+
+[Android experimental APK](docs/ANDROID.md) |
+[Full Stability specification](docs/STABILITY.md) |
+[Checkpoint 10 evidence](docs/CHECKPOINT10.md) |
+[Mixed MIT/0BSD rights](docs/RIGHTS_REVIEW.md)
+
+```powershell
+pwsh.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Fastest-Whisper-10D.ps1 -Analyze10D -RawStereoFloat32Path .\stereo-float32le.raw
+```
+
+The output is JSON and retains source SHA-256 plus the original nine
+measurements, three ring scores and the explicit six bytes. The model-free
+experiment **does not yet transcribe spoken words**. The pretrained Silero
+ONNX weights were removed; automatic model and tokenizer downloads are
+disabled. An explicitly supplied local model remains a separate legacy
+inference option, not part of the default PowerShell 7 interface.
+
+## Legacy Faster Whisper/CTranslate2 reference
+
+The following material documents the inherited Python inference library.
+Historical benchmarks and model demonstrations are **not** performance
+claims for the new model-free 10D experiment.
 
 **faster-whisper** is a reimplementation of OpenAI's Whisper model using [CTranslate2](https://github.com/OpenNMT/CTranslate2/), which is a fast inference engine for Transformer models.
 
@@ -380,3 +411,41 @@ If you are comparing the performance against other Whisper implementations, you 
 ```bash
 OMP_NUM_THREADS=4 python3 my_script.py
 ```
+
+## Canonical Pentagonal XOR integration in PR #17
+
+The numerical operator source of truth is **not a rewritten faster-whisper algorithm**. This PR pins the unmodified [Pentagonal XOR C++20 source](https://github.com/Simply-Well-Executed/pentagonal-xor-cpp20) at commit `fb23b40480476c98e992762ace37761b6fd8ba0e` as `external/pentagonal-xor-cpp20`. Run `git submodule update --init --recursive` to check it out. All original C++20/C11 targets, source fixtures, and their tests build from the upstream source; the adapter only handles CLI input/output.
+
+The source includes parity/AND/OR/partial/fifth-root scoring, strict C11 macros for Windows/Linux/Android/Unix, DecaSigma, TriPi, COREAO and RF gain, Stability-10D and hexabyte, COREO stereo inversion, counterarccosine tests, metadata trust guard, Android study material, and Docker/CI validation definitions. Some were experimental, and **the upstream Stability-10D and stereo COREO files explicitly credit this PR as their original protocol source**. The history runs in both directions.
+
+[Source-to-feature provenance, boundaries, and CI gates](docs/PENTAGONAL_XOR_PROVENANCE.md). The new `Shared Guard · canonical Pentagonal XOR and deployment` workflow builds upstream verbatim on Windows, Linux and macOS, verifies PR #17 PowerShell compatibility, and runs the upstream pinned container guards. Only `v*` tag pushes can publish a checksummed **numerical module** after successful gates; this does not claim trained Whisper transcription or a signed Android release.
+
+Local PowerShell 7 validation: `./ci/Invoke-SharedGuard.ps1 -Mode Test` after submodule initialization.
+
+
+### Original +9 dBi COREAO gain and full operator bridge
+
+`fastest_whisper_pxor_adapter gain9dbi 1` now calls upstream `swe::coreao::rf_gain::apply(1.0)` directly, returning **+9 dBi / 7.943282347242816× idealized directional RF EIRP** from 1 W conducted input. It checks input admissibility, reconstructed input and normalized residual, and rejects negative/overflow values. **This is RF gain, not audio loudness gain or a Whisper neural-network multiplier.**
+
+The same bridge now exposes parity, all five scores, signed fifth-root, Stability-10D, DecaSigma, TriPi, scalar COREAO, reversible stereo COREO and OS compile-target flags. The independent original metadata trust guard and counterarccosine research test stay in the upstream build/test suite. See [canonical CLI modes and source attribution](docs/PENTAGONAL_XOR_PROVENANCE.md). Shared Guard verifies the modes on its platform matrix, including original +9 dBi golden and invalid-domain tests.
+
+
+### Default-on operations with configurable RF gain
+
+One no-switch command now orchestrates the original Pentagonal XOR parity, all five scores, fifth root, 9-ligand Stability, DecaSigma, TriPi, scalar COREAO, reversible stereo COREO, OS compile-target metadata and the original five-channel trust-guard self-test:
+
+```powershell
+./Invoke-PentagonalPipeline.ps1
+
+# Supply measured RF conducted watts and request +11 dBi, without mode switches:
+./Invoke-PentagonalPipeline.ps1 -Watts 1 -GainDbi 11
+
+# Or pipe a new gain value. Every original operator still runs:
+11 | ./Invoke-PentagonalPipeline.ps1 -Watts 1
+
+# JSONL and PowerShell objects can supply all original operands per record:
+@{ watts=1; gain_dbi=11; features=@(0.8,0.7,0.9,0.6,0.95); deca_input=2 } |
+  ./Invoke-PentagonalPipeline.ps1
+```
+
+Piped record gain overrides CLI gain; if neither exists the **original +9 dBi path is used verbatim**. +11 dBi is a clearly labeled downstream RF EIRP extension, not a revised upstream algorithm or +11 dB audio boost. If operands are missing, reference fixture results are explicitly labeled as *not measurements*. [Complete schema, provenance and security boundaries](docs/PENTAGONAL_XOR_PROVENANCE.md).

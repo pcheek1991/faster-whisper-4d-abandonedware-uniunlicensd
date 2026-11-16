@@ -1,0 +1,25 @@
+Fastest-Whisper-10D
+Copyright and license scope
+
+This repository combines code derived from SYSTRAN/faster-whisper
+and original experimental additions. The notices below apply by origin.
+
+The upstream-derived portions remain governed by the upstream MIT License,
+included verbatim in LICENSE-MIT-UPSTREAM. That notice must accompany
+copies or substantial portions of those portions of the software.
+
+Original project contributions marked SPDX-License-Identifier: 0BSD are
+licensed under LICENSE-0BSD by their authorized copyright holders.
+The 0BSD notice does not remove the MIT notice for upstream portions.
+
+The pinned DUNGU Coreo converter, models (if supplied by others),
+external media and runtime dependencies require separate verification of
+their respective license grants. No new license or ownership is inferred
+for third-party materials from this scope document.
+
+The original ONNX weights have been removed from the new branch. Prior
+Git history retains the original tracked file as historical evidence.
+The new weight-free PowerShell 7 utilities do not include third-party
+pretrained weights.
+
+See NOTICE and docs/RIGHTS_REVIEW.md.

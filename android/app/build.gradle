@@ -1,0 +1,35 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.simplywellexecuted.fastestwhisper10d'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.simplywellexecuted.fastestwhisper10d'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '0.1.0-checkpoint10'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}

@@ -1,0 +1,86 @@
+cmake_minimum_required(VERSION 3.20)
+project(FastestWhisper10DCanonicalPentagonalXOR LANGUAGES C CXX)
+# The only implementation authority is the pinned, unmodified upstream gitlink.
+include(CTest)
+set(SWE_UPSTREAM_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/external/pentagonal-xor-cpp20")
+if(NOT EXISTS "${SWE_UPSTREAM_ROOT}/shared/pentagonal_xor_std_free.h")
+  message(FATAL_ERROR "Missing canonical upstream: git submodule update --init --recursive")
+endif()
+add_subdirectory("${SWE_UPSTREAM_ROOT}" "${CMAKE_CURRENT_BINARY_DIR}/canonical-pxor")
+add_subdirectory("${SWE_UPSTREAM_ROOT}/shared" "${CMAKE_CURRENT_BINARY_DIR}/canonical-guard")
+add_executable(fastest_whisper_pxor_adapter integration/pentagonal_xor_adapter.cpp)
+target_compile_features(fastest_whisper_pxor_adapter PRIVATE cxx_std_20)
+set_target_properties(fastest_whisper_pxor_adapter PROPERTIES CXX_STANDARD 20 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+target_include_directories(fastest_whisper_pxor_adapter PRIVATE "${SWE_UPSTREAM_ROOT}/shared")
+if(MSVC)
+  target_compile_options(fastest_whisper_pxor_adapter PRIVATE /W4 /permissive-)
+else()
+  target_compile_options(fastest_whisper_pxor_adapter PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+if(BUILD_TESTING)
+  add_test(NAME canonical_bridge_parity_zero COMMAND fastest_whisper_pxor_adapter parity 0 0 0 0 0)
+  set_tests_properties(canonical_bridge_parity_zero PROPERTIES PASS_REGULAR_EXPRESSION "score")
+  add_test(NAME canonical_bridge_parity_one COMMAND fastest_whisper_pxor_adapter parity 1 1 1 1 1)
+  set_tests_properties(canonical_bridge_parity_one PROPERTIES PASS_REGULAR_EXPRESSION "score")
+  add_test(NAME canonical_bridge_hexabyte_half COMMAND fastest_whisper_pxor_adapter ligands 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5)
+  set_tests_properties(canonical_bridge_hexabyte_half PROPERTIES PASS_REGULAR_EXPRESSION "008000800080")
+  add_test(NAME canonical_bridge_measurements COMMAND fastest_whisper_pxor_adapter measurements 1024 0 0 0.5 0.5 1 1 64 64)
+  set_tests_properties(canonical_bridge_measurements PROPERTIES PASS_REGULAR_EXPRESSION "hexabyte")
+  add_test(NAME canonical_bridge_invalid_nan COMMAND fastest_whisper_pxor_adapter parity nan 0 0 0 0)
+  set_tests_properties(canonical_bridge_invalid_nan PROPERTIES WILL_FAIL TRUE)
+  # Each bridge command calls the ORIGINAL pinned header; no local algorithm.
+  add_test(NAME canonical_bridge_scores COMMAND fastest_whisper_pxor_adapter scores 1 1 1 0 0)
+  set_tests_properties(canonical_bridge_scores PROPERTIES PASS_REGULAR_EXPRESSION "legacy_fifth_root")
+  add_test(NAME canonical_bridge_fifth_root COMMAND fastest_whisper_pxor_adapter fifth-root -32)
+  set_tests_properties(canonical_bridge_fifth_root PROPERTIES PASS_REGULAR_EXPRESSION "value")
+  add_test(NAME canonical_bridge_deca_sigma COMMAND fastest_whisper_pxor_adapter deca-sigma 2)
+  set_tests_properties(canonical_bridge_deca_sigma PROPERTIES PASS_REGULAR_EXPRESSION "returned")
+  add_test(NAME canonical_bridge_tri_pi COMMAND fastest_whisper_pxor_adapter tri-pi 2)
+  set_tests_properties(canonical_bridge_tri_pi PROPERTIES PASS_REGULAR_EXPRESSION "zfold")
+  add_test(NAME canonical_bridge_coreao_scalar COMMAND fastest_whisper_pxor_adapter coreao 2)
+  set_tests_properties(canonical_bridge_coreao_scalar PROPERTIES PASS_REGULAR_EXPRESSION "scalar")
+  add_test(NAME canonical_bridge_coreao_gain9dbi COMMAND fastest_whisper_pxor_adapter gain9dbi 1)
+  set_tests_properties(canonical_bridge_coreao_gain9dbi PROPERTIES PASS_REGULAR_EXPRESSION "output_eirp_watts")
+  add_test(NAME canonical_bridge_coreao_gain9dbi_zero COMMAND fastest_whisper_pxor_adapter gain9dbi 0)
+  set_tests_properties(canonical_bridge_coreao_gain9dbi_zero PROPERTIES PASS_REGULAR_EXPRESSION "gain_dbi")
+  add_test(NAME canonical_bridge_coreao_gain9dbi_negative COMMAND fastest_whisper_pxor_adapter gain9dbi -1)
+  set_tests_properties(canonical_bridge_coreao_gain9dbi_negative PROPERTIES WILL_FAIL TRUE)
+  add_test(NAME canonical_bridge_coreao_gain9dbi_overflow COMMAND fastest_whisper_pxor_adapter gain9dbi 1e308)
+  set_tests_properties(canonical_bridge_coreao_gain9dbi_overflow PROPERTIES WILL_FAIL TRUE)
+  add_test(NAME canonical_bridge_coreo_stereo COMMAND fastest_whisper_pxor_adapter coreo-stereo 1 -2 3 -4)
+  set_tests_properties(canonical_bridge_coreo_stereo PROPERTIES PASS_REGULAR_EXPRESSION "largest_disagreement")
+  add_test(NAME canonical_gain_default9 COMMAND fastest_whisper_pxor_adapter gain 1)
+  set_tests_properties(canonical_gain_default9 PROPERTIES PASS_REGULAR_EXPRESSION "original-fixed-9dbi")
+  add_test(NAME canonical_gain_explicit11 COMMAND fastest_whisper_pxor_adapter gain 1 11)
+  set_tests_properties(canonical_gain_explicit11 PROPERTIES PASS_REGULAR_EXPRESSION "downstream-rf-dbi-offset-v1")
+  add_test(NAME canonical_gain_reject101 COMMAND fastest_whisper_pxor_adapter gain 1 101)
+  set_tests_properties(canonical_gain_reject101 PROPERTIES WILL_FAIL TRUE)
+  add_test(NAME canonical_gain_reject_nonfinite COMMAND fastest_whisper_pxor_adapter gain 1 nan)
+  set_tests_properties(canonical_gain_reject_nonfinite PROPERTIES WILL_FAIL TRUE)
+  add_test(NAME canonical_bridge_platform_macros COMMAND fastest_whisper_pxor_adapter platform)
+  set_tests_properties(canonical_bridge_platform_macros PROPERTIES PASS_REGULAR_EXPRESSION "std_free_backend")
+endif()
+install(TARGETS fastest_whisper_pxor_adapter RUNTIME DESTINATION bin)
+# Install the original metadata guard and a complete source snapshot.
+# These files are unchanged upstream bytes, not generated algorithm clones.
+install(TARGETS swe_guard RUNTIME DESTINATION bin)
+install(DIRECTORY "${SWE_UPSTREAM_ROOT}/"
+  DESTINATION share/source/pentagonal-xor-cpp20
+  PATTERN ".git" EXCLUDE)
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/PENTAGONAL_XOR_PROVENANCE.md"
+  DESTINATION share/doc/fastest-whisper-10d)
+
+# Bundle one-command operation and its original acoustic measurement support.
+# Installed path is bin/ and subdirectory bin/ci, preserving script-relative paths.
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/Invoke-PentagonalPipeline.ps1"
+  DESTINATION bin)
+install(FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/ci/Measure-10D.ps1"
+  "${CMAKE_CURRENT_SOURCE_DIR}/ci/Stability.ps1"
+  DESTINATION bin/ci)
+
+# The second-wave white-paper operator is research-only in the pinned source.
+# Ship and run its VERBATIM executable test, never a reimplementation.
+if(BUILD_TESTING)
+  install(TARGETS counterarccosine_secondwave_test RUNTIME DESTINATION bin)
+endif()

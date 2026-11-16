@@ -1,13 +1,9 @@
 import bisect
-import functools
-import os
 
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
-
-from faster_whisper.utils import get_assets_path
 
 
 # The code below is adapted from https://github.com/snakers4/silero-vad.
@@ -319,11 +315,17 @@ class SpeechTimestampsMap:
         )
 
 
-@functools.lru_cache
 def get_vad_model():
-    """Returns the VAD model instance."""
-    path = os.path.join(get_assets_path(), "silero_vad_v6.onnx")
-    return SileroVADModel(path)
+    """Fail explicitly: pretrained Silero VAD weights are not bundled.
+
+    This weight-free build does not infer speech activity from an ONNX
+    model, and never attempts to download weights implicitly.
+    """
+    raise RuntimeError(
+        "Silero VAD weights are intentionally absent in Fastest-Whisper-10D; "
+        "vad_filter=True is unavailable. Use vad_filter=False or supply "
+        "explicit clip_timestamps when using the legacy inference backend."
+    )
 
 
 class SileroVADModel:

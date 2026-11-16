@@ -1,0 +1,92 @@
+name: 'Android bleeding APK · Fastest-Whisper-10D Stability'
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apk-debug:
+    name: 'Offline Android APK · Java 17 · Stability'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: 'Checkout source without credential persistence'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: 'Prepare evidence before any build'
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force -Path evidence-android | Out-Null
+
+      - name: 'Java 17 (pinned)'
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # Both v3 and v4 setup actions attempted the removed Android SDK
+      # 'tools' package. The image already includes sdkmanager under
+      # ANDROID_HOME/cmdline-tools/latest/bin. Use the real installed tool.
+      - name: 'Use SDK command-line tools already on Ubuntu runner'
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:ANDROID_HOME)) {
+            throw 'ANDROID_HOME is not set on the runner.'
+          }
+          $sdkDir = Join-Path $env:ANDROID_HOME 'cmdline-tools/latest/bin'
+          $sdk = Join-Path $sdkDir 'sdkmanager'
+          if (!(Test-Path -LiteralPath $sdk -PathType Leaf)) {
+            throw "Missing SDK manager at $sdk"
+          }
+          Add-Content -LiteralPath $env:GITHUB_PATH -Value $sdkDir
+          & $sdk --version
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: 'Install pinned Android platform and build tools'
+        shell: pwsh
+        run: |
+          & sdkmanager 'platforms;android-35' 'build-tools;35.0.0' *>&1 |
+            Tee-Object -FilePath evidence-android/android-sdk.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: 'Gradle 8.11.1 (pinned action and version)'
+        uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: 'Build debug APK and run native no-weight unit tests'
+        shell: pwsh
+        run: |
+          & gradle -p android --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleDebug *>&1 |
+            Tee-Object -FilePath evidence-android/build-and-test.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: 'Fingerprint APK, compiler and test evidence'
+        if: always()
+        shell: pwsh
+        run: ./ci/Write-AndroidEvidence.ps1 -EvidenceDir evidence-android
+
+      - name: 'Upload APK (experimental debug signing)'
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: Fastest-Whisper-10D-Android-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: 'Upload SHA256 and failure evidence even when build fails'
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: Fastest-Whisper-10D-Android-evidence
+          path: evidence-android/
+          if-no-files-found: warn
+          retention-days: 90

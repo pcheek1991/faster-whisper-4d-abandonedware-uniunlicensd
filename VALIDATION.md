@@ -1,3 +1,13 @@
+> **Checkpoint 10 update (2026-11-15):** The primary Fastest-Whisper-10D
+> PowerShell 7 experiment is model-weight-free. The tenth dimension is
+> [Stability](docs/STABILITY.md), the three-ring nine-ligand six-byte
+> witness. Original Python/CTranslate2 inference and its historical
+> model-dependent results are legacy records, not evidence of model-free
+> speech transcription. CI does not treat unavailable model-integration
+> tests as passed. The source now includes mixed-license notices; see
+> [RIGHTS_REVIEW.md](docs/RIGHTS_REVIEW.md). Cross-platform results are
+> commit-scoped and must be checked for each change.
+
 # Software validation baseline
 
 This document records a GAMP 4-oriented software validation approach for this repository. Release
@@ -21,6 +31,17 @@ logical order and handle bidirectional isolation at the rendering boundary.
 <span style="color:#b00020;"><u>UNVALIDATED RENDERING:</u></span> This repository has no browser or
 native UI test for visual bidi layout and does not implement UTS #39 identifier checks or bidi
 sanitization.
+
+## Experimental Stability V2 validation extension
+
+The tenth dimension is now **Stability**, defined in
+[docs/STABILITY.md](docs/STABILITY.md). Independent Pentagonal XOR
+odd-minterm reference tests verify exact six-byte golden vectors.
+[docs/ANDROID.md](docs/ANDROID.md) defines an experimental offline
+native Android implementation. PowerShell 7 validation runs on Windows,
+Linux and macOS. The older Python model-weight integration suite
+is **NOT RUN** under the new weight-free policy, not a passing
+substitute for speech recognition.
 
 ## Risk-based traceability
 

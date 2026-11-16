@@ -1,0 +1,3 @@
+[submodule "external/pentagonal-xor-cpp20"]
+	path = external/pentagonal-xor-cpp20
+	url = https://github.com/Simply-Well-Executed/pentagonal-xor-cpp20.git

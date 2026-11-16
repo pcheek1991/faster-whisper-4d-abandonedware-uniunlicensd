@@ -1,10 +1,7 @@
 import logging
 import os
-import re
 
 from typing import List, Optional, Union
-
-import huggingface_hub
 
 from tqdm.auto import tqdm
 
@@ -54,65 +51,18 @@ def download_model(
     revision: Optional[str] = None,
     use_auth_token: Optional[Union[str, bool]] = None,
 ):
-    """Downloads a CTranslate2 Whisper model from the Hugging Face Hub.
+    """Legacy signature retained, but remote model acquisition is disabled.
 
-    Args:
-      size_or_id: Size of the model to download from https://huggingface.co/Systran
-        (tiny, tiny.en, base, base.en, small, small.en, distil-small.en, medium, medium.en,
-        distil-medium.en, large-v1, large-v2, large-v3, large, distil-large-v2,
-        distil-large-v3), or a CTranslate2-converted model ID from the Hugging Face Hub
-        (e.g. Systran/faster-whisper-large-v3).
-      output_dir: Directory where the model should be saved. If not set, the model is saved in
-        the cache directory.
-      local_files_only:  If True, avoid downloading the file and return the path to the local
-        cached file if it exists.
-      cache_dir: Path to the folder where cached files are stored.
-      revision: An optional Git revision id which can be a branch name, a tag, or a
-            commit hash.
-      use_auth_token: HuggingFace authentication token or True to use the
-            token stored by the HuggingFace config folder.
-
-    Returns:
-      The path to the downloaded model.
-
-    Raises:
-      ValueError: if the model size is invalid.
+    Fastest-Whisper-10D does not download pretrained weights. Explicit
+    local model directories can still be passed to WhisperModel by callers
+    who choose to use the legacy inference backend outside the weight-free
+    PowerShell Coreo path.
     """
-    if re.match(r".*/.*", size_or_id):
-        repo_id = size_or_id
-    else:
-        repo_id = _MODELS.get(size_or_id)
-        if repo_id is None:
-            raise ValueError(
-                "Invalid model size '%s', expected one of: %s"
-                % (size_or_id, ", ".join(_MODELS.keys()))
-            )
-
-    allow_patterns = [
-        "config.json",
-        "preprocessor_config.json",
-        "model.bin",
-        "tokenizer.json",
-        "vocabulary.*",
-    ]
-
-    kwargs = {
-        "local_files_only": local_files_only,
-        "allow_patterns": allow_patterns,
-        "tqdm_class": disabled_tqdm,
-        "revision": revision,
-    }
-
-    if output_dir is not None:
-        kwargs["local_dir"] = output_dir
-
-    if cache_dir is not None:
-        kwargs["cache_dir"] = cache_dir
-
-    if use_auth_token is not None:
-        kwargs["token"] = use_auth_token
-
-    return huggingface_hub.snapshot_download(repo_id, **kwargs)
+    raise RuntimeError(
+        "Fastest-Whisper-10D disables model weight downloads. "
+        "Use the weight-free PowerShell 7 Coreo transform, or explicitly "
+        "provide your own local model directory for legacy transcription."
+    )
 
 
 def format_timestamp(

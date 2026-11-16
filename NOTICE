@@ -1,0 +1,18 @@
+Fastest-Whisper-10D distribution notice
+
+Upstream core: SYSTRAN/faster-whisper, copyright (c) 2023 SYSTRAN.
+Upstream notice: LICENSE-MIT-UPSTREAM.
+
+Original experimental PowerShell 7 Checkpoint 10 contributions are
+marked 0BSD, with license text in LICENSE-0BSD.
+
+The bundled DUNGU-derived PowerShell/C# audio converter retains its
+original provenance; its licensing and redistribution rights must be
+reviewed independently before broad commercial redistribution.
+The repository does not include trained ONNX weights on this branch.
+
+Existing historical attribution in CITATION.cff is maintained as a
+source-supplied record, not proof of consent or exclusive authorship.
+
+The GitHub repository's current slug was not changed by the source
+and package display-name update.
