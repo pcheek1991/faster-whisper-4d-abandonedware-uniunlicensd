@@ -1,46 +1,14 @@
-# Contributing to faster-whisper
+# Contributing to DIAMOND
 
-Contributions are welcome! Here are some pointers to help you install the library for development and validate your changes before submitting a pull request.
+Contribute standards-conforming C++20 and strict C11 only for computation; use CMake 3.20+ and a supported native compiler. PowerShell 7 may orchestrate builds and evidence but is not a second source of mathematical truth.
 
-## Install the library for development
+    git submodule update --init --recursive
+    cmake -S . -B build-native -DBUILD_TESTING=ON
+    cmake --build build-native --config Release
+    ctest --test-dir build-native -C Release --output-on-failure
 
-Python 3.12 or newer is required.
+Do not copy or rewrite the original Pentagonal XOR algorithms. Keep the pinned source commit, audit history, separate author identities and independent rights notices. Changes to the 348-language registry must update both the source JSON snapshot and compiled catalog with a provenance record.
 
-Save Markdown and Python source as UTF-8 without a byte-order mark. For Unicode or bidirectional
-text changes, preserve logical codepoint order and add codepoint-level tests; do not insert, strip,
-or normalize direction controls without an explicit requirement. Follow the
-[Unicode Bidirectional Algorithm (UAX #9)](https://www.unicode.org/reports/tr9/) and the
-[W3C inline bidi markup guidance](https://www.w3.org/International/articles/inline-bidi-markup/)
-when documenting rendering behavior.
+Language code, character, reading, meaning and source are separate fields. Preserve UTF-8 code points; do not infer translations, pronunciation or normalize away provenance. Honor explicitly assigned bidirectional span boundaries.
 
-We recommend installing the module in editable mode with the `dev` extra requirements:
-
-```bash
-git clone https://github.com/SYSTRAN/faster-whisper.git
-cd faster-whisper/
-pip install -e ".[dev]"
-```
-
-## Validate the changes before creating a pull request
-
-1. Run deterministic validation tests and model integration tests separately:
-
-```bash
-python -m pytest -q -m "not integration"
-python -m pytest -v -m integration
-```
-
-2. Reformat and validate the code with the following tools:
-
-```bash
-black --check .
-isort --check-only .
-flake8 .
-```
-
-<span style="color:#b00020;"><u>CONFIGURED, NOT YET RUN REMOTELY:</u></span> These checks are
-configured in GitHub Actions; the workflow for this branch has not yet completed on GitHub.
-
-For the project validation scope, risk traceability, and known evidence limitations, see
-[VALIDATION.md](VALIDATION.md). The integration tests download model weights from the Hugging Face
-Hub when they are not cached, so the first full run requires network access.
+Keep metadata security AND-gated, reject invalid numeric input and validate memory bounds. Independent original CTest and native host tests must remain green. For Android, use the pinned platform SDK/NDK tools and report which device features remain untested.
