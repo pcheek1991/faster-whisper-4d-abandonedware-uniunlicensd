@@ -31,10 +31,23 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      # The previous v3 Android setup action failed trying to install an
-      # obsolete 'tools' package. v4 is pinned separately, preserving history.
-      - name: 'Android SDK command-line tools (pinned v4)'
-        uses: android-actions/setup-android@651bceb6f9ca583f16b8d75b62c36ded2ae6fc9c # v4.0.0
+      # Both v3 and v4 setup actions attempted the removed Android SDK
+      # 'tools' package. The image already includes sdkmanager under
+      # ANDROID_HOME/cmdline-tools/latest/bin. Use the real installed tool.
+      - name: 'Use SDK command-line tools already on Ubuntu runner'
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:ANDROID_HOME)) {
+            throw 'ANDROID_HOME is not set on the runner.'
+          }
+          $sdkDir = Join-Path $env:ANDROID_HOME 'cmdline-tools/latest/bin'
+          $sdk = Join-Path $sdkDir 'sdkmanager'
+          if (!(Test-Path -LiteralPath $sdk -PathType Leaf)) {
+            throw "Missing SDK manager at $sdk"
+          }
+          Add-Content -LiteralPath $env:GITHUB_PATH -Value $sdkDir
+          & $sdk --version
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: 'Install pinned Android platform and build tools'
         shell: pwsh
