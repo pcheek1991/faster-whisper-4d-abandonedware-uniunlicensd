@@ -1,0 +1,143 @@
+name: 'Shared Guard · canonical Pentagonal XOR and deployment'
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: canonical-pxor-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  native:
+    name: 'Canonical C11/C++20 and PR17 contracts · ${{ matrix.name }}'
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: 'Linux x64', runner: ubuntu-24.04, vs_arch: ''}
+          - {name: 'Linux ARM64', runner: ubuntu-24.04-arm, vs_arch: ''}
+          - {name: 'Windows x64', runner: windows-2022, vs_arch: 'x64'}
+          - {name: 'Windows x86', runner: windows-2022, vs_arch: 'Win32'}
+          - {name: 'macOS Intel', runner: macos-15-intel, vs_arch: ''}
+          - {name: 'macOS Apple Silicon', runner: macos-15, vs_arch: ''}
+    steps:
+      - name: Ensure PowerShell 7 on macOS
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          if ! command -v pwsh >/dev/null 2>&1; then brew install --cask powershell; fi
+          pwsh -NoLogo -NoProfile -Command '$PSVersionTable.PSVersion.ToString()'
+      - name: Checkout exact commit and immutable canonical submodule
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($env:GITHUB_REPOSITORY -cne 'pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd') { throw 'Unexpected repository' }
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin 'https://github.com/pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd.git'
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git -c advice.detachedHead=false fetch --no-tags --depth 1 origin $env:GITHUB_REF
+          if ($LASTEXITCODE -ne 0) { throw 'git exact ref fetch failed' }
+          & git -c advice.detachedHead=false checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $sha = ((& git rev-parse HEAD) | Out-String).Trim()
+          if ($LASTEXITCODE -ne 0 -or $sha -cne $env:GITHUB_SHA) { throw "Checkout mismatch $sha versus $env:GITHUB_SHA" }
+          & git submodule sync --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'submodule sync failed' }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'pinned source submodule fetch failed' }
+          Write-Host "Verified target commit $sha"
+      - name: Check original upstream SHA, compile all operators and run upstream and PR17 tests
+        shell: pwsh
+        run: ./ci/Invoke-SharedGuard.ps1 -Mode Test -VsArch '${{ matrix.vs_arch }}'
+      - name: Retain diagnostic manifest in GitHub job log
+        if: ${{ always() }}
+        shell: pwsh
+        run: |
+          if (Test-Path evidence-pxor/SHA256SUMS) { Get-Content evidence-pxor/SHA256SUMS }
+          if (Test-Path evidence-pxor/shared-guard-record.json) { Get-Content evidence-pxor/shared-guard-record.json }
+
+  docker:
+    name: 'Pinned upstream source containers · linux/amd64'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact commit and immutable canonical submodule
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($env:GITHUB_REPOSITORY -cne 'pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd') { throw 'Unexpected repository' }
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin 'https://github.com/pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd.git'
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git -c advice.detachedHead=false fetch --no-tags --depth 1 origin $env:GITHUB_REF
+          if ($LASTEXITCODE -ne 0) { throw 'git exact ref fetch failed' }
+          & git -c advice.detachedHead=false checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $sha = ((& git rev-parse HEAD) | Out-String).Trim()
+          if ($LASTEXITCODE -ne 0 -or $sha -cne $env:GITHUB_SHA) { throw "Checkout mismatch $sha versus $env:GITHUB_SHA" }
+          & git submodule sync --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'submodule sync failed' }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'pinned source submodule fetch failed' }
+          Write-Host "Verified target commit $sha"
+      - name: Verify immutable source before Docker execution
+        shell: pwsh
+        run: |
+          $actual = ((& git -C external/pentagonal-xor-cpp20 rev-parse HEAD) | Out-String).Trim()
+          if ($LASTEXITCODE -ne 0 -or $actual -cne 'fb23b40480476c98e992762ace37761b6fd8ba0e') { throw 'Unreviewed source SHA' }
+      - name: Execute verbatim upstream Linux pinned image guard
+        shell: pwsh
+        run: |
+          ./external/pentagonal-xor-cpp20/ci/Invoke-PinnedContainerGuard.ps1 -Flavor linux -Image 'paulcheek/opensuse-leap-hardened:latest' -Digest 'sha256:3e127aa5462cdd8cf5d4a35878983cb7895d0ebeb5679de63e0f35ca67de562d' -Platform 'linux/amd64'
+      - name: Execute verbatim upstream SDK-free Android study guard
+        shell: pwsh
+        run: |
+          ./external/pentagonal-xor-cpp20/ci/Invoke-PinnedContainerGuard.ps1 -Flavor android -Image 'paulcheek/android-source-study-v1:latest' -Digest 'sha256:8ed78faab11b97aaa8f7884dd91b39968e565a7f5359066c32a3f520f9ef35c4' -Platform 'linux/amd64'
+      - name: Retain container evidence in GitHub logs
+        if: ${{ always() }}
+        shell: pwsh
+        run: |
+          if (Test-Path external/pentagonal-xor-cpp20/evidence/SHA256SUMS) { Get-Content external/pentagonal-xor-cpp20/evidence/SHA256SUMS }
+
+  release:
+    name: 'Deploy checksummed numerical module · tag only'
+    needs: [native, docker]
+    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && github.repository == 'pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    timeout-minutes: 40
+    steps:
+      - name: Checkout exact commit and immutable canonical submodule
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($env:GITHUB_REPOSITORY -cne 'pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd') { throw 'Unexpected repository' }
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin 'https://github.com/pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd.git'
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git -c advice.detachedHead=false fetch --no-tags --depth 1 origin $env:GITHUB_REF
+          if ($LASTEXITCODE -ne 0) { throw 'git exact ref fetch failed' }
+          & git -c advice.detachedHead=false checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $sha = ((& git rev-parse HEAD) | Out-String).Trim()
+          if ($LASTEXITCODE -ne 0 -or $sha -cne $env:GITHUB_SHA) { throw "Checkout mismatch $sha versus $env:GITHUB_SHA" }
+          & git submodule sync --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'submodule sync failed' }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'pinned source submodule fetch failed' }
+          Write-Host "Verified target commit $sha"
+      - name: Verify all tests and publish immutable checksummed numerical package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./ci/Publish-SharedGuardRelease.ps1
