@@ -3,7 +3,6 @@ import os
 
 from typing import List, Optional, Union
 
-
 from tqdm.auto import tqdm
 
 _MODELS = {
@@ -64,6 +63,7 @@ def download_model(
         "Use the weight-free PowerShell 7 Coreo transform, or explicitly "
         "provide your own local model directory for legacy transcription."
     )
+
 
 def format_timestamp(
     seconds: float,
