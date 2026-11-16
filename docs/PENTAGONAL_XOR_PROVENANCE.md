@@ -25,3 +25,34 @@ Upstream project-owned source is 0BSD. The inherited faster-whisper repository a
 No source history or evidence failure is deleted or reclassified as success.
 
 The release package installs the original upstream executable, the original C11/C++20 headers, the original `swe_guard` binary, the thin adapter, original documentation, and a full version-pinned source snapshot (excluding Git administrative data). Upstream Android SDK, Docker image layers, and third-party binaries are never silently bundled under the project's 0BSD license.
+
+
+## Executable original features, not just copied source
+
+PR #17's `integration/pentagonal_xor_adapter.cpp` now exposes the original upstream APIs directly as JSON-producing CLI modes. No gain, XOR, stereo, route, normalization, or root algorithms are redefined in this target code.
+
+| CLI mode | Verbatim original source function | Scope |
+| --- | --- | --- |
+| `parity h0 h1 h2 h3 h4` | `swe_pxor_xor_parity_arr` | Five-input closed-form odd parity |
+| `scores h0 h1 h2 h3 h4` | `swe_pxor_scores5` | AND, OR, XOR, partial and legacy fifth-root |
+| `fifth-root value` | `swe_pxor_fifth_root` | Signed finite-input mathematical fifth root |
+| `ligands h0 ... h8` | `swe::stability10d::calculate` | Three rings, Stability, six-byte witness |
+| `measurements N meanL meanR rmsL rmsR peakL peakR crossingsL crossingsR` | `swe::stability10d::from_measurements` | Original normalization + Stability |
+| `deca-sigma x` | `swe::deca_sigma::run`, `witnesses_return` | Ten chronological operations, 11 retained states |
+| `tri-pi x` | `swe::tri_pi::inspect` | Forward, reverse, Z-fold witnesses |
+| `coreao x` | `swe::coreao::inspect` | Read-only scalar residual |
+| **`gain9dbi watts`** | **`swe::coreao::rf_gain::apply`** | **Idealized directional RF EIRP from conducted watts at +9 dBi** |
+| `coreo-stereo L0 R0 [L1 R1 ...]` | `swe::coreo_stereo::forward_at`, `reverse_at`, `inspect` | Immutable source, reversible quad, read-only Z-fold audit |
+| `platform` | `SWE_PXOR_TARGET_*` and legacy compile-target macros | Build target flags, not host OS detection |
+
+The *original* five-channel metadata trust guard remains executable separately as the upstream `swe_guard` installed binary with original CTest coverage of 32 parity states, trusted/untrusted origin and traversal. The research counterarccosine second wave remains in original source/test artifacts, rather than invented as a new public runtime API. Source and tests for the original Android/containers/workflows remain in the pinned submodule and packaged snapshot, with separate Android CI. This interface makes every existing **public computation family** callable while preserving domain-specific separation.
+
+### +9 dBi RF/EIRP golden witness
+
+```powershell
+./build-pxor/fastest_whisper_pxor_adapter gain9dbi 1
+```
+
+The originating `shared/coreao_gain.hpp` returns `gain_dbi=9`, `gain_linear=7.943282347242816`, `output_eirp_watts=7.943282347242816` for `input_watts=1` and a recovered input of 1. The result is an idealized **equivalent isotropic radiated power in a reference direction** under explicit no-loss assumptions. It is not actual total radiated power or an antenna measurement. **It does not amplify audio, change Whisper inference, imply a +9 dB digital signal multiplier, or produce a transcript.** Negative, nonfinite and overflow power inputs fail closed.
+
+Shared Guard invokes `ci/Test-CanonicalFeatureSurface.ps1` across its Windows/Linux/macOS native matrix and executes all upstream CTest tests. The PowerShell test compares the +9 dBi gain, power factor, field factor, recovered input, zero, negative and overflow guard with the original API. It also tests every other bridge mode and COREO inverse. The package dry-run exercises the same gates before release and checks the installed original binaries.

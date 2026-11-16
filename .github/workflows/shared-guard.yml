@@ -53,7 +53,7 @@ jobs:
           & git -c protocol.file.allow=never submodule update --init --recursive
           if ($LASTEXITCODE -ne 0) { throw 'pinned source submodule fetch failed' }
           Write-Host "Verified target commit $sha"
-      - name: Check original upstream SHA, compile all operators and run upstream and PR17 tests
+      - name: Check every canonical operator including COREAO +9 dBi RF gain and PR17 tests
         shell: pwsh
         run: ./ci/Invoke-SharedGuard.ps1 -Mode Test -VsArch '${{ matrix.vs_arch }}'
       - name: Retain diagnostic manifest in GitHub job log
@@ -133,7 +133,7 @@ jobs:
           & git -c protocol.file.allow=never submodule update --init --recursive
           if ($LASTEXITCODE -ne 0) { throw 'pinned source submodule fetch failed' }
           Write-Host "Verified target commit $sha"
-      - name: Repeat canonical tests and install original source, guard and bridge
+      - name: Repeat full operator/+9 dBi gates and install original source, guard and bridge
         shell: pwsh
         run: ./ci/Invoke-SharedGuard.ps1 -Mode Package
       - name: Inspect ZIP, complete original source snapshot, SHA-256 and evidence

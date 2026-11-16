@@ -86,6 +86,7 @@ try {
   Invoke-Gate 'cmake-build' 'cmake' @('--build',$build,'--config','Release','--parallel','2')
   Invoke-Gate 'canonical-full-and-shared-ctest' 'ctest' @('--test-dir',$build,'-C','Release','--output-on-failure','--output-junit',(Join-Path $evidence 'ctest-results.xml'))
   Invoke-Gate 'canonical-bridge-vs-powershell' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-CanonicalPentagonalBridge.ps1'),'-BuildDir',$BuildDir)
+  Invoke-Gate 'all-canonical-operator-modes-plus-rf-9dbi-gain' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-CanonicalFeatureSurface.ps1'),'-BuildDir',$BuildDir)
   Invoke-Gate 'original-coreo-contract' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-CoreoContract.ps1'))
   Invoke-Gate 'original-stability-contract' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-Stability.ps1'))
   Invoke-Gate 'original-ten-dimensional-contract' 'pwsh' @('-NoLogo','-NoProfile','-File',(Join-Path $PSScriptRoot 'Test-10D.ps1'))

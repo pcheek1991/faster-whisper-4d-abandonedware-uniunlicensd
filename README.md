@@ -421,3 +421,10 @@ The source includes parity/AND/OR/partial/fifth-root scoring, strict C11 macros 
 [Source-to-feature provenance, boundaries, and CI gates](docs/PENTAGONAL_XOR_PROVENANCE.md). The new `Shared Guard · canonical Pentagonal XOR and deployment` workflow builds upstream verbatim on Windows, Linux and macOS, verifies PR #17 PowerShell compatibility, and runs the upstream pinned container guards. Only `v*` tag pushes can publish a checksummed **numerical module** after successful gates; this does not claim trained Whisper transcription or a signed Android release.
 
 Local PowerShell 7 validation: `./ci/Invoke-SharedGuard.ps1 -Mode Test` after submodule initialization.
+
+
+### Original +9 dBi COREAO gain and full operator bridge
+
+`fastest_whisper_pxor_adapter gain9dbi 1` now calls upstream `swe::coreao::rf_gain::apply(1.0)` directly, returning **+9 dBi / 7.943282347242816× idealized directional RF EIRP** from 1 W conducted input. It checks input admissibility, reconstructed input and normalized residual, and rejects negative/overflow values. **This is RF gain, not audio loudness gain or a Whisper neural-network multiplier.**
+
+The same bridge now exposes parity, all five scores, signed fifth-root, Stability-10D, DecaSigma, TriPi, scalar COREAO, reversible stereo COREO and OS compile-target flags. The independent original metadata trust guard and counterarccosine research test stay in the upstream build/test suite. See [canonical CLI modes and source attribution](docs/PENTAGONAL_XOR_PROVENANCE.md). Shared Guard verifies the modes on its platform matrix, including original +9 dBi golden and invalid-domain tests.
