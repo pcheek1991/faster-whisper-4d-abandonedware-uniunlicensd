@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-09-08T07:06:19.300Z",
+  "sources": {
+    "disambiguationCategories": "https://www.wikidata.org/wiki/Q1982926 (Category:Disambiguation pages sitelinks)",
+    "disambiguationTemplates": "https://www.wikidata.org/wiki/Q6148868 (Template:Disambiguation sitelinks)",
+    "disambiguationTitleSuffixes": "https://<lang>.wikipedia.org/w/api.php?action=query&list=querypage&qppage=DisambiguationPages",
+    "languages": "https://meta.wikimedia.org/w/api.php?action=sitematrix&format=json&formatversion=2&smtype=language&smlangprop=code%7Cname%7Clocalname%7Csite",
+    "suffixPrecision": "https://<lang>.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=intitle:\"(<suffix>)\"&prop=pageprops&ppprop=disambiguation"
+  },
+  "counts": {
+    "disambiguationCategories": 215,
+    "disambiguationTemplates": 234,
+    "disambiguationTitleSuffixes": 172,
+    "languages": 348
+  },
+  "suffixPrecision": {
+    "ary": {
+      "صفحة توضيح": 1
+    },
+    "ce": {
+      "маьӀна": 1
+    },
+    "cv": {
+      "пĕлтерĕшĕсем": 0.96
+    },
+    "inh": {
+      "нах": 0.9
+    },
+    "kk": {
+      "мағына": 0.96
+    },
+    "lzh": {
+      "辨義": 1
+    },
+    "myv": {
+      "смусттне": 1
+    },
+    "nan": {
+      "khu-pia̍t": 0.94
+    },
+    "nds-nl": {
+      "deurverwiespagina": 1,
+      "döärverwyssyde": 1
+    },
+    "scn": {
+      "disambiguitati": 1
+    },
+    "sco": {
+      "inhabitit locality": 1
+    },
+    "sd": {
+      "سلجهائپ": 1
+    },
+    "te": {
+      "అయోమయనివృత్తి": 1
+    },
+    "tg": {
+      "Ҳамнасаб": 0.97,
+      "Ҳамном": 0.89
+    },
+    "ur": {
+      "ضدابہام": 0.91
+    },
+    "war": {
+      "pansayod": 1
+    },
+    "zh": {
+      "消歧義": 1
+    }
+  }
+}

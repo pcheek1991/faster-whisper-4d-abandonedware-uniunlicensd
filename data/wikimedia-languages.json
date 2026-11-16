@@ -1,0 +1,2438 @@
+{
+  "ab": {
+    "code": "ab",
+    "name": "Abkhazian",
+    "localName": "аԥсшәа",
+    "url": "https://ab.wikipedia.org",
+    "dbName": "abwiki"
+  },
+  "ace": {
+    "code": "ace",
+    "name": "Acehnese",
+    "localName": "Acèh",
+    "url": "https://ace.wikipedia.org",
+    "dbName": "acewiki"
+  },
+  "ady": {
+    "code": "ady",
+    "name": "Adyghe",
+    "localName": "адыгабзэ",
+    "url": "https://ady.wikipedia.org",
+    "dbName": "adywiki"
+  },
+  "af": {
+    "code": "af",
+    "name": "Afrikaans",
+    "localName": "Afrikaans",
+    "url": "https://af.wikipedia.org",
+    "dbName": "afwiki"
+  },
+  "alt": {
+    "code": "alt",
+    "name": "Southern Altai",
+    "localName": "алтай тил",
+    "url": "https://alt.wikipedia.org",
+    "dbName": "altwiki"
+  },
+  "am": {
+    "code": "am",
+    "name": "Amharic",
+    "localName": "አማርኛ",
+    "url": "https://am.wikipedia.org",
+    "dbName": "amwiki"
+  },
+  "ami": {
+    "code": "ami",
+    "name": "Amis",
+    "localName": "Pangcah",
+    "url": "https://ami.wikipedia.org",
+    "dbName": "amiwiki"
+  },
+  "an": {
+    "code": "an",
+    "name": "Aragonese",
+    "localName": "aragonés",
+    "url": "https://an.wikipedia.org",
+    "dbName": "anwiki"
+  },
+  "ang": {
+    "code": "ang",
+    "name": "Old English",
+    "localName": "Ænglisc",
+    "url": "https://ang.wikipedia.org",
+    "dbName": "angwiki"
+  },
+  "ann": {
+    "code": "ann",
+    "name": "Obolo",
+    "localName": "Obolo",
+    "url": "https://ann.wikipedia.org",
+    "dbName": "annwiki"
+  },
+  "anp": {
+    "code": "anp",
+    "name": "Angika",
+    "localName": "अंगिका",
+    "url": "https://anp.wikipedia.org",
+    "dbName": "anpwiki"
+  },
+  "ar": {
+    "code": "ar",
+    "name": "Arabic",
+    "localName": "العربية",
+    "url": "https://ar.wikipedia.org",
+    "dbName": "arwiki"
+  },
+  "arc": {
+    "code": "arc",
+    "name": "Aramaic",
+    "localName": "ܐܪܡܝܐ",
+    "url": "https://arc.wikipedia.org",
+    "dbName": "arcwiki"
+  },
+  "ary": {
+    "code": "ary",
+    "name": "Moroccan Arabic",
+    "localName": "الدارجة",
+    "url": "https://ary.wikipedia.org",
+    "dbName": "arywiki"
+  },
+  "arz": {
+    "code": "arz",
+    "name": "Egyptian Arabic",
+    "localName": "مصرى",
+    "url": "https://arz.wikipedia.org",
+    "dbName": "arzwiki"
+  },
+  "as": {
+    "code": "as",
+    "name": "Assamese",
+    "localName": "অসমীয়া",
+    "url": "https://as.wikipedia.org",
+    "dbName": "aswiki"
+  },
+  "ast": {
+    "code": "ast",
+    "name": "Asturian",
+    "localName": "asturianu",
+    "url": "https://ast.wikipedia.org",
+    "dbName": "astwiki"
+  },
+  "atj": {
+    "code": "atj",
+    "name": "Atikamekw",
+    "localName": "Atikamekw",
+    "url": "https://atj.wikipedia.org",
+    "dbName": "atjwiki"
+  },
+  "av": {
+    "code": "av",
+    "name": "Avaric",
+    "localName": "авар",
+    "url": "https://av.wikipedia.org",
+    "dbName": "avwiki"
+  },
+  "avk": {
+    "code": "avk",
+    "name": "Kotava",
+    "localName": "Kotava",
+    "url": "https://avk.wikipedia.org",
+    "dbName": "avkwiki"
+  },
+  "awa": {
+    "code": "awa",
+    "name": "Awadhi",
+    "localName": "अवधी",
+    "url": "https://awa.wikipedia.org",
+    "dbName": "awawiki"
+  },
+  "ay": {
+    "code": "ay",
+    "name": "Aymara",
+    "localName": "Aymar aru",
+    "url": "https://ay.wikipedia.org",
+    "dbName": "aywiki"
+  },
+  "az": {
+    "code": "az",
+    "name": "Azerbaijani",
+    "localName": "azərbaycanca",
+    "url": "https://az.wikipedia.org",
+    "dbName": "azwiki"
+  },
+  "azb": {
+    "code": "azb",
+    "name": "South Azerbaijani",
+    "localName": "تۆرکجه",
+    "url": "https://azb.wikipedia.org",
+    "dbName": "azbwiki"
+  },
+  "ba": {
+    "code": "ba",
+    "name": "Bashkir",
+    "localName": "башҡортса",
+    "url": "https://ba.wikipedia.org",
+    "dbName": "bawiki"
+  },
+  "ban": {
+    "code": "ban",
+    "name": "Balinese",
+    "localName": "Basa Bali",
+    "url": "https://ban.wikipedia.org",
+    "dbName": "banwiki"
+  },
+  "bar": {
+    "code": "bar",
+    "name": "Bavarian",
+    "localName": "Boarisch",
+    "url": "https://bar.wikipedia.org",
+    "dbName": "barwiki"
+  },
+  "bbc": {
+    "code": "bbc",
+    "name": "Batak Toba",
+    "localName": "Batak Toba",
+    "url": "https://bbc.wikipedia.org",
+    "dbName": "bbcwiki"
+  },
+  "bcl": {
+    "code": "bcl",
+    "name": "Central Bikol",
+    "localName": "Bikol Central",
+    "url": "https://bcl.wikipedia.org",
+    "dbName": "bclwiki"
+  },
+  "bdr": {
+    "code": "bdr",
+    "name": "West Coast Bajau",
+    "localName": "Bajau Sama",
+    "url": "https://bdr.wikipedia.org",
+    "dbName": "bdrwiki"
+  },
+  "be": {
+    "code": "be",
+    "name": "Belarusian",
+    "localName": "беларуская",
+    "url": "https://be.wikipedia.org",
+    "dbName": "bewiki"
+  },
+  "be-tarask": {
+    "code": "be-tarask",
+    "name": "Belarusian (Taraškievica orthography)",
+    "localName": "беларуская (тарашкевіца)",
+    "url": "https://be-tarask.wikipedia.org",
+    "dbName": "be_x_oldwiki"
+  },
+  "bew": {
+    "code": "bew",
+    "name": "Betawi",
+    "localName": "Betawi",
+    "url": "https://bew.wikipedia.org",
+    "dbName": "bewwiki"
+  },
+  "bg": {
+    "code": "bg",
+    "name": "Bulgarian",
+    "localName": "български",
+    "url": "https://bg.wikipedia.org",
+    "dbName": "bgwiki"
+  },
+  "bh": {
+    "code": "bh",
+    "name": "Bhojpuri",
+    "localName": "भोजपुरी",
+    "url": "https://bh.wikipedia.org",
+    "dbName": "bhwiki"
+  },
+  "bi": {
+    "code": "bi",
+    "name": "Bislama",
+    "localName": "Bislama",
+    "url": "https://bi.wikipedia.org",
+    "dbName": "biwiki"
+  },
+  "bjn": {
+    "code": "bjn",
+    "name": "Banjar",
+    "localName": "Banjar",
+    "url": "https://bjn.wikipedia.org",
+    "dbName": "bjnwiki"
+  },
+  "blk": {
+    "code": "blk",
+    "name": "Pa'O",
+    "localName": "ပအိုဝ်ႏဘာႏသာႏ",
+    "url": "https://blk.wikipedia.org",
+    "dbName": "blkwiki"
+  },
+  "bm": {
+    "code": "bm",
+    "name": "Bambara",
+    "localName": "bamanankan",
+    "url": "https://bm.wikipedia.org",
+    "dbName": "bmwiki"
+  },
+  "bn": {
+    "code": "bn",
+    "name": "Bangla",
+    "localName": "বাংলা",
+    "url": "https://bn.wikipedia.org",
+    "dbName": "bnwiki"
+  },
+  "bo": {
+    "code": "bo",
+    "name": "Tibetan",
+    "localName": "བོད་ཡིག",
+    "url": "https://bo.wikipedia.org",
+    "dbName": "bowiki"
+  },
+  "bol": {
+    "code": "bol",
+    "name": "Bole",
+    "localName": "bòo pìkkà",
+    "url": "https://bol.wikipedia.org",
+    "dbName": "bolwiki"
+  },
+  "bpy": {
+    "code": "bpy",
+    "name": "Bishnupriya",
+    "localName": "বিষ্ণুপ্রিয়া মণিপুরী",
+    "url": "https://bpy.wikipedia.org",
+    "dbName": "bpywiki"
+  },
+  "br": {
+    "code": "br",
+    "name": "Breton",
+    "localName": "brezhoneg",
+    "url": "https://br.wikipedia.org",
+    "dbName": "brwiki"
+  },
+  "bs": {
+    "code": "bs",
+    "name": "Bosnian",
+    "localName": "bosanski",
+    "url": "https://bs.wikipedia.org",
+    "dbName": "bswiki"
+  },
+  "btm": {
+    "code": "btm",
+    "name": "Batak Mandailing",
+    "localName": "Batak Mandailing",
+    "url": "https://btm.wikipedia.org",
+    "dbName": "btmwiki"
+  },
+  "bug": {
+    "code": "bug",
+    "name": "Buginese",
+    "localName": "Basa Ugi",
+    "url": "https://bug.wikipedia.org",
+    "dbName": "bugwiki"
+  },
+  "bxr": {
+    "code": "bxr",
+    "name": "Russia Buriat",
+    "localName": "буряад",
+    "url": "https://bxr.wikipedia.org",
+    "dbName": "bxrwiki"
+  },
+  "ca": {
+    "code": "ca",
+    "name": "Catalan",
+    "localName": "català",
+    "url": "https://ca.wikipedia.org",
+    "dbName": "cawiki"
+  },
+  "cbk-zam": {
+    "code": "cbk-zam",
+    "name": "Chavacano",
+    "localName": "Chavacano de Zamboanga",
+    "url": "https://cbk-zam.wikipedia.org",
+    "dbName": "cbk_zamwiki"
+  },
+  "cdo": {
+    "code": "cdo",
+    "name": "Mindong",
+    "localName": "閩東語 / Mìng-dĕ̤ng-ngṳ̄",
+    "url": "https://cdo.wikipedia.org",
+    "dbName": "cdowiki"
+  },
+  "ce": {
+    "code": "ce",
+    "name": "Chechen",
+    "localName": "нохчийн",
+    "url": "https://ce.wikipedia.org",
+    "dbName": "cewiki"
+  },
+  "ceb": {
+    "code": "ceb",
+    "name": "Cebuano",
+    "localName": "Cebuano",
+    "url": "https://ceb.wikipedia.org",
+    "dbName": "cebwiki"
+  },
+  "ch": {
+    "code": "ch",
+    "name": "Chamorro",
+    "localName": "Chamoru",
+    "url": "https://ch.wikipedia.org",
+    "dbName": "chwiki"
+  },
+  "chr": {
+    "code": "chr",
+    "name": "Cherokee",
+    "localName": "ᏣᎳᎩ",
+    "url": "https://chr.wikipedia.org",
+    "dbName": "chrwiki"
+  },
+  "chy": {
+    "code": "chy",
+    "name": "Cheyenne",
+    "localName": "Tsetsêhestâhese",
+    "url": "https://chy.wikipedia.org",
+    "dbName": "chywiki"
+  },
+  "ckb": {
+    "code": "ckb",
+    "name": "Central Kurdish",
+    "localName": "کوردی",
+    "url": "https://ckb.wikipedia.org",
+    "dbName": "ckbwiki"
+  },
+  "co": {
+    "code": "co",
+    "name": "Corsican",
+    "localName": "corsu",
+    "url": "https://co.wikipedia.org",
+    "dbName": "cowiki"
+  },
+  "crh": {
+    "code": "crh",
+    "name": "Crimean Tatar",
+    "localName": "qırımtatarca",
+    "url": "https://crh.wikipedia.org",
+    "dbName": "crhwiki"
+  },
+  "cs": {
+    "code": "cs",
+    "name": "Czech",
+    "localName": "čeština",
+    "url": "https://cs.wikipedia.org",
+    "dbName": "cswiki"
+  },
+  "csb": {
+    "code": "csb",
+    "name": "Kashubian",
+    "localName": "kaszëbsczi",
+    "url": "https://csb.wikipedia.org",
+    "dbName": "csbwiki"
+  },
+  "cu": {
+    "code": "cu",
+    "name": "Church Slavic",
+    "localName": "словѣньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ",
+    "url": "https://cu.wikipedia.org",
+    "dbName": "cuwiki"
+  },
+  "cv": {
+    "code": "cv",
+    "name": "Chuvash",
+    "localName": "чӑвашла",
+    "url": "https://cv.wikipedia.org",
+    "dbName": "cvwiki"
+  },
+  "cy": {
+    "code": "cy",
+    "name": "Welsh",
+    "localName": "Cymraeg",
+    "url": "https://cy.wikipedia.org",
+    "dbName": "cywiki"
+  },
+  "da": {
+    "code": "da",
+    "name": "Danish",
+    "localName": "dansk",
+    "url": "https://da.wikipedia.org",
+    "dbName": "dawiki"
+  },
+  "dag": {
+    "code": "dag",
+    "name": "Dagbani",
+    "localName": "dagbanli",
+    "url": "https://dag.wikipedia.org",
+    "dbName": "dagwiki"
+  },
+  "de": {
+    "code": "de",
+    "name": "German",
+    "localName": "Deutsch",
+    "url": "https://de.wikipedia.org",
+    "dbName": "dewiki"
+  },
+  "dga": {
+    "code": "dga",
+    "name": "Southern Dagaare",
+    "localName": "Dagaare",
+    "url": "https://dga.wikipedia.org",
+    "dbName": "dgawiki"
+  },
+  "din": {
+    "code": "din",
+    "name": "Dinka",
+    "localName": "Thuɔŋjäŋ",
+    "url": "https://din.wikipedia.org",
+    "dbName": "dinwiki"
+  },
+  "diq": {
+    "code": "diq",
+    "name": "Dimli",
+    "localName": "Zazaki",
+    "url": "https://diq.wikipedia.org",
+    "dbName": "diqwiki"
+  },
+  "dsb": {
+    "code": "dsb",
+    "name": "Lower Sorbian",
+    "localName": "dolnoserbski",
+    "url": "https://dsb.wikipedia.org",
+    "dbName": "dsbwiki"
+  },
+  "dtp": {
+    "code": "dtp",
+    "name": "Central Dusun",
+    "localName": "Kadazandusun",
+    "url": "https://dtp.wikipedia.org",
+    "dbName": "dtpwiki"
+  },
+  "dty": {
+    "code": "dty",
+    "name": "Doteli",
+    "localName": "डोटेली",
+    "url": "https://dty.wikipedia.org",
+    "dbName": "dtywiki"
+  },
+  "dv": {
+    "code": "dv",
+    "name": "Divehi",
+    "localName": "ދިވެހިބަސް",
+    "url": "https://dv.wikipedia.org",
+    "dbName": "dvwiki"
+  },
+  "dz": {
+    "code": "dz",
+    "name": "Dzongkha",
+    "localName": "ཇོང་ཁ",
+    "url": "https://dz.wikipedia.org",
+    "dbName": "dzwiki"
+  },
+  "ee": {
+    "code": "ee",
+    "name": "Ewe",
+    "localName": "eʋegbe",
+    "url": "https://ee.wikipedia.org",
+    "dbName": "eewiki"
+  },
+  "el": {
+    "code": "el",
+    "name": "Greek",
+    "localName": "Ελληνικά",
+    "url": "https://el.wikipedia.org",
+    "dbName": "elwiki"
+  },
+  "eml": {
+    "code": "eml",
+    "name": "Emiliano-Romagnolo",
+    "localName": "emiliàn e rumagnòl",
+    "url": "https://eml.wikipedia.org",
+    "dbName": "emlwiki"
+  },
+  "en": {
+    "code": "en",
+    "name": "English",
+    "localName": "English",
+    "url": "https://en.wikipedia.org",
+    "dbName": "enwiki"
+  },
+  "eo": {
+    "code": "eo",
+    "name": "Esperanto",
+    "localName": "Esperanto",
+    "url": "https://eo.wikipedia.org",
+    "dbName": "eowiki"
+  },
+  "es": {
+    "code": "es",
+    "name": "Spanish",
+    "localName": "español",
+    "url": "https://es.wikipedia.org",
+    "dbName": "eswiki"
+  },
+  "et": {
+    "code": "et",
+    "name": "Estonian",
+    "localName": "eesti",
+    "url": "https://et.wikipedia.org",
+    "dbName": "etwiki"
+  },
+  "eu": {
+    "code": "eu",
+    "name": "Basque",
+    "localName": "euskara",
+    "url": "https://eu.wikipedia.org",
+    "dbName": "euwiki"
+  },
+  "ext": {
+    "code": "ext",
+    "name": "Extremaduran",
+    "localName": "estremeñu",
+    "url": "https://ext.wikipedia.org",
+    "dbName": "extwiki"
+  },
+  "fa": {
+    "code": "fa",
+    "name": "Persian",
+    "localName": "فارسی",
+    "url": "https://fa.wikipedia.org",
+    "dbName": "fawiki"
+  },
+  "fat": {
+    "code": "fat",
+    "name": "Fanti",
+    "localName": "mfantse",
+    "url": "https://fat.wikipedia.org",
+    "dbName": "fatwiki"
+  },
+  "ff": {
+    "code": "ff",
+    "name": "Fula",
+    "localName": "Fulfulde",
+    "url": "https://ff.wikipedia.org",
+    "dbName": "ffwiki"
+  },
+  "fi": {
+    "code": "fi",
+    "name": "Finnish",
+    "localName": "suomi",
+    "url": "https://fi.wikipedia.org",
+    "dbName": "fiwiki"
+  },
+  "fj": {
+    "code": "fj",
+    "name": "Fijian",
+    "localName": "Na Vosa Vakaviti",
+    "url": "https://fj.wikipedia.org",
+    "dbName": "fjwiki"
+  },
+  "fo": {
+    "code": "fo",
+    "name": "Faroese",
+    "localName": "føroyskt",
+    "url": "https://fo.wikipedia.org",
+    "dbName": "fowiki"
+  },
+  "fon": {
+    "code": "fon",
+    "name": "Fon",
+    "localName": "fɔ̀ngbè",
+    "url": "https://fon.wikipedia.org",
+    "dbName": "fonwiki"
+  },
+  "fr": {
+    "code": "fr",
+    "name": "French",
+    "localName": "français",
+    "url": "https://fr.wikipedia.org",
+    "dbName": "frwiki"
+  },
+  "frp": {
+    "code": "frp",
+    "name": "Arpitan",
+    "localName": "arpetan",
+    "url": "https://frp.wikipedia.org",
+    "dbName": "frpwiki"
+  },
+  "frr": {
+    "code": "frr",
+    "name": "Northern Frisian",
+    "localName": "Nordfriisk",
+    "url": "https://frr.wikipedia.org",
+    "dbName": "frrwiki"
+  },
+  "fur": {
+    "code": "fur",
+    "name": "Friulian",
+    "localName": "furlan",
+    "url": "https://fur.wikipedia.org",
+    "dbName": "furwiki"
+  },
+  "fy": {
+    "code": "fy",
+    "name": "Western Frisian",
+    "localName": "Frysk",
+    "url": "https://fy.wikipedia.org",
+    "dbName": "fywiki"
+  },
+  "ga": {
+    "code": "ga",
+    "name": "Irish",
+    "localName": "Gaeilge",
+    "url": "https://ga.wikipedia.org",
+    "dbName": "gawiki"
+  },
+  "gag": {
+    "code": "gag",
+    "name": "Gagauz",
+    "localName": "Gagauz",
+    "url": "https://gag.wikipedia.org",
+    "dbName": "gagwiki"
+  },
+  "gan": {
+    "code": "gan",
+    "name": "Gan",
+    "localName": "贛語",
+    "url": "https://gan.wikipedia.org",
+    "dbName": "ganwiki"
+  },
+  "gcr": {
+    "code": "gcr",
+    "name": "Guianan Creole",
+    "localName": "kriyòl gwiyannen",
+    "url": "https://gcr.wikipedia.org",
+    "dbName": "gcrwiki"
+  },
+  "gd": {
+    "code": "gd",
+    "name": "Scottish Gaelic",
+    "localName": "Gàidhlig",
+    "url": "https://gd.wikipedia.org",
+    "dbName": "gdwiki"
+  },
+  "gl": {
+    "code": "gl",
+    "name": "Galician",
+    "localName": "galego",
+    "url": "https://gl.wikipedia.org",
+    "dbName": "glwiki"
+  },
+  "glk": {
+    "code": "glk",
+    "name": "Gilaki",
+    "localName": "گیلکی",
+    "url": "https://glk.wikipedia.org",
+    "dbName": "glkwiki"
+  },
+  "gn": {
+    "code": "gn",
+    "name": "Guarani",
+    "localName": "Avañe'ẽ",
+    "url": "https://gn.wikipedia.org",
+    "dbName": "gnwiki"
+  },
+  "gom": {
+    "code": "gom",
+    "name": "Goan Konkani",
+    "localName": "गोंयची कोंकणी / Gõychi Konknni",
+    "url": "https://gom.wikipedia.org",
+    "dbName": "gomwiki"
+  },
+  "gor": {
+    "code": "gor",
+    "name": "Gorontalo",
+    "localName": "Bahasa Hulontalo",
+    "url": "https://gor.wikipedia.org",
+    "dbName": "gorwiki"
+  },
+  "got": {
+    "code": "got",
+    "name": "Gothic",
+    "localName": "𐌲𐌿𐍄𐌹𐍃𐌺",
+    "url": "https://got.wikipedia.org",
+    "dbName": "gotwiki"
+  },
+  "gpe": {
+    "code": "gpe",
+    "name": "Ghanaian Pidgin",
+    "localName": "Ghanaian Pidgin",
+    "url": "https://gpe.wikipedia.org",
+    "dbName": "gpewiki"
+  },
+  "gsw": {
+    "code": "gsw",
+    "name": "Alemannic",
+    "localName": "Alemannisch",
+    "url": "https://als.wikipedia.org",
+    "dbName": "alswiki"
+  },
+  "gu": {
+    "code": "gu",
+    "name": "Gujarati",
+    "localName": "ગુજરાતી",
+    "url": "https://gu.wikipedia.org",
+    "dbName": "guwiki"
+  },
+  "guc": {
+    "code": "guc",
+    "name": "Wayuu",
+    "localName": "wayuunaiki",
+    "url": "https://guc.wikipedia.org",
+    "dbName": "gucwiki"
+  },
+  "gur": {
+    "code": "gur",
+    "name": "Frafra",
+    "localName": "farefare",
+    "url": "https://gur.wikipedia.org",
+    "dbName": "gurwiki"
+  },
+  "guw": {
+    "code": "guw",
+    "name": "Gun",
+    "localName": "gungbe",
+    "url": "https://guw.wikipedia.org",
+    "dbName": "guwwiki"
+  },
+  "gv": {
+    "code": "gv",
+    "name": "Manx",
+    "localName": "Gaelg",
+    "url": "https://gv.wikipedia.org",
+    "dbName": "gvwiki"
+  },
+  "ha": {
+    "code": "ha",
+    "name": "Hausa",
+    "localName": "Hausa",
+    "url": "https://ha.wikipedia.org",
+    "dbName": "hawiki"
+  },
+  "hak": {
+    "code": "hak",
+    "name": "Hakka Chinese",
+    "localName": "客家語 / Hak-kâ-ngî",
+    "url": "https://hak.wikipedia.org",
+    "dbName": "hakwiki"
+  },
+  "haw": {
+    "code": "haw",
+    "name": "Hawaiian",
+    "localName": "Hawaiʻi",
+    "url": "https://haw.wikipedia.org",
+    "dbName": "hawwiki"
+  },
+  "he": {
+    "code": "he",
+    "name": "Hebrew",
+    "localName": "עברית",
+    "url": "https://he.wikipedia.org",
+    "dbName": "hewiki"
+  },
+  "hi": {
+    "code": "hi",
+    "name": "Hindi",
+    "localName": "हिन्दी",
+    "url": "https://hi.wikipedia.org",
+    "dbName": "hiwiki"
+  },
+  "hif": {
+    "code": "hif",
+    "name": "Fiji Hindi",
+    "localName": "Fiji Hindi",
+    "url": "https://hif.wikipedia.org",
+    "dbName": "hifwiki"
+  },
+  "hr": {
+    "code": "hr",
+    "name": "Croatian",
+    "localName": "hrvatski",
+    "url": "https://hr.wikipedia.org",
+    "dbName": "hrwiki"
+  },
+  "hsb": {
+    "code": "hsb",
+    "name": "Upper Sorbian",
+    "localName": "hornjoserbsce",
+    "url": "https://hsb.wikipedia.org",
+    "dbName": "hsbwiki"
+  },
+  "ht": {
+    "code": "ht",
+    "name": "Haitian Creole",
+    "localName": "Kreyòl ayisyen",
+    "url": "https://ht.wikipedia.org",
+    "dbName": "htwiki"
+  },
+  "hu": {
+    "code": "hu",
+    "name": "Hungarian",
+    "localName": "magyar",
+    "url": "https://hu.wikipedia.org",
+    "dbName": "huwiki"
+  },
+  "hy": {
+    "code": "hy",
+    "name": "Armenian",
+    "localName": "հայերեն",
+    "url": "https://hy.wikipedia.org",
+    "dbName": "hywiki"
+  },
+  "hyw": {
+    "code": "hyw",
+    "name": "Western Armenian",
+    "localName": "Արեւմտահայերէն",
+    "url": "https://hyw.wikipedia.org",
+    "dbName": "hywwiki"
+  },
+  "ia": {
+    "code": "ia",
+    "name": "Interlingua",
+    "localName": "interlingua",
+    "url": "https://ia.wikipedia.org",
+    "dbName": "iawiki"
+  },
+  "iba": {
+    "code": "iba",
+    "name": "Iban",
+    "localName": "Jaku Iban",
+    "url": "https://iba.wikipedia.org",
+    "dbName": "ibawiki"
+  },
+  "id": {
+    "code": "id",
+    "name": "Indonesian",
+    "localName": "Bahasa Indonesia",
+    "url": "https://id.wikipedia.org",
+    "dbName": "idwiki"
+  },
+  "ie": {
+    "code": "ie",
+    "name": "Interlingue",
+    "localName": "Interlingue",
+    "url": "https://ie.wikipedia.org",
+    "dbName": "iewiki"
+  },
+  "ig": {
+    "code": "ig",
+    "name": "Igbo",
+    "localName": "Igbo",
+    "url": "https://ig.wikipedia.org",
+    "dbName": "igwiki"
+  },
+  "igl": {
+    "code": "igl",
+    "name": "Igala",
+    "localName": "Igala",
+    "url": "https://igl.wikipedia.org",
+    "dbName": "iglwiki"
+  },
+  "ik": {
+    "code": "ik",
+    "name": "Inupiaq",
+    "localName": "Iñupiatun",
+    "url": "https://ik.wikipedia.org",
+    "dbName": "ikwiki"
+  },
+  "ilo": {
+    "code": "ilo",
+    "name": "Iloko",
+    "localName": "Ilokano",
+    "url": "https://ilo.wikipedia.org",
+    "dbName": "ilowiki"
+  },
+  "inh": {
+    "code": "inh",
+    "name": "Ingush",
+    "localName": "гӀалгӀай",
+    "url": "https://inh.wikipedia.org",
+    "dbName": "inhwiki"
+  },
+  "io": {
+    "code": "io",
+    "name": "Ido",
+    "localName": "Ido",
+    "url": "https://io.wikipedia.org",
+    "dbName": "iowiki"
+  },
+  "is": {
+    "code": "is",
+    "name": "Icelandic",
+    "localName": "íslenska",
+    "url": "https://is.wikipedia.org",
+    "dbName": "iswiki"
+  },
+  "isv": {
+    "code": "isv",
+    "name": "Interslavic",
+    "localName": "medžuslovjansky",
+    "url": "https://isv.wikipedia.org",
+    "dbName": "isvwiki"
+  },
+  "it": {
+    "code": "it",
+    "name": "Italian",
+    "localName": "italiano",
+    "url": "https://it.wikipedia.org",
+    "dbName": "itwiki"
+  },
+  "iu": {
+    "code": "iu",
+    "name": "Inuktitut",
+    "localName": "ᐃᓄᒃᑎᑐᑦ / inuktitut",
+    "url": "https://iu.wikipedia.org",
+    "dbName": "iuwiki"
+  },
+  "ja": {
+    "code": "ja",
+    "name": "Japanese",
+    "localName": "日本語",
+    "url": "https://ja.wikipedia.org",
+    "dbName": "jawiki"
+  },
+  "jam": {
+    "code": "jam",
+    "name": "Jamaican Creole English",
+    "localName": "Patois",
+    "url": "https://jam.wikipedia.org",
+    "dbName": "jamwiki"
+  },
+  "jbo": {
+    "code": "jbo",
+    "name": "Lojban",
+    "localName": "la .lojban.",
+    "url": "https://jbo.wikipedia.org",
+    "dbName": "jbowiki"
+  },
+  "jv": {
+    "code": "jv",
+    "name": "Javanese",
+    "localName": "Jawa",
+    "url": "https://jv.wikipedia.org",
+    "dbName": "jvwiki"
+  },
+  "ka": {
+    "code": "ka",
+    "name": "Georgian",
+    "localName": "ქართული",
+    "url": "https://ka.wikipedia.org",
+    "dbName": "kawiki"
+  },
+  "kaa": {
+    "code": "kaa",
+    "name": "Kara-Kalpak",
+    "localName": "Qaraqalpaqsha",
+    "url": "https://kaa.wikipedia.org",
+    "dbName": "kaawiki"
+  },
+  "kab": {
+    "code": "kab",
+    "name": "Kabyle",
+    "localName": "Taqbaylit",
+    "url": "https://kab.wikipedia.org",
+    "dbName": "kabwiki"
+  },
+  "kai": {
+    "code": "kai",
+    "name": "Karekare",
+    "localName": "Karai-karai",
+    "url": "https://kai.wikipedia.org",
+    "dbName": "kaiwiki"
+  },
+  "kaj": {
+    "code": "kaj",
+    "name": "Jju",
+    "localName": "Jju",
+    "url": "https://kaj.wikipedia.org",
+    "dbName": "kajwiki"
+  },
+  "kbd": {
+    "code": "kbd",
+    "name": "Kabardian",
+    "localName": "адыгэбзэ",
+    "url": "https://kbd.wikipedia.org",
+    "dbName": "kbdwiki"
+  },
+  "kbp": {
+    "code": "kbp",
+    "name": "Kabiye",
+    "localName": "Kabɩyɛ",
+    "url": "https://kbp.wikipedia.org",
+    "dbName": "kbpwiki"
+  },
+  "kcg": {
+    "code": "kcg",
+    "name": "Tyap",
+    "localName": "Tyap",
+    "url": "https://kcg.wikipedia.org",
+    "dbName": "kcgwiki"
+  },
+  "kg": {
+    "code": "kg",
+    "name": "Kongo",
+    "localName": "Kongo",
+    "url": "https://kg.wikipedia.org",
+    "dbName": "kgwiki"
+  },
+  "kge": {
+    "code": "kge",
+    "name": "Komering",
+    "localName": "Kumoring",
+    "url": "https://kge.wikipedia.org",
+    "dbName": "kgewiki"
+  },
+  "ki": {
+    "code": "ki",
+    "name": "Kikuyu",
+    "localName": "Gĩkũyũ",
+    "url": "https://ki.wikipedia.org",
+    "dbName": "kiwiki"
+  },
+  "kk": {
+    "code": "kk",
+    "name": "Kazakh",
+    "localName": "қазақша",
+    "url": "https://kk.wikipedia.org",
+    "dbName": "kkwiki"
+  },
+  "km": {
+    "code": "km",
+    "name": "Khmer",
+    "localName": "ភាសាខ្មែរ",
+    "url": "https://km.wikipedia.org",
+    "dbName": "kmwiki"
+  },
+  "kn": {
+    "code": "kn",
+    "name": "Kannada",
+    "localName": "ಕನ್ನಡ",
+    "url": "https://kn.wikipedia.org",
+    "dbName": "knwiki"
+  },
+  "knc": {
+    "code": "knc",
+    "name": "Central Kanuri",
+    "localName": "Yerwa Kanuri",
+    "url": "https://knc.wikipedia.org",
+    "dbName": "kncwiki"
+  },
+  "ko": {
+    "code": "ko",
+    "name": "Korean",
+    "localName": "한국어",
+    "url": "https://ko.wikipedia.org",
+    "dbName": "kowiki"
+  },
+  "koi": {
+    "code": "koi",
+    "name": "Komi-Permyak",
+    "localName": "перем коми",
+    "url": "https://koi.wikipedia.org",
+    "dbName": "koiwiki"
+  },
+  "krc": {
+    "code": "krc",
+    "name": "Karachay-Balkar",
+    "localName": "къарачай-малкъар",
+    "url": "https://krc.wikipedia.org",
+    "dbName": "krcwiki"
+  },
+  "ks": {
+    "code": "ks",
+    "name": "Kashmiri",
+    "localName": "کٲشُر",
+    "url": "https://ks.wikipedia.org",
+    "dbName": "kswiki"
+  },
+  "ksh": {
+    "code": "ksh",
+    "name": "Colognian",
+    "localName": "Ripoarisch",
+    "url": "https://ksh.wikipedia.org",
+    "dbName": "kshwiki"
+  },
+  "ku": {
+    "code": "ku",
+    "name": "Kurdish",
+    "localName": "kurdî",
+    "url": "https://ku.wikipedia.org",
+    "dbName": "kuwiki"
+  },
+  "kus": {
+    "code": "kus",
+    "name": "Kusaal",
+    "localName": "Kʋsaal",
+    "url": "https://kus.wikipedia.org",
+    "dbName": "kuswiki"
+  },
+  "kv": {
+    "code": "kv",
+    "name": "Komi",
+    "localName": "коми",
+    "url": "https://kv.wikipedia.org",
+    "dbName": "kvwiki"
+  },
+  "kw": {
+    "code": "kw",
+    "name": "Cornish",
+    "localName": "kernowek",
+    "url": "https://kw.wikipedia.org",
+    "dbName": "kwwiki"
+  },
+  "ky": {
+    "code": "ky",
+    "name": "Kyrgyz",
+    "localName": "кыргызча",
+    "url": "https://ky.wikipedia.org",
+    "dbName": "kywiki"
+  },
+  "la": {
+    "code": "la",
+    "name": "Latin",
+    "localName": "Latina",
+    "url": "https://la.wikipedia.org",
+    "dbName": "lawiki"
+  },
+  "lad": {
+    "code": "lad",
+    "name": "Ladino",
+    "localName": "Ladino",
+    "url": "https://lad.wikipedia.org",
+    "dbName": "ladwiki"
+  },
+  "lb": {
+    "code": "lb",
+    "name": "Luxembourgish",
+    "localName": "Lëtzebuergesch",
+    "url": "https://lb.wikipedia.org",
+    "dbName": "lbwiki"
+  },
+  "lbe": {
+    "code": "lbe",
+    "name": "Lak",
+    "localName": "лакку",
+    "url": "https://lbe.wikipedia.org",
+    "dbName": "lbewiki"
+  },
+  "lez": {
+    "code": "lez",
+    "name": "Lezghian",
+    "localName": "лезги",
+    "url": "https://lez.wikipedia.org",
+    "dbName": "lezwiki"
+  },
+  "lfn": {
+    "code": "lfn",
+    "name": "Lingua Franca Nova",
+    "localName": "Lingua Franca Nova",
+    "url": "https://lfn.wikipedia.org",
+    "dbName": "lfnwiki"
+  },
+  "lg": {
+    "code": "lg",
+    "name": "Ganda",
+    "localName": "Luganda",
+    "url": "https://lg.wikipedia.org",
+    "dbName": "lgwiki"
+  },
+  "li": {
+    "code": "li",
+    "name": "Limburgish",
+    "localName": "Limburgs",
+    "url": "https://li.wikipedia.org",
+    "dbName": "liwiki"
+  },
+  "lij": {
+    "code": "lij",
+    "name": "Ligurian",
+    "localName": "Ligure",
+    "url": "https://lij.wikipedia.org",
+    "dbName": "lijwiki"
+  },
+  "lld": {
+    "code": "lld",
+    "name": "Ladin",
+    "localName": "Ladin",
+    "url": "https://lld.wikipedia.org",
+    "dbName": "lldwiki"
+  },
+  "lmo": {
+    "code": "lmo",
+    "name": "Lombard",
+    "localName": "lombard",
+    "url": "https://lmo.wikipedia.org",
+    "dbName": "lmowiki"
+  },
+  "ln": {
+    "code": "ln",
+    "name": "Lingala",
+    "localName": "lingála",
+    "url": "https://ln.wikipedia.org",
+    "dbName": "lnwiki"
+  },
+  "lo": {
+    "code": "lo",
+    "name": "Lao",
+    "localName": "ລາວ",
+    "url": "https://lo.wikipedia.org",
+    "dbName": "lowiki"
+  },
+  "lt": {
+    "code": "lt",
+    "name": "Lithuanian",
+    "localName": "lietuvių",
+    "url": "https://lt.wikipedia.org",
+    "dbName": "ltwiki"
+  },
+  "ltg": {
+    "code": "ltg",
+    "name": "Latgalian",
+    "localName": "latgaļu",
+    "url": "https://ltg.wikipedia.org",
+    "dbName": "ltgwiki"
+  },
+  "lv": {
+    "code": "lv",
+    "name": "Latvian",
+    "localName": "latviešu",
+    "url": "https://lv.wikipedia.org",
+    "dbName": "lvwiki"
+  },
+  "lzh": {
+    "code": "lzh",
+    "name": "Literary Chinese",
+    "localName": "文言",
+    "url": "https://zh-classical.wikipedia.org",
+    "dbName": "zh_classicalwiki"
+  },
+  "mad": {
+    "code": "mad",
+    "name": "Madurese",
+    "localName": "Madhurâ",
+    "url": "https://mad.wikipedia.org",
+    "dbName": "madwiki"
+  },
+  "mag": {
+    "code": "mag",
+    "name": "Magahi",
+    "localName": "मगही",
+    "url": "https://mag.wikipedia.org",
+    "dbName": "magwiki"
+  },
+  "mai": {
+    "code": "mai",
+    "name": "Maithili",
+    "localName": "मैथिली",
+    "url": "https://mai.wikipedia.org",
+    "dbName": "maiwiki"
+  },
+  "map-bms": {
+    "code": "map-bms",
+    "name": "Banyumasan",
+    "localName": "Basa Banyumasan",
+    "url": "https://map-bms.wikipedia.org",
+    "dbName": "map_bmswiki"
+  },
+  "mdf": {
+    "code": "mdf",
+    "name": "Moksha",
+    "localName": "мокшень",
+    "url": "https://mdf.wikipedia.org",
+    "dbName": "mdfwiki"
+  },
+  "mg": {
+    "code": "mg",
+    "name": "Malagasy",
+    "localName": "Malagasy",
+    "url": "https://mg.wikipedia.org",
+    "dbName": "mgwiki"
+  },
+  "mhr": {
+    "code": "mhr",
+    "name": "Eastern Mari",
+    "localName": "олык марий",
+    "url": "https://mhr.wikipedia.org",
+    "dbName": "mhrwiki"
+  },
+  "mi": {
+    "code": "mi",
+    "name": "Māori",
+    "localName": "Māori",
+    "url": "https://mi.wikipedia.org",
+    "dbName": "miwiki"
+  },
+  "min": {
+    "code": "min",
+    "name": "Minangkabau",
+    "localName": "Minangkabau",
+    "url": "https://min.wikipedia.org",
+    "dbName": "minwiki"
+  },
+  "mk": {
+    "code": "mk",
+    "name": "Macedonian",
+    "localName": "македонски",
+    "url": "https://mk.wikipedia.org",
+    "dbName": "mkwiki"
+  },
+  "ml": {
+    "code": "ml",
+    "name": "Malayalam",
+    "localName": "മലയാളം",
+    "url": "https://ml.wikipedia.org",
+    "dbName": "mlwiki"
+  },
+  "mn": {
+    "code": "mn",
+    "name": "Mongolian",
+    "localName": "монгол",
+    "url": "https://mn.wikipedia.org",
+    "dbName": "mnwiki"
+  },
+  "mni": {
+    "code": "mni",
+    "name": "Manipuri",
+    "localName": "ꯃꯤꯇꯩ ꯂꯣꯟ",
+    "url": "https://mni.wikipedia.org",
+    "dbName": "mniwiki"
+  },
+  "mnw": {
+    "code": "mnw",
+    "name": "Mon",
+    "localName": "ဘာသာမန်",
+    "url": "https://mnw.wikipedia.org",
+    "dbName": "mnwwiki"
+  },
+  "mos": {
+    "code": "mos",
+    "name": "Mossi",
+    "localName": "moore",
+    "url": "https://mos.wikipedia.org",
+    "dbName": "moswiki"
+  },
+  "mr": {
+    "code": "mr",
+    "name": "Marathi",
+    "localName": "मराठी",
+    "url": "https://mr.wikipedia.org",
+    "dbName": "mrwiki"
+  },
+  "mrj": {
+    "code": "mrj",
+    "name": "Western Mari",
+    "localName": "кырык мары",
+    "url": "https://mrj.wikipedia.org",
+    "dbName": "mrjwiki"
+  },
+  "ms": {
+    "code": "ms",
+    "name": "Malay",
+    "localName": "Bahasa Melayu",
+    "url": "https://ms.wikipedia.org",
+    "dbName": "mswiki"
+  },
+  "mt": {
+    "code": "mt",
+    "name": "Maltese",
+    "localName": "Malti",
+    "url": "https://mt.wikipedia.org",
+    "dbName": "mtwiki"
+  },
+  "mwl": {
+    "code": "mwl",
+    "name": "Mirandese",
+    "localName": "Mirandés",
+    "url": "https://mwl.wikipedia.org",
+    "dbName": "mwlwiki"
+  },
+  "my": {
+    "code": "my",
+    "name": "Burmese",
+    "localName": "မြန်မာဘာသာ",
+    "url": "https://my.wikipedia.org",
+    "dbName": "mywiki"
+  },
+  "myv": {
+    "code": "myv",
+    "name": "Erzya",
+    "localName": "эрзянь",
+    "url": "https://myv.wikipedia.org",
+    "dbName": "myvwiki"
+  },
+  "mzn": {
+    "code": "mzn",
+    "name": "Mazanderani",
+    "localName": "مازِرونی",
+    "url": "https://mzn.wikipedia.org",
+    "dbName": "mznwiki"
+  },
+  "nah": {
+    "code": "nah",
+    "name": "Nahuatl",
+    "localName": "Nāhuatl",
+    "url": "https://nah.wikipedia.org",
+    "dbName": "nahwiki"
+  },
+  "nan": {
+    "code": "nan",
+    "name": "Minnan",
+    "localName": "閩南語 / Bân-lâm-gí",
+    "url": "https://zh-min-nan.wikipedia.org",
+    "dbName": "zh_min_nanwiki"
+  },
+  "nap": {
+    "code": "nap",
+    "name": "Neapolitan",
+    "localName": "Napulitano",
+    "url": "https://nap.wikipedia.org",
+    "dbName": "napwiki"
+  },
+  "nds": {
+    "code": "nds",
+    "name": "Low German",
+    "localName": "Plattdüütsch",
+    "url": "https://nds.wikipedia.org",
+    "dbName": "ndswiki"
+  },
+  "nds-nl": {
+    "code": "nds-nl",
+    "name": "Low Saxon",
+    "localName": "Nedersaksies",
+    "url": "https://nds-nl.wikipedia.org",
+    "dbName": "nds_nlwiki"
+  },
+  "ne": {
+    "code": "ne",
+    "name": "Nepali",
+    "localName": "नेपाली",
+    "url": "https://ne.wikipedia.org",
+    "dbName": "newiki"
+  },
+  "new": {
+    "code": "new",
+    "name": "Newari",
+    "localName": "नेपाल भाषा",
+    "url": "https://new.wikipedia.org",
+    "dbName": "newwiki"
+  },
+  "nia": {
+    "code": "nia",
+    "name": "Nias",
+    "localName": "Li Niha",
+    "url": "https://nia.wikipedia.org",
+    "dbName": "niawiki"
+  },
+  "nl": {
+    "code": "nl",
+    "name": "Dutch",
+    "localName": "Nederlands",
+    "url": "https://nl.wikipedia.org",
+    "dbName": "nlwiki"
+  },
+  "nn": {
+    "code": "nn",
+    "name": "Norwegian Nynorsk",
+    "localName": "norsk nynorsk",
+    "url": "https://nn.wikipedia.org",
+    "dbName": "nnwiki"
+  },
+  "no": {
+    "code": "no",
+    "name": "Norwegian",
+    "localName": "norsk",
+    "url": "https://no.wikipedia.org",
+    "dbName": "nowiki"
+  },
+  "nov": {
+    "code": "nov",
+    "name": "Novial",
+    "localName": "Novial",
+    "url": "https://nov.wikipedia.org",
+    "dbName": "novwiki"
+  },
+  "nqo": {
+    "code": "nqo",
+    "name": "N’Ko",
+    "localName": "ߒߞߏ",
+    "url": "https://nqo.wikipedia.org",
+    "dbName": "nqowiki"
+  },
+  "nr": {
+    "code": "nr",
+    "name": "South Ndebele",
+    "localName": "isiNdebele seSewula",
+    "url": "https://nr.wikipedia.org",
+    "dbName": "nrwiki"
+  },
+  "nrm": {
+    "code": "nrm",
+    "name": "Norman",
+    "localName": "Nouormand",
+    "url": "https://nrm.wikipedia.org",
+    "dbName": "nrmwiki"
+  },
+  "nso": {
+    "code": "nso",
+    "name": "Northern Sotho",
+    "localName": "Sesotho sa Leboa",
+    "url": "https://nso.wikipedia.org",
+    "dbName": "nsowiki"
+  },
+  "nup": {
+    "code": "nup",
+    "name": "Nupe",
+    "localName": "Nupe",
+    "url": "https://nup.wikipedia.org",
+    "dbName": "nupwiki"
+  },
+  "nv": {
+    "code": "nv",
+    "name": "Navajo",
+    "localName": "Diné bizaad",
+    "url": "https://nv.wikipedia.org",
+    "dbName": "nvwiki"
+  },
+  "ny": {
+    "code": "ny",
+    "name": "Nyanja",
+    "localName": "Chi-Chewa",
+    "url": "https://ny.wikipedia.org",
+    "dbName": "nywiki"
+  },
+  "oc": {
+    "code": "oc",
+    "name": "Occitan",
+    "localName": "occitan",
+    "url": "https://oc.wikipedia.org",
+    "dbName": "ocwiki"
+  },
+  "olo": {
+    "code": "olo",
+    "name": "Livvi-Karelian",
+    "localName": "livvinkarjala",
+    "url": "https://olo.wikipedia.org",
+    "dbName": "olowiki"
+  },
+  "om": {
+    "code": "om",
+    "name": "Oromo",
+    "localName": "Oromoo",
+    "url": "https://om.wikipedia.org",
+    "dbName": "omwiki"
+  },
+  "or": {
+    "code": "or",
+    "name": "Odia",
+    "localName": "ଓଡ଼ିଆ",
+    "url": "https://or.wikipedia.org",
+    "dbName": "orwiki"
+  },
+  "os": {
+    "code": "os",
+    "name": "Ossetic",
+    "localName": "ирон",
+    "url": "https://os.wikipedia.org",
+    "dbName": "oswiki"
+  },
+  "pa": {
+    "code": "pa",
+    "name": "Punjabi",
+    "localName": "ਪੰਜਾਬੀ",
+    "url": "https://pa.wikipedia.org",
+    "dbName": "pawiki"
+  },
+  "pag": {
+    "code": "pag",
+    "name": "Pangasinan",
+    "localName": "Pangasinan",
+    "url": "https://pag.wikipedia.org",
+    "dbName": "pagwiki"
+  },
+  "pam": {
+    "code": "pam",
+    "name": "Pampanga",
+    "localName": "Kapampangan",
+    "url": "https://pam.wikipedia.org",
+    "dbName": "pamwiki"
+  },
+  "pap": {
+    "code": "pap",
+    "name": "Papiamento",
+    "localName": "Papiamentu",
+    "url": "https://pap.wikipedia.org",
+    "dbName": "papwiki"
+  },
+  "pcd": {
+    "code": "pcd",
+    "name": "Picard",
+    "localName": "Picard",
+    "url": "https://pcd.wikipedia.org",
+    "dbName": "pcdwiki"
+  },
+  "pcm": {
+    "code": "pcm",
+    "name": "Nigerian Pidgin",
+    "localName": "Naijá",
+    "url": "https://pcm.wikipedia.org",
+    "dbName": "pcmwiki"
+  },
+  "pdc": {
+    "code": "pdc",
+    "name": "Pennsylvania German",
+    "localName": "Deitsch",
+    "url": "https://pdc.wikipedia.org",
+    "dbName": "pdcwiki"
+  },
+  "pfl": {
+    "code": "pfl",
+    "name": "Palatine German",
+    "localName": "Pälzisch",
+    "url": "https://pfl.wikipedia.org",
+    "dbName": "pflwiki"
+  },
+  "pi": {
+    "code": "pi",
+    "name": "Pali",
+    "localName": "पालि",
+    "url": "https://pi.wikipedia.org",
+    "dbName": "piwiki"
+  },
+  "pl": {
+    "code": "pl",
+    "name": "Polish",
+    "localName": "polski",
+    "url": "https://pl.wikipedia.org",
+    "dbName": "plwiki"
+  },
+  "pms": {
+    "code": "pms",
+    "name": "Piedmontese",
+    "localName": "Piemontèis",
+    "url": "https://pms.wikipedia.org",
+    "dbName": "pmswiki"
+  },
+  "pnb": {
+    "code": "pnb",
+    "name": "Western Punjabi",
+    "localName": "پنجابی",
+    "url": "https://pnb.wikipedia.org",
+    "dbName": "pnbwiki"
+  },
+  "pnt": {
+    "code": "pnt",
+    "name": "Pontic",
+    "localName": "Ποντιακά",
+    "url": "https://pnt.wikipedia.org",
+    "dbName": "pntwiki"
+  },
+  "ppl": {
+    "code": "ppl",
+    "name": "Nawat",
+    "localName": "Nawat",
+    "url": "https://ppl.wikipedia.org",
+    "dbName": "pplwiki"
+  },
+  "ps": {
+    "code": "ps",
+    "name": "Pashto",
+    "localName": "پښتو",
+    "url": "https://ps.wikipedia.org",
+    "dbName": "pswiki"
+  },
+  "pt": {
+    "code": "pt",
+    "name": "Portuguese",
+    "localName": "português",
+    "url": "https://pt.wikipedia.org",
+    "dbName": "ptwiki"
+  },
+  "pwn": {
+    "code": "pwn",
+    "name": "Paiwan",
+    "localName": "pinayuanan",
+    "url": "https://pwn.wikipedia.org",
+    "dbName": "pwnwiki"
+  },
+  "qu": {
+    "code": "qu",
+    "name": "Quechua",
+    "localName": "Runa Simi",
+    "url": "https://qu.wikipedia.org",
+    "dbName": "quwiki"
+  },
+  "rki": {
+    "code": "rki",
+    "name": "Arakanese",
+    "localName": "ရခိုင်",
+    "url": "https://rki.wikipedia.org",
+    "dbName": "rkiwiki"
+  },
+  "rm": {
+    "code": "rm",
+    "name": "Romansh",
+    "localName": "rumantsch",
+    "url": "https://rm.wikipedia.org",
+    "dbName": "rmwiki"
+  },
+  "rmy": {
+    "code": "rmy",
+    "name": "Vlax Romani",
+    "localName": "romani čhib",
+    "url": "https://rmy.wikipedia.org",
+    "dbName": "rmywiki"
+  },
+  "rn": {
+    "code": "rn",
+    "name": "Rundi",
+    "localName": "ikirundi",
+    "url": "https://rn.wikipedia.org",
+    "dbName": "rnwiki"
+  },
+  "ro": {
+    "code": "ro",
+    "name": "Romanian",
+    "localName": "română",
+    "url": "https://ro.wikipedia.org",
+    "dbName": "rowiki"
+  },
+  "roa-tara": {
+    "code": "roa-tara",
+    "name": "Tarantino",
+    "localName": "tarandíne",
+    "url": "https://roa-tara.wikipedia.org",
+    "dbName": "roa_tarawiki"
+  },
+  "rsk": {
+    "code": "rsk",
+    "name": "Pannonian Rusyn",
+    "localName": "руски",
+    "url": "https://rsk.wikipedia.org",
+    "dbName": "rskwiki"
+  },
+  "ru": {
+    "code": "ru",
+    "name": "Russian",
+    "localName": "русский",
+    "url": "https://ru.wikipedia.org",
+    "dbName": "ruwiki"
+  },
+  "rue": {
+    "code": "rue",
+    "name": "Rusyn",
+    "localName": "русиньскый",
+    "url": "https://rue.wikipedia.org",
+    "dbName": "ruewiki"
+  },
+  "rup": {
+    "code": "rup",
+    "name": "Aromanian",
+    "localName": "armãneashti",
+    "url": "https://roa-rup.wikipedia.org",
+    "dbName": "roa_rupwiki"
+  },
+  "rw": {
+    "code": "rw",
+    "name": "Kinyarwanda",
+    "localName": "Ikinyarwanda",
+    "url": "https://rw.wikipedia.org",
+    "dbName": "rwwiki"
+  },
+  "sa": {
+    "code": "sa",
+    "name": "Sanskrit",
+    "localName": "संस्कृतम्",
+    "url": "https://sa.wikipedia.org",
+    "dbName": "sawiki"
+  },
+  "sah": {
+    "code": "sah",
+    "name": "Yakut",
+    "localName": "саха тыла",
+    "url": "https://sah.wikipedia.org",
+    "dbName": "sahwiki"
+  },
+  "sat": {
+    "code": "sat",
+    "name": "Santali",
+    "localName": "ᱥᱟᱱᱛᱟᱲᱤ",
+    "url": "https://sat.wikipedia.org",
+    "dbName": "satwiki"
+  },
+  "sc": {
+    "code": "sc",
+    "name": "Sardinian",
+    "localName": "sardu",
+    "url": "https://sc.wikipedia.org",
+    "dbName": "scwiki"
+  },
+  "scn": {
+    "code": "scn",
+    "name": "Sicilian",
+    "localName": "sicilianu",
+    "url": "https://scn.wikipedia.org",
+    "dbName": "scnwiki"
+  },
+  "sco": {
+    "code": "sco",
+    "name": "Scots",
+    "localName": "Scots",
+    "url": "https://sco.wikipedia.org",
+    "dbName": "scowiki"
+  },
+  "sd": {
+    "code": "sd",
+    "name": "Sindhi",
+    "localName": "سنڌي",
+    "url": "https://sd.wikipedia.org",
+    "dbName": "sdwiki"
+  },
+  "se": {
+    "code": "se",
+    "name": "Northern Sami",
+    "localName": "davvisámegiella",
+    "url": "https://se.wikipedia.org",
+    "dbName": "sewiki"
+  },
+  "sg": {
+    "code": "sg",
+    "name": "Sango",
+    "localName": "Sängö",
+    "url": "https://sg.wikipedia.org",
+    "dbName": "sgwiki"
+  },
+  "sgs": {
+    "code": "sgs",
+    "name": "Samogitian",
+    "localName": "žemaitėška",
+    "url": "https://bat-smg.wikipedia.org",
+    "dbName": "bat_smgwiki"
+  },
+  "sh": {
+    "code": "sh",
+    "name": "Serbo-Croatian",
+    "localName": "srpskohrvatski / српскохрватски",
+    "url": "https://sh.wikipedia.org",
+    "dbName": "shwiki"
+  },
+  "shi": {
+    "code": "shi",
+    "name": "Tachelhit",
+    "localName": "Taclḥit",
+    "url": "https://shi.wikipedia.org",
+    "dbName": "shiwiki"
+  },
+  "shn": {
+    "code": "shn",
+    "name": "Shan",
+    "localName": "တႆး",
+    "url": "https://shn.wikipedia.org",
+    "dbName": "shnwiki"
+  },
+  "si": {
+    "code": "si",
+    "name": "Sinhala",
+    "localName": "සිංහල",
+    "url": "https://si.wikipedia.org",
+    "dbName": "siwiki"
+  },
+  "simple": {
+    "code": "simple",
+    "name": "Simple English",
+    "localName": "Simple English",
+    "url": "https://simple.wikipedia.org",
+    "dbName": "simplewiki"
+  },
+  "sk": {
+    "code": "sk",
+    "name": "Slovak",
+    "localName": "slovenčina",
+    "url": "https://sk.wikipedia.org",
+    "dbName": "skwiki"
+  },
+  "skr": {
+    "code": "skr",
+    "name": "Saraiki",
+    "localName": "سرائیکی",
+    "url": "https://skr.wikipedia.org",
+    "dbName": "skrwiki"
+  },
+  "sl": {
+    "code": "sl",
+    "name": "Slovenian",
+    "localName": "slovenščina",
+    "url": "https://sl.wikipedia.org",
+    "dbName": "slwiki"
+  },
+  "sm": {
+    "code": "sm",
+    "name": "Samoan",
+    "localName": "Gagana Samoa",
+    "url": "https://sm.wikipedia.org",
+    "dbName": "smwiki"
+  },
+  "smn": {
+    "code": "smn",
+    "name": "Inari Sami",
+    "localName": "anarâškielâ",
+    "url": "https://smn.wikipedia.org",
+    "dbName": "smnwiki"
+  },
+  "sn": {
+    "code": "sn",
+    "name": "Shona",
+    "localName": "chiShona",
+    "url": "https://sn.wikipedia.org",
+    "dbName": "snwiki"
+  },
+  "so": {
+    "code": "so",
+    "name": "Somali",
+    "localName": "Soomaaliga",
+    "url": "https://so.wikipedia.org",
+    "dbName": "sowiki"
+  },
+  "sq": {
+    "code": "sq",
+    "name": "Albanian",
+    "localName": "shqip",
+    "url": "https://sq.wikipedia.org",
+    "dbName": "sqwiki"
+  },
+  "sr": {
+    "code": "sr",
+    "name": "Serbian",
+    "localName": "српски / srpski",
+    "url": "https://sr.wikipedia.org",
+    "dbName": "srwiki"
+  },
+  "srn": {
+    "code": "srn",
+    "name": "Sranan Tongo",
+    "localName": "Sranantongo",
+    "url": "https://srn.wikipedia.org",
+    "dbName": "srnwiki"
+  },
+  "ss": {
+    "code": "ss",
+    "name": "Swati",
+    "localName": "SiSwati",
+    "url": "https://ss.wikipedia.org",
+    "dbName": "sswiki"
+  },
+  "st": {
+    "code": "st",
+    "name": "Southern Sotho",
+    "localName": "Sesotho",
+    "url": "https://st.wikipedia.org",
+    "dbName": "stwiki"
+  },
+  "stq": {
+    "code": "stq",
+    "name": "Saterland Frisian",
+    "localName": "Seeltersk",
+    "url": "https://stq.wikipedia.org",
+    "dbName": "stqwiki"
+  },
+  "su": {
+    "code": "su",
+    "name": "Sundanese",
+    "localName": "Sunda",
+    "url": "https://su.wikipedia.org",
+    "dbName": "suwiki"
+  },
+  "sv": {
+    "code": "sv",
+    "name": "Swedish",
+    "localName": "svenska",
+    "url": "https://sv.wikipedia.org",
+    "dbName": "svwiki"
+  },
+  "sw": {
+    "code": "sw",
+    "name": "Swahili",
+    "localName": "Kiswahili",
+    "url": "https://sw.wikipedia.org",
+    "dbName": "swwiki"
+  },
+  "syl": {
+    "code": "syl",
+    "name": "Sylheti",
+    "localName": "ꠍꠤꠟꠐꠤ",
+    "url": "https://syl.wikipedia.org",
+    "dbName": "sylwiki"
+  },
+  "szl": {
+    "code": "szl",
+    "name": "Silesian",
+    "localName": "ślůnski",
+    "url": "https://szl.wikipedia.org",
+    "dbName": "szlwiki"
+  },
+  "szy": {
+    "code": "szy",
+    "name": "Sakizaya",
+    "localName": "Sakizaya",
+    "url": "https://szy.wikipedia.org",
+    "dbName": "szywiki"
+  },
+  "ta": {
+    "code": "ta",
+    "name": "Tamil",
+    "localName": "தமிழ்",
+    "url": "https://ta.wikipedia.org",
+    "dbName": "tawiki"
+  },
+  "tay": {
+    "code": "tay",
+    "name": "Atayal",
+    "localName": "Tayal",
+    "url": "https://tay.wikipedia.org",
+    "dbName": "taywiki"
+  },
+  "tcy": {
+    "code": "tcy",
+    "name": "Tulu",
+    "localName": "ತುಳು",
+    "url": "https://tcy.wikipedia.org",
+    "dbName": "tcywiki"
+  },
+  "tdd": {
+    "code": "tdd",
+    "name": "Tai Nuea",
+    "localName": "ᥖᥭᥰ ᥖᥬᥲ ᥑᥨᥒᥰ",
+    "url": "https://tdd.wikipedia.org",
+    "dbName": "tddwiki"
+  },
+  "te": {
+    "code": "te",
+    "name": "Telugu",
+    "localName": "తెలుగు",
+    "url": "https://te.wikipedia.org",
+    "dbName": "tewiki"
+  },
+  "tet": {
+    "code": "tet",
+    "name": "Tetum",
+    "localName": "tetun",
+    "url": "https://tet.wikipedia.org",
+    "dbName": "tetwiki"
+  },
+  "tg": {
+    "code": "tg",
+    "name": "Tajik",
+    "localName": "тоҷикӣ",
+    "url": "https://tg.wikipedia.org",
+    "dbName": "tgwiki"
+  },
+  "th": {
+    "code": "th",
+    "name": "Thai",
+    "localName": "ไทย",
+    "url": "https://th.wikipedia.org",
+    "dbName": "thwiki"
+  },
+  "ti": {
+    "code": "ti",
+    "name": "Tigrinya",
+    "localName": "ትግርኛ",
+    "url": "https://ti.wikipedia.org",
+    "dbName": "tiwiki"
+  },
+  "tig": {
+    "code": "tig",
+    "name": "Tigre",
+    "localName": "ትግሬ",
+    "url": "https://tig.wikipedia.org",
+    "dbName": "tigwiki"
+  },
+  "tk": {
+    "code": "tk",
+    "name": "Turkmen",
+    "localName": "Türkmençe",
+    "url": "https://tk.wikipedia.org",
+    "dbName": "tkwiki"
+  },
+  "tl": {
+    "code": "tl",
+    "name": "Tagalog",
+    "localName": "Tagalog",
+    "url": "https://tl.wikipedia.org",
+    "dbName": "tlwiki"
+  },
+  "tly": {
+    "code": "tly",
+    "name": "Talysh",
+    "localName": "tolışi",
+    "url": "https://tly.wikipedia.org",
+    "dbName": "tlywiki"
+  },
+  "tn": {
+    "code": "tn",
+    "name": "Tswana",
+    "localName": "Setswana",
+    "url": "https://tn.wikipedia.org",
+    "dbName": "tnwiki"
+  },
+  "to": {
+    "code": "to",
+    "name": "Tongan",
+    "localName": "lea faka-Tonga",
+    "url": "https://to.wikipedia.org",
+    "dbName": "towiki"
+  },
+  "tok": {
+    "code": "tok",
+    "name": "Toki Pona",
+    "localName": "toki pona",
+    "url": "https://tok.wikipedia.org",
+    "dbName": "tokwiki"
+  },
+  "tpi": {
+    "code": "tpi",
+    "name": "Tok Pisin",
+    "localName": "Tok Pisin",
+    "url": "https://tpi.wikipedia.org",
+    "dbName": "tpiwiki"
+  },
+  "tr": {
+    "code": "tr",
+    "name": "Turkish",
+    "localName": "Türkçe",
+    "url": "https://tr.wikipedia.org",
+    "dbName": "trwiki"
+  },
+  "trv": {
+    "code": "trv",
+    "name": "Taroko",
+    "localName": "Seediq",
+    "url": "https://trv.wikipedia.org",
+    "dbName": "trvwiki"
+  },
+  "ts": {
+    "code": "ts",
+    "name": "Tsonga",
+    "localName": "Xitsonga",
+    "url": "https://ts.wikipedia.org",
+    "dbName": "tswiki"
+  },
+  "tt": {
+    "code": "tt",
+    "name": "Tatar",
+    "localName": "татарча / tatarça",
+    "url": "https://tt.wikipedia.org",
+    "dbName": "ttwiki"
+  },
+  "tum": {
+    "code": "tum",
+    "name": "Tumbuka",
+    "localName": "chiTumbuka",
+    "url": "https://tum.wikipedia.org",
+    "dbName": "tumwiki"
+  },
+  "tw": {
+    "code": "tw",
+    "name": "Twi",
+    "localName": "Twi",
+    "url": "https://tw.wikipedia.org",
+    "dbName": "twwiki"
+  },
+  "ty": {
+    "code": "ty",
+    "name": "Tahitian",
+    "localName": "reo tahiti",
+    "url": "https://ty.wikipedia.org",
+    "dbName": "tywiki"
+  },
+  "tyv": {
+    "code": "tyv",
+    "name": "Tuvinian",
+    "localName": "тыва дыл",
+    "url": "https://tyv.wikipedia.org",
+    "dbName": "tyvwiki"
+  },
+  "udm": {
+    "code": "udm",
+    "name": "Udmurt",
+    "localName": "удмурт",
+    "url": "https://udm.wikipedia.org",
+    "dbName": "udmwiki"
+  },
+  "ug": {
+    "code": "ug",
+    "name": "Uyghur",
+    "localName": "ئۇيغۇرچە / Uyghurche",
+    "url": "https://ug.wikipedia.org",
+    "dbName": "ugwiki"
+  },
+  "uk": {
+    "code": "uk",
+    "name": "Ukrainian",
+    "localName": "українська",
+    "url": "https://uk.wikipedia.org",
+    "dbName": "ukwiki"
+  },
+  "ur": {
+    "code": "ur",
+    "name": "Urdu",
+    "localName": "اردو",
+    "url": "https://ur.wikipedia.org",
+    "dbName": "urwiki"
+  },
+  "uz": {
+    "code": "uz",
+    "name": "Uzbek",
+    "localName": "oʻzbekcha / ўзбекча",
+    "url": "https://uz.wikipedia.org",
+    "dbName": "uzwiki"
+  },
+  "ve": {
+    "code": "ve",
+    "name": "Venda",
+    "localName": "Tshivenda",
+    "url": "https://ve.wikipedia.org",
+    "dbName": "vewiki"
+  },
+  "vec": {
+    "code": "vec",
+    "name": "Venetian",
+    "localName": "vèneto",
+    "url": "https://vec.wikipedia.org",
+    "dbName": "vecwiki"
+  },
+  "vep": {
+    "code": "vep",
+    "name": "Veps",
+    "localName": "vepsän kel’",
+    "url": "https://vep.wikipedia.org",
+    "dbName": "vepwiki"
+  },
+  "vi": {
+    "code": "vi",
+    "name": "Vietnamese",
+    "localName": "Tiếng Việt",
+    "url": "https://vi.wikipedia.org",
+    "dbName": "viwiki"
+  },
+  "vls": {
+    "code": "vls",
+    "name": "West Flemish",
+    "localName": "West-Vlams",
+    "url": "https://vls.wikipedia.org",
+    "dbName": "vlswiki"
+  },
+  "vo": {
+    "code": "vo",
+    "name": "Volapük",
+    "localName": "Volapük",
+    "url": "https://vo.wikipedia.org",
+    "dbName": "vowiki"
+  },
+  "vro": {
+    "code": "vro",
+    "name": "Võro",
+    "localName": "võro",
+    "url": "https://fiu-vro.wikipedia.org",
+    "dbName": "fiu_vrowiki"
+  },
+  "wa": {
+    "code": "wa",
+    "name": "Walloon",
+    "localName": "walon",
+    "url": "https://wa.wikipedia.org",
+    "dbName": "wawiki"
+  },
+  "war": {
+    "code": "war",
+    "name": "Waray",
+    "localName": "Winaray",
+    "url": "https://war.wikipedia.org",
+    "dbName": "warwiki"
+  },
+  "wo": {
+    "code": "wo",
+    "name": "Wolof",
+    "localName": "Wolof",
+    "url": "https://wo.wikipedia.org",
+    "dbName": "wowiki"
+  },
+  "wuu": {
+    "code": "wuu",
+    "name": "Wu",
+    "localName": "吴语",
+    "url": "https://wuu.wikipedia.org",
+    "dbName": "wuuwiki"
+  },
+  "xal": {
+    "code": "xal",
+    "name": "Kalmyk",
+    "localName": "хальмг",
+    "url": "https://xal.wikipedia.org",
+    "dbName": "xalwiki"
+  },
+  "xh": {
+    "code": "xh",
+    "name": "Xhosa",
+    "localName": "isiXhosa",
+    "url": "https://xh.wikipedia.org",
+    "dbName": "xhwiki"
+  },
+  "xmf": {
+    "code": "xmf",
+    "name": "Mingrelian",
+    "localName": "მარგალური",
+    "url": "https://xmf.wikipedia.org",
+    "dbName": "xmfwiki"
+  },
+  "yi": {
+    "code": "yi",
+    "name": "Yiddish",
+    "localName": "ייִדיש",
+    "url": "https://yi.wikipedia.org",
+    "dbName": "yiwiki"
+  },
+  "yo": {
+    "code": "yo",
+    "name": "Yoruba",
+    "localName": "Yorùbá",
+    "url": "https://yo.wikipedia.org",
+    "dbName": "yowiki"
+  },
+  "yue": {
+    "code": "yue",
+    "name": "Cantonese",
+    "localName": "粵語",
+    "url": "https://zh-yue.wikipedia.org",
+    "dbName": "zh_yuewiki"
+  },
+  "za": {
+    "code": "za",
+    "name": "Zhuang",
+    "localName": "Vahcuengh",
+    "url": "https://za.wikipedia.org",
+    "dbName": "zawiki"
+  },
+  "zea": {
+    "code": "zea",
+    "name": "Zeelandic",
+    "localName": "Zeêuws",
+    "url": "https://zea.wikipedia.org",
+    "dbName": "zeawiki"
+  },
+  "zgh": {
+    "code": "zgh",
+    "name": "Standard Moroccan Tamazight",
+    "localName": "ⵜⴰⵎⴰⵣⵉⵖⵜ ⵜⴰⵏⴰⵡⴰⵢⵜ",
+    "url": "https://zgh.wikipedia.org",
+    "dbName": "zghwiki"
+  },
+  "zh": {
+    "code": "zh",
+    "name": "Chinese",
+    "localName": "中文",
+    "url": "https://zh.wikipedia.org",
+    "dbName": "zhwiki"
+  },
+  "zu": {
+    "code": "zu",
+    "name": "Zulu",
+    "localName": "isiZulu",
+    "url": "https://zu.wikipedia.org",
+    "dbName": "zuwiki"
+  }
+}
