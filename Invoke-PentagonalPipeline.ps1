@@ -15,10 +15,10 @@ begin {
   $root=[IO.Path]::GetFullPath($PSScriptRoot)
   $exe=if($IsWindows){'fastest_whisper_pxor_adapter.exe'}else{'fastest_whisper_pxor_adapter'}
   $guardExe=if($IsWindows){'swe_guard.exe'}else{'swe_guard'}
-  $adapter=@((Join-Path $root "$BuildDir/Release/$exe"),(Join-Path $root "$BuildDir/$exe")) |
+  $adapter=@((Join-Path $root "$BuildDir/Release/$exe"),(Join-Path $root "$BuildDir/$exe"),(Join-Path $root $exe)) |
     Where-Object {Test-Path -LiteralPath $_ -PathType Leaf} | Select-Object -First 1
   $guard=@((Join-Path $root "$BuildDir/canonical-guard/Release/$guardExe"),
-           (Join-Path $root "$BuildDir/canonical-guard/$guardExe")) |
+           (Join-Path $root "$BuildDir/canonical-guard/$guardExe"),(Join-Path $root $guardExe)) |
     Where-Object {Test-Path -LiteralPath $_ -PathType Leaf} | Select-Object -First 1
   if(!$adapter -or !$guard) {
     throw 'Build the canonical C++20/C11 submodule first: git submodule update --init --recursive; cmake -S . -B build-pxor; cmake --build build-pxor --config Release'
