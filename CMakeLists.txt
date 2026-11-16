@@ -30,3 +30,11 @@ if(BUILD_TESTING)
   set_tests_properties(canonical_bridge_invalid_nan PROPERTIES WILL_FAIL TRUE)
 endif()
 install(TARGETS fastest_whisper_pxor_adapter RUNTIME DESTINATION bin)
+# Install the original metadata guard and a complete source snapshot.
+# These files are unchanged upstream bytes, not generated algorithm clones.
+install(TARGETS swe_guard RUNTIME DESTINATION bin)
+install(DIRECTORY "${SWE_UPSTREAM_ROOT}/"
+  DESTINATION share/source/pentagonal-xor-cpp20
+  PATTERN ".git" EXCLUDE)
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/PENTAGONAL_XOR_PROVENANCE.md"
+  DESTINATION share/doc/fastest-whisper-10d)

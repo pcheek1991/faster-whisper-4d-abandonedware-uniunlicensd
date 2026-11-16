@@ -23,3 +23,5 @@ Each Shared Guard run must check the Git gitlink and submodule checkout SHA matc
 Upstream project-owned source is 0BSD. The inherited faster-whisper repository also contains upstream MIT components; neither license overrides third-party Android SDK, OS, compiler, Docker layer or model licenses. Packaging must remain clearly labeled *weight-free numerical analysis and provenance tooling*, **not speech-to-text** or a signed production Android release. Docker Hub publication and external uploads are not authorized by Shared Guard validation alone. Deployment is tag-gated, checks code and tests again, and releases only the explicitly packaged numerical module.
 
 No source history or evidence failure is deleted or reclassified as success.
+
+The release package installs the original upstream executable, the original C11/C++20 headers, the original `swe_guard` binary, the thin adapter, original documentation, and a full version-pinned source snapshot (excluding Git administrative data). Upstream Android SDK, Docker image layers, and third-party binaries are never silently bundled under the project's 0BSD license.

@@ -411,3 +411,13 @@ If you are comparing the performance against other Whisper implementations, you 
 ```bash
 OMP_NUM_THREADS=4 python3 my_script.py
 ```
+
+## Canonical Pentagonal XOR integration in PR #17
+
+The numerical operator source of truth is **not a rewritten faster-whisper algorithm**. This PR pins the unmodified [Pentagonal XOR C++20 source](https://github.com/Simply-Well-Executed/pentagonal-xor-cpp20) at commit `fb23b40480476c98e992762ace37761b6fd8ba0e` as `external/pentagonal-xor-cpp20`. Run `git submodule update --init --recursive` to check it out. All original C++20/C11 targets, source fixtures, and their tests build from the upstream source; the adapter only handles CLI input/output.
+
+The source includes parity/AND/OR/partial/fifth-root scoring, strict C11 macros for Windows/Linux/Android/Unix, DecaSigma, TriPi, COREAO and RF gain, Stability-10D and hexabyte, COREO stereo inversion, counterarccosine tests, metadata trust guard, Android study material, and Docker/CI validation definitions. Some were experimental, and **the upstream Stability-10D and stereo COREO files explicitly credit this PR as their original protocol source**. The history runs in both directions.
+
+[Source-to-feature provenance, boundaries, and CI gates](docs/PENTAGONAL_XOR_PROVENANCE.md). The new `Shared Guard · canonical Pentagonal XOR and deployment` workflow builds upstream verbatim on Windows, Linux and macOS, verifies PR #17 PowerShell compatibility, and runs the upstream pinned container guards. Only `v*` tag pushes can publish a checksummed **numerical module** after successful gates; this does not claim trained Whisper transcription or a signed Android release.
+
+Local PowerShell 7 validation: `./ci/Invoke-SharedGuard.ps1 -Mode Test` after submodule initialization.
