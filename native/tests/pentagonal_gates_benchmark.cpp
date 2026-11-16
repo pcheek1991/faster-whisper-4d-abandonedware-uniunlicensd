@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <iomanip>
 #include <iostream>
+#include <utility>
 
 namespace {
 using swe::pentagonal::boolean_gates;
