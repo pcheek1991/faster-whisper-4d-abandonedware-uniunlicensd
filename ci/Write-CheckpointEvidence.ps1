@@ -18,7 +18,7 @@ $sourceFingerprints = [Collections.Generic.List[object]]::new()
 foreach ($name in ($tracked | Sort-Object)) {
     $source = Join-Path $root $name
     if (!(Test-Path -LiteralPath $source -PathType Leaf)) { continue }
-    $item = Get-Item -LiteralPath $source
+    $item = Get-Item -LiteralPath $source -Force
     $sourceFingerprints.Add([ordered]@{
         path = $name.Replace('\', '/')
         bytes = $item.Length
@@ -35,7 +35,7 @@ foreach ($tool in @('pwsh','git','dotnet','python','clang','cl.exe')) {
     $executables.Add([ordered]@{
         tool = $tool
         path = $cmd.Source
-        bytes = (Get-Item -LiteralPath $cmd.Source).Length
+        bytes = (Get-Item -LiteralPath $cmd.Source -Force).Length
         sha256 = Get-Sha256 $cmd.Source
         redistributed = $false
     })
