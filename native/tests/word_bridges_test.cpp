@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 #include "word_bridges.hpp"
+#ifdef NDEBUG
+#undef NDEBUG
+#endif
 #include <cassert>
 #include <sstream>
 int main() {
