@@ -31,8 +31,16 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: 'Android SDK (pinned)'
-        uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3.2.2
+      # The GitHub-hosted Ubuntu runner already contains the Android SDK.
+      # A third-party setup action failed trying to install obsolete
+      # sdkmanager 'tools'; retain that failure in CI history.
+      - name: 'Validate preinstalled Android SDK'
+        shell: pwsh
+        run: |
+          if (!(Get-Command sdkmanager -ErrorAction SilentlyContinue)) {
+            throw 'Android sdkmanager is unavailable on the selected runner.'
+          }
+          Write-Host "SDK location: $env:ANDROID_HOME"
 
       - name: 'Install pinned Android platform and build tools'
         shell: pwsh
