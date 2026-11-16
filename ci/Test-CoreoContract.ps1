@@ -73,13 +73,15 @@ function Get-Scalar([float[]] $source, [float[]] $actual) {
     $largest = [double]0.0
     for ($i = 0; $i -lt $frames; $i++) {
         $j = $frames - $i - 1
+        # Parenthesize each scalar; PowerShell's comma operator can bind
+        # more tightly than addition, manufacturing an Object[] operand.
         $relations = @(
-            [double]$actual[4*$i] + [double]$source[2*$j],
-            [double]$actual[4*$i+1] + [double]$source[2*$j+1],
-            [double]$actual[4*$i+2] + [double]$source[2*$i],
-            [double]$actual[4*$i+3] + [double]$source[2*$i+1],
-            [double]$actual[4*$i] - [double]$actual[4*$j+2],
-            [double]$actual[4*$i+1] - [double]$actual[4*$j+3]
+            ([double]$actual[4*$i] + [double]$source[2*$j])
+            ([double]$actual[4*$i+1] + [double]$source[2*$j+1])
+            ([double]$actual[4*$i+2] + [double]$source[2*$i])
+            ([double]$actual[4*$i+3] + [double]$source[2*$i+1])
+            ([double]$actual[4*$i] - [double]$actual[4*$j+2])
+            ([double]$actual[4*$i+1] - [double]$actual[4*$j+3])
         )
         foreach ($residual in $relations) {
             $largest = [Math]::Max($largest, [Math]::Abs($residual))
