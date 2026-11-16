@@ -199,7 +199,8 @@ void report(const Options& o) {
     const auto trace=deca_sigma::run(o.deca.value_or(2.0));
     if(!trace.admissible||!deca_sigma::witnesses_return(trace))
         throw std::invalid_argument("Original DecaSigma witness rejected CORE");
-    const auto tri=tri_pi::inspect(trace), core=coreao::inspect(trace);
+    const auto tri=tri_pi::inspect(trace);
+    const auto core=coreao::inspect(trace);
     if(!tri.passed()||!core.passed())
         throw std::invalid_argument("Original route audit failed");
 

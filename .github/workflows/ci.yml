@@ -69,7 +69,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cmake --build build-native --config Release --parallel 2
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: CTest: original parity, gain, native acoustic and 348 languages
+      - name: 'CTest validates parity, gain, native acoustic and 348 languages'
         shell: pwsh
         run: |
           ctest --test-dir build-native -C Release --output-on-failure
