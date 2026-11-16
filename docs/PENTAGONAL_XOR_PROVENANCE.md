@@ -56,3 +56,33 @@ The *original* five-channel metadata trust guard remains executable separately a
 The originating `shared/coreao_gain.hpp` returns `gain_dbi=9`, `gain_linear=7.943282347242816`, `output_eirp_watts=7.943282347242816` for `input_watts=1` and a recovered input of 1. The result is an idealized **equivalent isotropic radiated power in a reference direction** under explicit no-loss assumptions. It is not actual total radiated power or an antenna measurement. **It does not amplify audio, change Whisper inference, imply a +9 dB digital signal multiplier, or produce a transcript.** Negative, nonfinite and overflow power inputs fail closed.
 
 Shared Guard invokes `ci/Test-CanonicalFeatureSurface.ps1` across its Windows/Linux/macOS native matrix and executes all upstream CTest tests. The PowerShell test compares the +9 dBi gain, power factor, field factor, recovered input, zero, negative and overflow guard with the original API. It also tests every other bridge mode and COREO inverse. The package dry-run exercises the same gates before release and checks the installed original binaries.
+
+
+## Default-on PowerShell pipeline and adjustable dBi gain
+
+The simpler CLI is `Invoke-PentagonalPipeline.ps1`. It **runs every applicable public upstream operator automatically**. With no supplied source measurements, it executes original algorithms on *explicitly marked synthetic reference fixtures* rather than inventing microphone readings, RF wattage, or security authorization. It always runs the upstream metadata guard self-test; **actual metadata approval still requires an explicit record**.
+
+```powershell
+# No switches: all operator families execute; reference fixture markers are mandatory.
+./Invoke-PentagonalPipeline.ps1
+
+# RF gain is +9 dBi by default. Override to +11 dBi without selecting a mode.
+./Invoke-PentagonalPipeline.ps1 -Watts 1 -GainDbi 11
+
+# PowerShell object piping, with record-level gain winning over CLI default:
+@{ watts = 1; gain_dbi = 11; deca_input = 2;
+   features = @(0.8,0.7,0.9,0.6,0.95);
+   stereo = @(1,-2,3,-4) } | ./Invoke-PentagonalPipeline.ps1
+
+# A one-number pipe also means "override gain_dbi".
+11 | ./Invoke-PentagonalPipeline.ps1 -Watts 1
+
+# Native C++ CLI accepts a piped dBi scalar after '-' (dash marks stdin).
+'11' | ./build-pxor/fastest_whisper_pxor_adapter gain 1 '-'
+```
+
+For multiline JSONL, pipe a line-per-record input into the PowerShell script; each JSON object produces one JSON output record. Input schema supports `watts`, `gain_dbi`, `features` (five), `ligands` (nine), `measurements` (nine original CORE values), `deca_input`, `fifth_root_input`, `stereo` (ordered L/R float32 frame pairs), `raw_stereo_float32_path`, and `metadata` with `url,path,sha256,artifact`. Explicit numeric inputs must be finite and within the original domain; contradictory input sources fail rather than silently picking one. Per-record `gain_dbi` overrides explicit `-GainDbi` which overrides the **+9 dBi default**.
+
+**Provenance boundary**: +9 dBi runs the **verbatim** `swe::coreao::rf_gain::apply` function at pinned SHA `fb23b40480476c98e992762ace37761b6fd8ba0e`. A request for +11 dBi applies the separately labeled `downstream-rf-dbi-offset-v1` extension to its original output: `P(+11)=P(+9)*10^((11-9)/10)`. One conducted watt therefore yields approximately `12.589254 W` idealized EIRP. This extension is **not claimed as part of the original fixed +9 dBi header** and does not amplify audio or modify Whisper inference. It respects the upstream fail-closed watts domain and adds finite gain/output/roundtrip checks. Valid gain range: `[-100,+100] dBi`.
+
+The original counterarccosine second wave remains a documented, executable **upstream CTest research witness**, not an invented production runtime API. The original five-channel trust guard remains the authoritative security decision, not a parity proxy. The entire pinned original source tree is installed alongside the standalone CLI. CI runs both upstream tests and `ci/Test-DefaultOnPipeline.ps1` across all native targets and executes the **installed CLI inside the unsigned numerical ZIP dry-run**.

@@ -428,3 +428,24 @@ Local PowerShell 7 validation: `./ci/Invoke-SharedGuard.ps1 -Mode Test` after su
 `fastest_whisper_pxor_adapter gain9dbi 1` now calls upstream `swe::coreao::rf_gain::apply(1.0)` directly, returning **+9 dBi / 7.943282347242816× idealized directional RF EIRP** from 1 W conducted input. It checks input admissibility, reconstructed input and normalized residual, and rejects negative/overflow values. **This is RF gain, not audio loudness gain or a Whisper neural-network multiplier.**
 
 The same bridge now exposes parity, all five scores, signed fifth-root, Stability-10D, DecaSigma, TriPi, scalar COREAO, reversible stereo COREO and OS compile-target flags. The independent original metadata trust guard and counterarccosine research test stay in the upstream build/test suite. See [canonical CLI modes and source attribution](docs/PENTAGONAL_XOR_PROVENANCE.md). Shared Guard verifies the modes on its platform matrix, including original +9 dBi golden and invalid-domain tests.
+
+
+### Default-on operations with configurable RF gain
+
+One no-switch command now orchestrates the original Pentagonal XOR parity, all five scores, fifth root, 9-ligand Stability, DecaSigma, TriPi, scalar COREAO, reversible stereo COREO, OS compile-target metadata and the original five-channel trust-guard self-test:
+
+```powershell
+./Invoke-PentagonalPipeline.ps1
+
+# Supply measured RF conducted watts and request +11 dBi, without mode switches:
+./Invoke-PentagonalPipeline.ps1 -Watts 1 -GainDbi 11
+
+# Or pipe a new gain value. Every original operator still runs:
+11 | ./Invoke-PentagonalPipeline.ps1 -Watts 1
+
+# JSONL and PowerShell objects can supply all original operands per record:
+@{ watts=1; gain_dbi=11; features=@(0.8,0.7,0.9,0.6,0.95); deca_input=2 } |
+  ./Invoke-PentagonalPipeline.ps1
+```
+
+Piped record gain overrides CLI gain; if neither exists the **original +9 dBi path is used verbatim**. +11 dBi is a clearly labeled downstream RF EIRP extension, not a revised upstream algorithm or +11 dB audio boost. If operands are missing, reference fixture results are explicitly labeled as *not measurements*. [Complete schema, provenance and security boundaries](docs/PENTAGONAL_XOR_PROVENANCE.md).

@@ -49,6 +49,14 @@ if(BUILD_TESTING)
   set_tests_properties(canonical_bridge_coreao_gain9dbi_overflow PROPERTIES WILL_FAIL TRUE)
   add_test(NAME canonical_bridge_coreo_stereo COMMAND fastest_whisper_pxor_adapter coreo-stereo 1 -2 3 -4)
   set_tests_properties(canonical_bridge_coreo_stereo PROPERTIES PASS_REGULAR_EXPRESSION "largest_disagreement")
+  add_test(NAME canonical_gain_default9 COMMAND fastest_whisper_pxor_adapter gain 1)
+  set_tests_properties(canonical_gain_default9 PROPERTIES PASS_REGULAR_EXPRESSION "original-fixed-9dbi")
+  add_test(NAME canonical_gain_explicit11 COMMAND fastest_whisper_pxor_adapter gain 1 11)
+  set_tests_properties(canonical_gain_explicit11 PROPERTIES PASS_REGULAR_EXPRESSION "downstream-rf-dbi-offset-v1")
+  add_test(NAME canonical_gain_reject101 COMMAND fastest_whisper_pxor_adapter gain 1 101)
+  set_tests_properties(canonical_gain_reject101 PROPERTIES WILL_FAIL TRUE)
+  add_test(NAME canonical_gain_reject_nonfinite COMMAND fastest_whisper_pxor_adapter gain 1 nan)
+  set_tests_properties(canonical_gain_reject_nonfinite PROPERTIES WILL_FAIL TRUE)
   add_test(NAME canonical_bridge_platform_macros COMMAND fastest_whisper_pxor_adapter platform)
   set_tests_properties(canonical_bridge_platform_macros PROPERTIES PASS_REGULAR_EXPRESSION "std_free_backend")
 endif()
@@ -61,3 +69,12 @@ install(DIRECTORY "${SWE_UPSTREAM_ROOT}/"
   PATTERN ".git" EXCLUDE)
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/PENTAGONAL_XOR_PROVENANCE.md"
   DESTINATION share/doc/fastest-whisper-10d)
+
+# Bundle one-command operation and its original acoustic measurement support.
+# Installed path is bin/ and subdirectory bin/ci, preserving script-relative paths.
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/Invoke-PentagonalPipeline.ps1"
+  DESTINATION bin)
+install(FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/ci/Measure-10D.ps1"
+  "${CMAKE_CURRENT_SOURCE_DIR}/ci/Stability.ps1"
+  DESTINATION bin/ci)
