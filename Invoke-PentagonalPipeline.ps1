@@ -33,7 +33,7 @@ begin {
     $n=[double]0
     if(![double]::TryParse([string]$v,[Globalization.NumberStyles]::Float,
       $culture,[ref]$n) -or [double]::IsNaN($n) -or [double]::IsInfinity($n)){
-      throw "Invalid $field: expected finite numeric value."
+      throw ("Invalid {0}: expected finite numeric value." -f $field)
     }
     return $n
   }
