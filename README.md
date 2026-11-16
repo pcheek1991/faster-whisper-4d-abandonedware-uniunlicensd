@@ -37,3 +37,18 @@ The offline registry preserves codes, English names and autonyms for 348 active 
 [Native validation](VALIDATION.md) | [Source provenance](docs/PENTAGONAL_XOR_PROVENANCE.md) | [Rights](docs/RIGHTS_REVIEW.md)
 
 Previous application sources and packaging manifests remain discoverable in Git history, but are retired from the current tree. Retirement is not erasure, transfer of authorship or authorization to modify the pinned upstream algorithm.
+
+
+## PENTAGONAL control family (experimental)
+
+The native C++20 extension implements PENTAGONAL-OR, -AND, -NOP,
+-COR, -VISTA and the six-stage FLOP return around the unchanged XOR.
+The application sequence is **XOR → OR → AND → NOP → COR → FLOP ↺**
+No extra XOR executes at the return point. The COR audit's separate
+OR → XOR → AND entry-gate bypass is retained for compatibility.
+
+Read [the full operator, provenance, MCU and optimization study](docs/PENTAGONAL_GATE_CASCADE.md).
+Build and run the separate `pentagonal_control` executable for a
+structured VISTA JSON report; the pre-existing command remains unchanged.
+Missing independently authenticated witnesses are identified, never
+silently presumed valid.
