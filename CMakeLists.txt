@@ -175,3 +175,17 @@ if(BUILD_TESTING)
   set_tests_properties(diamond_depth_three_benchmark PROPERTIES
     PASS_REGULAR_EXPRESSION "Interpretation")
 endif()
+
+
+# Supplier-side GAMP 4-style verification, preserving the pinned gitlink.
+if(BUILD_TESTING)
+  add_executable(pentagonal_gamp4_integration_test
+                 native/tests/pentagonal_gamp4_validation_test.cpp)
+  target_include_directories(pentagonal_gamp4_integration_test PRIVATE
+    native external/pentagonal-xor-cpp20/shared)
+  target_compile_features(pentagonal_gamp4_integration_test PRIVATE cxx_std_20)
+  add_test(NAME diamond_gamp4_pentagonal_urs_11_to_22
+           COMMAND pentagonal_gamp4_integration_test)
+endif()
+install(FILES docs/PENTAGONAL_GAMP4_VALIDATION.md
+        DESTINATION share/doc/diamond)
