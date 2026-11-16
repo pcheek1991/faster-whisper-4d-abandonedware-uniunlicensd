@@ -140,3 +140,22 @@ if(ANDROID)
   target_compile_features(diamond_android PRIVATE cxx_std_20)
   target_link_libraries(diamond_android PRIVATE android log)
 endif()
+
+
+# Experimental controller complements, but does not replace, the pinned
+# upstream submodule or the default DIAMOND executable.
+if(BUILD_TESTING)
+  add_executable(pentagonal_gates_integration_test native/tests/pentagonal_gates_test.cpp)
+  target_include_directories(pentagonal_gates_integration_test PRIVATE
+    native external/pentagonal-xor-cpp20/shared)
+  target_compile_features(pentagonal_gates_integration_test PRIVATE cxx_std_20)
+  add_test(NAME diamond_pentagonal_gates_cor_vista_flop
+           COMMAND pentagonal_gates_integration_test)
+  add_executable(pentagonal_gates_integration_benchmark
+                 native/tests/pentagonal_gates_benchmark.cpp)
+  target_include_directories(pentagonal_gates_integration_benchmark PRIVATE
+    native external/pentagonal-xor-cpp20/shared)
+  target_compile_features(pentagonal_gates_integration_benchmark PRIVATE cxx_std_20)
+endif()
+install(FILES native/pentagonal_gates.hpp DESTINATION include/swe)
+install(FILES docs/PENTAGONAL_GATE_CASCADE.md DESTINATION share/doc/diamond)
