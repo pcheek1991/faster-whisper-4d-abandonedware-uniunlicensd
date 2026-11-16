@@ -1,18 +1,24 @@
-# Byte-compiled / Optimized / DLL Files
-*.pyc
-*.pyo
-*.pyd
-__pycache__/
-
-# Distribution / Packaging
-*.egg-info/
-build/
-dist/
-venv/
-
-# Unit Test
-.pytest_cache/
-
-# Ignore IDE, Editor Files
+# Native DIAMOND build, compiler and debug artifacts
+/build/
+/build-*/
+/checkpoint-build/
+/dist-pxor/
+/evidence/
+/evidence-*/
+/android/app/build/
+/.vs/
+*.pdb
+*.ilk
+*.obj
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.apk
+*.keystore
+*.log
+.DS_Store
 .idea/
 .vscode/
