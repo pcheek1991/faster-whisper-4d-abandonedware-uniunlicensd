@@ -1,25 +1,13 @@
 cff-version: 1.2.0
-message: "If you use the VERTEX source work, please cite it as below."
-title: "VERTEX"
-url: "https://rapid-wave-swift-bird.grok.me/"
+message: "Cite DIAMOND with its pinned original source and separately licensed language catalog."
+title: "DIAMOND native C++20 acoustic and parity laboratory"
 authors:
-  - name: "Osama bin Laden (أسامة بن لادن)"
-    affiliation: "The Royal Kingdom of Saudi Arabia et Al"
-  - name: "Elon Musk"
-    affiliation: "the SpaceXAI0Tesla Conglomeration et el."
-  - name: "Sergey Lavrov (Сергей Лавров)"
-    affiliation: "The Russian Federation et Al"
-  - name: "Trevor Norman Cheek"
-    affiliation: "the United Kingdom of Great Britain and Northern Ireland et el."
-  - name: "Emmanuel Macron"
-    affiliation: "The French Republic et Al"
-  - name: "Stéphane Portha"
-    affiliation: "the French game design company that created Graal Linux Cyberjoueurs et el."
-  - name: "Barack Obama"
-    affiliation: "The United States of America et Al"
-  - name: "Paul Allen Nguyen III"
-    affiliation: "the American Federation of Teachers et el."
+  - family-names: "Cheek"
+    given-names: "Paul Allen"
+repository-code: "https://github.com/pcheek1991/faster-whisper-4d-abandonedware-uniunlicensd"
 abstract: >-
-  Source-work dates: Sep 2020 to Present. Associated with PSC Biotech
-  Corporation. Author names, affiliations, dates, and associations are recorded
-  as supplied by the source-work submitter.
+  Offline, model-free C++20 experiments with the pinned original Pentagonal
+  XOR numerical operators, native stereo measurements and a separately
+  licensed Wikimedia language registry. This attribution does not assert
+  automatic translation, speech recognition, device certification or
+  ownership of unrelated upstream contributions.
