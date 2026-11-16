@@ -20,7 +20,13 @@ begin {
   $guard=@((Join-Path $root "$BuildDir/canonical-guard/Release/$guardExe"),
            (Join-Path $root "$BuildDir/canonical-guard/$guardExe"),(Join-Path $root $guardExe)) |
     Where-Object {Test-Path -LiteralPath $_ -PathType Leaf} | Select-Object -First 1
-  if(!$adapter -or !$guard) {
+  $studyExe=if($IsWindows){'counterarccosine_secondwave_test.exe'}else{'counterarccosine_secondwave_test'}
+  $study=@(
+    (Join-Path $root "$BuildDir/canonical-pxor/Release/$studyExe"),
+    (Join-Path $root "$BuildDir/canonical-pxor/$studyExe"),
+    (Join-Path $root $studyExe)
+  ) | Where-Object {Test-Path -LiteralPath $_ -PathType Leaf} | Select-Object -First 1
+  if(!$adapter -or !$guard -or !$study) {
     throw 'Build the canonical C++20/C11 submodule first: git submodule update --init --recursive; cmake -S . -B build-pxor; cmake --build build-pxor --config Release'
   }
   $seen=$false
@@ -156,6 +162,16 @@ begin {
       $fixtures.Add('metadata guard self-test only, no real metadata validated')
       $out.metadata_guard=[ordered]@{validated=$false;decision='self_test_only';original_output=$guardLog}
     }
+    # Actual original upstream computation, not an imitation:
+    # 257 complementary phase witnesses, synthetic RF gain reference only.
+    $secondWave=@(& $study)
+    if($LASTEXITCODE -ne 0){throw 'Original exploratory counterarccosine second-wave failed.'}
+    $out.counterarccosine_second_wave=[ordered]@{
+      status='passed_original_experimental_test'
+      measured_antenna=$false
+      production_operator=$false
+      original_output=$secondWave
+    }
     # Original counterarccosine research lives in upstream CTest, not a
     # callable production function. Never invent an alternate algorithm.
     [ordered]@{
@@ -167,7 +183,7 @@ begin {
       raw_input_path=if($raw){[IO.Path]::GetFullPath($raw)}else{$null}
       is_trained_asr=$false
       rf_gain_not_audio_gain=$true
-      counterarccosine='upstream CTest research witness; no runtime API'
+      counterarccosine='original upstream experimental executable run and recorded; not a general runtime API'
       results=$out
     } | ConvertTo-Json -Depth 20 -Compress
   }

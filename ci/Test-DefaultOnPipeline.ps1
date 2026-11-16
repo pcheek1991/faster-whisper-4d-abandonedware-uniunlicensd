@@ -12,9 +12,10 @@ function Check([object]$json){
   $value=($json -join [Environment]::NewLine | ConvertFrom-Json)
   if($value.schema -cne 'SWE-Canonical-AllOn-Pipeline-v1'){throw 'Wrong pipeline schema.'}
   foreach($name in @('platform','rf_gain','stability','parity','scores5',
-    'fifth_root','deca_sigma','tri_pi','coreao','coreo_stereo','metadata_guard')){
+    'fifth_root','deca_sigma','tri_pi','coreao','coreo_stereo','metadata_guard','counterarccosine_second_wave')){
     if(!$value.results.PSObject.Properties[$name]){throw "Missing automatically executed $name"}
   }
+  if($value.results.counterarccosine_second_wave.status -cne 'passed_original_experimental_test' -or $value.results.counterarccosine_second_wave.measured_antenna) {throw 'Original second-wave research test absent or mislabeled.'}
   if(!$value.results.rf_gain.passed -or $value.is_trained_asr -or
      !$value.rf_gain_not_audio_gain){throw 'False gain or model provenance.'}
   return $value

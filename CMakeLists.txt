@@ -78,3 +78,9 @@ install(FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/ci/Measure-10D.ps1"
   "${CMAKE_CURRENT_SOURCE_DIR}/ci/Stability.ps1"
   DESTINATION bin/ci)
+
+# The second-wave white-paper operator is research-only in the pinned source.
+# Ship and run its VERBATIM executable test, never a reimplementation.
+if(BUILD_TESTING)
+  install(TARGETS counterarccosine_secondwave_test RUNTIME DESTINATION bin)
+endif()
