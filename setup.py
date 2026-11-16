@@ -33,7 +33,10 @@ setup(
     name="fastest-whisper-10d",
     version=get_project_version(),
     license="MIT AND 0BSD",
-    description="Fastest-Whisper-10D experimental weight-free PowerShell Coreo with legacy compatibility",
+    description=(
+        "Fastest-Whisper-10D weight-free PowerShell Coreo "
+        "with legacy compatibility"
+    ),
     long_description=get_long_description(),
     long_description_content_type="text/markdown",
     author="Guillaume Klein",
