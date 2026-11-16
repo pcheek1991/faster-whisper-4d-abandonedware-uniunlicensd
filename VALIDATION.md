@@ -1,125 +1,22 @@
-> **Checkpoint 10 update (2026-11-15):** The primary Fastest-Whisper-10D
-> PowerShell 7 experiment is model-weight-free. The tenth dimension is
-> [Stability](docs/STABILITY.md), the three-ring nine-ligand six-byte
-> witness. Original Python/CTranslate2 inference and its historical
-> model-dependent results are legacy records, not evidence of model-free
-> speech transcription. CI does not treat unavailable model-integration
-> tests as passed. The source now includes mixed-license notices; see
-> [RIGHTS_REVIEW.md](docs/RIGHTS_REVIEW.md). Cross-platform results are
-> commit-scoped and must be checked for each change.
+# DIAMOND native validation
 
-# Software validation baseline
+The authoritative mathematical algorithms remain in the pinned original Pentagonal XOR C11/C++20 source. Native DIAMOND uses its original headers and includes the original five-channel trust guard and exploratory counterarccosine test in its own translation unit without reimplementing their mathematics.
 
-This document records a GAMP 4-oriented software validation approach for this repository. Release
-2.0.0 sets Python 3.12 as the minimum so the project can use maintained interpreters and current
-runtime dependencies. This is a breaking compatibility change. This document is not a completed
-system validation or a claim of GxP, regulatory, or product certification.
+## Reproduce
 
-<span style="color:#b00020;"><u>RED-UNDERLINED TEXT</u></span> marks claims or compatibility paths
-without direct test evidence. Keep these markers until repeatable tests or approved external
-qualification provide the missing evidence.
+    git submodule update --init --recursive
+    cmake -S . -B build-native -DBUILD_TESTING=ON
+    cmake --build build-native --config Release
+    ctest --test-dir build-native -C Release --output-on-failure
 
-## Scope and intended use
+ci/Test-NativeBoundary.ps1 ensures retired source/build manifests are absent from the current tracked tree and source licenses remain present.
 
-The repository provides a Python speech-to-text library using CTranslate2, PyAV, Hugging Face Hub
-model downloads, and an optional Silero VAD model. This baseline covers source changes, package
-behavior, and the repository's CI checks. It does not validate a particular deployment, hardware
-configuration, transcript's suitability for a regulated decision, or any downstream system.
-The intended use and acceptance criteria for a deployed system must be established by its owner.
-Transcript rendering is outside this library's scope; consuming interfaces must preserve Unicode
-logical order and handle bidirectional isolation at the rendering boundary.
-<span style="color:#b00020;"><u>UNVALIDATED RENDERING:</u></span> This repository has no browser or
-native UI test for visual bidi layout and does not implement UTS #39 identifier checks or bidi
-sanitization.
+## Checks
 
-## Experimental Stability V2 validation extension
+Original upstream tests cover 16-minterm parity, 32 binary trust states, strict C11 parity compilation, invalid metadata rejection, DecaSigma, TriPi, scalar COREAO, +9 dBi RF EIRP, reversible COREO, Stability-10D and 257 exploratory second-wave witnesses.
 
-The tenth dimension is now **Stability**, defined in
-[docs/STABILITY.md](docs/STABILITY.md). Independent Pentagonal XOR
-odd-minterm reference tests verify exact six-byte golden vectors.
-[docs/ANDROID.md](docs/ANDROID.md) defines an experimental offline
-native Android implementation. PowerShell 7 validation runs on Windows,
-Linux and macOS. The older Python model-weight integration suite
-is **NOT RUN** under the new weight-free policy, not a passing
-substitute for speech recognition.
+Native checks cover 348 unique language IDs and strict UTF-8 including malformed sequences, original source identity, nine acoustic measurements from known synthetic float32LE frames, duplicate/invalid inputs, the default-on DIAMOND JSON record, +9 and +11 dBi cases and unknown language rejection.
 
-## Risk-based traceability
+The debug Android package is built using a pinned SDK/NDK, manifest tooling, temporary signing identity and SHA-256 evidence. It is not a signed production release, and no emulator/device feature-parity testing is claimed. The hosted Word Bridges site is not asserted to be synchronized.
 
-The identifiers below are repository-level verification assertions, not approved user requirements.
-
-| ID | Risk / behavior | Verification evidence |
-| --- | --- | --- |
-| SV-01 | Model alias resolution and download failures must be explicit. | `tests/test_utils.py`; `tests/test_failure_modes.py::test_hub_download_failure_is_propagated` |
-| SV-02 | Invalid or unavailable audio must not produce success-shaped output. | `tests/test_transcribe.py::test_stereo_diarization`; `tests/test_failure_modes.py::test_audio_open_failure_is_propagated` |
-| SV-03 | Batched VAD options must respect the encoder chunk limit without changing caller input. | `tests/test_failure_modes.py::test_batched_vad_options_are_bounded_without_mutating_input` |
-| SV-04 | In-memory model file mappings must remain reusable by the caller. | `tests/test_failure_modes.py::test_model_files_argument_is_not_mutated` |
-| SV-05 | Missing VAD runtime and invalid VAD input must fail explicitly before inference. | `tests/test_failure_modes.py::test_missing_vad_runtime_is_explicit`; `tests/test_failure_modes.py::test_vad_rejects_invalid_audio_before_inference` |
-| SV-06 | Transcription content, timestamps, VAD, batching, and clipping retain their tested behavior. | `tests/test_transcribe.py` integration tests |
-| SV-07 | Tokenizer decoding preserves bidi controls and joiners returned by its decoder. | `tests/test_failure_modes.py::test_tokenizer_decode_preserves_bidi_controls` |
-| SV-08 | Markdown documentation is UTF-8 without a BOM. | `tests/test_failure_modes.py::test_markdown_docs_are_utf8_without_bom` |
-| SV-09 | PyAV decodes sample audio without an `ffmpeg` executable on `PATH`. | `tests/test_failure_modes.py::test_audio_decode_does_not_require_ffmpeg_cli` |
-| SV-10 | The documented default VAD minimum silence duration is 2000 ms. | `tests/test_failure_modes.py::test_vad_default_minimum_silence_duration` |
-
-## Verification procedure
-
-Install the development extra and run the checks used by CI:
-
-```bash
-python -m pip install -e ".[dev]"
-python -m black --check .
-python -m isort --check-only .
-python -m flake8 .
-python -m pytest -q -m "not integration"
-python -m pytest -v -m integration
-python -m pip install -e ".[security]"
-python -m pip_audit -r requirements.txt
-python setup.py sdist bdist_wheel
-```
-
-Fault-injection tests are deterministic and local: they replace Hub, media-open, or optional-runtime
-boundaries with controlled failures. They do not call production services with injected faults,
-consume credentials, or perform destructive load testing. Tests marked `integration` exercise
-model/audio inference or download weights from Hugging Face; they require outbound access on the
-first run.
-
-## Evidence limits and release controls
-
-- <span style="color:#b00020;"><u>NOT RUN REMOTELY:</u></span> GitHub Actions is configured for
-  Python 3.12, 3.13, and 3.14 on Ubuntu, but this branch has not completed those remote jobs. Local
-  tests used Windows with Python 3.14.5 and CUDA disabled.
-- <span style="color:#b00020;"><u>DOCKER BUILD UNVALIDATED:</u></span> The optional Docker example pins
-  an NVIDIA CUDA 12.9.1/cuDNN runtime image for Ubuntu 24.04, applies current Ubuntu package updates
-  at build time, and uses distro Python 3.12. The tag was checked in the registry, but the image was
-  not built because the local Docker daemon is unavailable. CUDA 13 is excluded until CTranslate2
-  supports it.
-- <span style="color:#b00020;"><u>OS PACKAGES NOT AUDITED:</u></span> `pip-audit` scans Python
-  requirements, not the Docker base image's OpenSSL or other operating-system packages.
-- CI action references are pinned to immutable commit IDs and use a read-only repository token.
-  Dependabot is configured for weekly action, Python dependency, and Docker base-image update PRs;
-  each update requires review and the normal verification checks.
-- <span style="color:#b00020;"><u>NOT RUN REMOTELY:</u></span> The release build is configured to
-  require a `pip-audit` scan of runtime requirements. The local scan checks known advisories for the
-  resolved dependency set; it does not prove the dependencies are vulnerability free.
-- <span style="color:#b00020;"><u>EXTERNAL BEHAVIOR NOT TESTED:</u></span> Hub aliases can point to
-  changed artifacts over time. For reproducible deployments, record the model repository and pass
-  a fixed Hub commit hash through the `revision` argument; record the runtime, dependency versions,
-  and test outcomes with the release evidence.
-- Runtime dependency lower bounds track the current stable release baseline and major-version upper
-  bounds limit unreviewed API breaks. CI and Dependabot updates are the controlled path for moving
-  that baseline forward. Hugging Face Hub remains below 2 while the latest Tokenizers release
-  requires that compatibility range.
-- Integration tests use downloaded models and example audio. They do not establish accuracy or
-  suitability for a particular population, recording environment, or regulated intended use.
-- <span style="color:#b00020;"><u>OPTIONAL PATHS UNVALIDATED:</u></span> The Transformers/Torch
-  conversion extra, benchmark figures, Distil-Whisper compatibility, and community integration list
-  are not exercised or verified by this repository's current tests.
-- The base commit deletes `LICENSE`, while `setup.py` still advertises MIT metadata. A maintainer
-  must resolve that inconsistency before distribution; this change does not restore or alter license
-  terms.
-- A system owner must define intended use, approved requirements, operating environment, acceptance
-  criteria, change approval, and any applicable quality-system controls before treating this package
-  as part of a regulated computerized system.
-
-For each release, retain the source commit, build artifacts, CI results, resolved dependencies,
-model repository/revision, environment details, deviations, and approval records in the applicable
-project quality system.
+The source audit and package dry-run are fail-closed. Git history, source signatures, skipped release jobs, missing contracts and unsuccessful runs remain visible as evidence, not policy.

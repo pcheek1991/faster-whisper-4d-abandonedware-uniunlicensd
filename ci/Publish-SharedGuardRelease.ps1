@@ -31,7 +31,7 @@ if (!$?) { throw 'Canonical source guard rejected release package.' }
 $dist = Join-Path $root 'dist-pxor'
 $evidence = Join-Path $root 'evidence-pxor'
 $files = @(
-  (Join-Path $dist 'fastest-whisper-10d-pentagonal-xor-linux-x64.zip'),
+  (Join-Path $dist 'diamond-native-linux-x64.zip'),
   (Join-Path $dist 'SHA256SUMS'),
   (Join-Path $evidence 'shared-guard-record.json'),
   (Join-Path $evidence 'upstream-source-sha256.txt')
@@ -42,7 +42,7 @@ foreach ($file in $files) {
   }
 }
 $notes = "Weight-free numerical Pentagonal XOR compatibility module, not speech-to-text or a production-signed Android APK. Original C11/C++20 algorithms are an exact Git submodule at fb23b40480476c98e992762ace37761b6fd8ba0e. Source provenance, SHA256 and test records are attached. Linux x64 binary package only; Windows/macOS are CI-qualified separately. Target commit: $head."
-& gh release create $tag @files --repo $repo --target $head --title "Checkpoint 10 Pentagonal XOR numerical module $tag" --notes $notes --prerelease --latest=false
+& gh release create $tag @files --repo $repo --target $head --title "DIAMOND native C++20 numerical module $tag" --notes $notes --prerelease --latest=false
 if ($LASTEXITCODE -ne 0) { throw 'GitHub release API rejected deployment; no success assumed.' }
 Write-Host "Published only audited numerical assets for tag $tag."
 exit 0

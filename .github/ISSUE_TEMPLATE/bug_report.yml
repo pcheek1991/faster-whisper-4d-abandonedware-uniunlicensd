@@ -1,45 +1,37 @@
-name: Bug report
-description: Report a reproducible problem.
-title: "[Bug]: "
+name: Native DIAMOND bug report
+description: Reproducible native C++20, Unicode, acoustic or platform behavior
+title: "[Native bug]: "
 labels:
   - bug
 body:
   - type: markdown
     attributes:
       value: >-
-        Do not include credentials, private recordings, transcripts, or
-        personal data. Use private reporting for security vulnerabilities.
+        Redact private recordings, secrets, personal data and source paths.
+        Report security vulnerabilities privately.
   - type: textarea
     id: summary
     attributes:
-      label: Problem
-      description: What happened, and what did you expect to happen?
+      label: Observed versus expected behavior
     validations:
       required: true
   - type: textarea
-    id: reproduce
+    id: reproduction
     attributes:
-      label: Steps to reproduce
-      description: Provide the smallest reproducible example.
-      placeholder: |
-        1. Set up ...
-        2. Run ...
-        3. Observe ...
+      label: Native CMake/CTest or DIAMOND command and safe synthetic inputs
     validations:
       required: true
   - type: textarea
     id: environment
     attributes:
-      label: Environment
-      description: Include Python, faster-whisper, OS, device, and relevant dependency versions.
-      placeholder: Python version, OS, faster-whisper version, CPU/GPU, compute type
+      label: OS, architecture, C++20 compiler, CMake and source revision
+      description: Include platform SDK/NDK if reporting an Android build issue.
     validations:
       required: true
   - type: textarea
     id: logs
     attributes:
-      label: Relevant logs
-      description: Redact paths, tokens, and personal information before posting.
+      label: Redacted test logs and relevant evidence
       render: text
     validations:
       required: false

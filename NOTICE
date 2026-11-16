@@ -1,18 +1,18 @@
-Fastest-Whisper-10D distribution notice
+DIAMOND native C++20 distribution notice
 
-Upstream core: SYSTRAN/faster-whisper, copyright (c) 2023 SYSTRAN.
-Upstream notice: LICENSE-MIT-UPSTREAM.
+Canonical mathematical source: Simply-Well-Executed/pentagonal-xor-cpp20,
+commit fb23b40480476c98e992762ace37761b6fd8ba0e.
+The original source preserves its 0BSD license notices.
 
-Original experimental PowerShell 7 Checkpoint 10 contributions are
-marked 0BSD, with license text in LICENSE-0BSD.
+Language edition data: entitizer/wikipedia-data, source blob
+5f97e44d943f1a5e4c89acce23c5a43afb3fc92d,
+snapshot generated 2026-09-08 from Wikimedia Meta-Wiki.
+ISC copyright (c) 2015-2026 Dumitru Cantea; see
+LICENSE-ISC-WIKIPEDIA-DATA.
 
-The bundled DUNGU-derived PowerShell/C# audio converter retains its
-original provenance; its licensing and redistribution rights must be
-reviewed independently before broad commercial redistribution.
-The repository does not include trained ONNX weights on this branch.
+Original inherited source history remains credited under
+LICENSE-MIT-UPSTREAM and Git history. Retirement from the active tree
+is not deletion of history or transfer of another author's rights.
 
-Existing historical attribution in CITATION.cff is maintained as a
-source-supplied record, not proof of consent or exclusive authorship.
-
-The GitHub repository's current slug was not changed by the source
-and package display-name update.
+Android platform, compilers and operating systems are separately licensed.
+No trained weights, translation engine or production-signed APK is supplied.

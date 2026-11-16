@@ -1,20 +1,16 @@
-## Summary
+## Scope and source authority
 
-Describe the change and the user-visible behavior.
+Identify affected DIAMOND facet and distinguish original Pentagonal XOR algorithms from independent native input code.
 
-## Validation
+## Verification
 
-- [ ] Unit tests added or updated
-- [ ] Integration tests run when the change crosses a subsystem boundary
-- [ ] Formatting, import-order, and lint checks pass
-- [ ] Validation artifacts are reproducible and contain no private data
+- [ ] Original C11 and C++20 source stays pinned or a change is explicitly reviewed
+- [ ] All applicable native CMake/CTest tests pass
+- [ ] Security AND guard and domain-rejection tests remain enforced
+- [ ] Unicode code points and source provenance stay intact
+- [ ] No retired runtime or intermediate build component is restored
+- [ ] Language data retains ISC attribution, without false translation claims
+- [ ] Android device testing, release signing and skipped gates are stated accurately
+- [ ] Docs and test evidence include exact source revisions
 
-Test commands and results:
-
-## Provenance and compatibility
-
-- [ ] Any new sample data has documented source and redistribution permission
-- [ ] Public API and default transcription behavior are unchanged, or changes are explained
-- [ ] Documentation is updated
-
-Thank you for helping keep science free as in freedom.
+Reproduction commands, CI links and hashes:

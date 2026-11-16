@@ -1,92 +1,54 @@
-name: 'Android bleeding APK · Fastest-Whisper-10D Stability'
-
+name: 'DIAMOND · direct native Android NDK'
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
-  apk-debug:
-    name: 'Offline Android APK · Java 17 · Stability'
+  ndk-debug:
+    name: 'Native arm64-v8a offline debug APK'
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 50
     steps:
-      - name: 'Checkout source without credential persistence'
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - name: 'Prepare evidence before any build'
-        shell: pwsh
-        run: New-Item -ItemType Directory -Force -Path evidence-android | Out-Null
-
-      - name: 'Java 17 (pinned)'
-        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      # Both v3 and v4 setup actions attempted the removed Android SDK
-      # 'tools' package. The image already includes sdkmanager under
-      # ANDROID_HOME/cmdline-tools/latest/bin. Use the real installed tool.
-      - name: 'Use SDK command-line tools already on Ubuntu runner'
+      - name: Checkout exact immutable source and canonical submodule
         shell: pwsh
         run: |
-          if ([string]::IsNullOrWhiteSpace($env:ANDROID_HOME)) {
-            throw 'ANDROID_HOME is not set on the runner.'
+          $ErrorActionPreference='Stop'
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin "https://github.com/$env:GITHUB_REPOSITORY.git"
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git fetch --no-tags --depth 1 origin $env:GITHUB_REF
+          if ($LASTEXITCODE -ne 0) { throw 'git fetch failed' }
+          & git checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $sha = ((& git rev-parse HEAD) | Out-String).Trim()
+          if ($sha -cne $env:GITHUB_SHA) { throw 'Untrusted checkout SHA' }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'Canonical source checkout failed' }
+      - name: Locate vendor platform SDK tools, no intermediary build layer
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:ANDROID_HOME)) { throw 'ANDROID_HOME missing' }
+          $sdkmanager = Join-Path $env:ANDROID_HOME 'cmdline-tools/latest/bin/sdkmanager'
+          if (!(Test-Path -LiteralPath $sdkmanager)) { throw 'SDK manager missing' }
+          "SDK_MANAGER=$sdkmanager" | Out-File -FilePath $env:GITHUB_ENV -Append
+      - name: Install pinned NDK API and platform build tools
+        shell: pwsh
+        run: |
+          & $env:SDK_MANAGER 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.2.12479018'
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned Android packages unavailable' }
+      - name: Build native C++20 library and locally sign debug APK
+        shell: pwsh
+        run: ./ci/Build-NativeAndroid.ps1
+      - name: Preserve failure evidence and source hashes in job output
+        if: always()
+        shell: pwsh
+        run: |
+          ./ci/Write-AndroidEvidence.ps1 -EvidenceDir evidence-android
+          if (Test-Path evidence-android/native-apk-record.json) {
+            Get-Content evidence-android/native-apk-record.json
           }
-          $sdkDir = Join-Path $env:ANDROID_HOME 'cmdline-tools/latest/bin'
-          $sdk = Join-Path $sdkDir 'sdkmanager'
-          if (!(Test-Path -LiteralPath $sdk -PathType Leaf)) {
-            throw "Missing SDK manager at $sdk"
-          }
-          Add-Content -LiteralPath $env:GITHUB_PATH -Value $sdkDir
-          & $sdk --version
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-      - name: 'Install pinned Android platform and build tools'
-        shell: pwsh
-        run: |
-          & sdkmanager 'platforms;android-35' 'build-tools;35.0.0' *>&1 |
-            Tee-Object -FilePath evidence-android/android-sdk.log
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-      - name: 'Gradle 8.11.1 (pinned action and version)'
-        uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
-        with:
-          gradle-version: '8.11.1'
-
-      - name: 'Build debug APK and run native no-weight unit tests'
-        shell: pwsh
-        run: |
-          & gradle -p android --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleDebug *>&1 |
-            Tee-Object -FilePath evidence-android/build-and-test.log
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-      - name: 'Fingerprint APK, compiler and test evidence'
-        if: always()
-        shell: pwsh
-        run: ./ci/Write-AndroidEvidence.ps1 -EvidenceDir evidence-android
-
-      - name: 'Upload APK (experimental debug signing)'
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: Fastest-Whisper-10D-Android-debug-apk
-          path: android/app/build/outputs/apk/debug/*.apk
-          if-no-files-found: warn
-          retention-days: 90
-
-      - name: 'Upload SHA256 and failure evidence even when build fails'
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: Fastest-Whisper-10D-Android-evidence
-          path: evidence-android/
-          if-no-files-found: warn
-          retention-days: 90
