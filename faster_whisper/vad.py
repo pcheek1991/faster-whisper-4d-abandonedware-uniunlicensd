@@ -6,7 +6,6 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 
 
-
 # The code below is adapted from https://github.com/snakers4/silero-vad.
 @dataclass
 class VadOptions:
