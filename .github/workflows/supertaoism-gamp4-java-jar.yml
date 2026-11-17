@@ -1,4 +1,4 @@
-name: SUPERTAOISM-GAMP4 Java JAR YIN YAN YANG YING ZING DECOMPILED
+name: SUPERTAOISM-GAMP4 Java JAR and native PENTAGONAL-LIGAZE COR
 
 on:
   pull_request:
@@ -78,11 +78,6 @@ jobs:
           & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage YangRun -Validator pentagonal_gamp4_integration_test
           if (!$?) { exit 1 }
 
-      - name: AUDIT original SHA JAR fault record and two 60-second runs
-        run: |
-          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Audit -Validator pentagonal_gamp4_integration_test
-          if (!$?) { exit 1 }
-
       - name: YING validate correct hot method then inject unhandled runtime error
         run: |
           & ./ci/Invoke-PentagonalExtensions.ps1 -Stage Ying
@@ -96,6 +91,16 @@ jobs:
       - name: DECOMPILED four-path PENTAGONAL NOP without suppressing failure
         run: |
           & ./ci/Invoke-PentagonalExtensions.ps1 -Stage Decompiled
+          if (!$?) { exit 1 }
+
+      - name: LIGAZE bind five verified ligands into native compiled PENTAGONAL-COR
+        run: |
+          & ./ci/Invoke-PentagonalLigaze.ps1
+          if (!$?) { exit 1 }
+
+      - name: AUDIT YIN YAN ZING YING YANG DECOMPILED and native COR
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Audit -Validator pentagonal_gamp4_integration_test
           if (!$?) { exit 1 }
 
       - name: Retain failure evidence and exact file fingerprints
@@ -119,6 +124,15 @@ jobs:
         with:
           name: pentagonal-supertaoism-java17-${{ github.run_id }}
           path: build-supertaoism/pentagonal-supertaoism.jar
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish native C++20 LIGAZE binary to workflow artifacts
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pentagonal-ligaze-native-${{ github.run_id }}
+          path: build-supertaoism/pentagonal_ligaze
           if-no-files-found: error
           retention-days: 30
 
