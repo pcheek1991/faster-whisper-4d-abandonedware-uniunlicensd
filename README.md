@@ -137,3 +137,16 @@ and 7-11% downstream. Both repositories now enable Release-only
 IPO on the native LIGAZE executable and default native benchmark;
 the opt-in baseline remains available for future comparisons.
 The no-op Win32 overloads are never enabled in normal builds.
+
+
+### Architecture-aware Windows LIGAZE header v2
+
+The revised Windows header, including ARM64EC/ARM64/x86/x64 architecture
+branches, proposed NOapi exclusions and additional do-nothing Win32
+overloads, is retained as an **isolated experimental fixture**, not a
+shipping optimization. A separate, safe C++20 platform header preserves
+architecture metadata without replacing real Win32 API contracts.
+Windows CI performs a negative compiler contract test on the full
+experimental header, and compares safe v2 headers with matched
+pre-LTCG/LTCG controls to avoid crediting the same optimizer twice.
+See [the Windows header v2 methodology](docs/LIGAZE_WINDOWS_HEADER_V2.md).
