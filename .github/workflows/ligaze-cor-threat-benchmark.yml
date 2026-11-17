@@ -1,0 +1,95 @@
+name: LIGAZE COR Threat Model and Windows openSUSE macOS Benchmarks
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ligaze-cor-matrix-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  platform-benchmark:
+    name: LIGAZE COR / ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: Windows
+            runner: windows-2025
+          - platform: openSUSE
+            runner: ubuntu-24.04
+          - platform: macOS
+            runner: macos-15
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout exact Git commit including original pinned submodule
+        run: |
+          $ErrorActionPreference='Stop'
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin "https://github.com/$env:GITHUB_REPOSITORY.git"
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git fetch --no-tags --depth 1 origin $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'git fetch failed' }
+          & git checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $actual=((& git rev-parse HEAD)|Out-String).Trim()
+          if ($actual -cne $env:GITHUB_SHA) { throw "Unexpected source commit $actual" }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned submodule not available' }
+          Write-Host "LIGAZE_MATRIX|SOURCE|PASS|sha=$actual"
+
+      - name: Install JDK 17 on Windows and macOS runner
+        if: matrix.platform != 'openSUSE'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Verify JDK 17 on Windows and macOS
+        if: matrix.platform != 'openSUSE'
+        run: |
+          $v=((& javac -version 2>&1)|Out-String).Trim()
+          if ($LASTEXITCODE -ne 0 -or $v -notmatch 'javac 17[.]') {
+            throw "Java 17 compiler unavailable: $v"
+          }
+          Write-Host "LIGAZE_MATRIX|HOST_JDK|$v"
+
+      - name: Execute CMake/CTest, COR threat fixtures and matched 5-repeat benchmarks
+        env:
+          TARGET_PLATFORM: ${{ matrix.platform }}
+        run: |
+          & ./ci/Invoke-LigazeBenchmarkMatrix.ps1 -Platform $env:TARGET_PLATFORM -Iterations 500000 -Warmup 50000 -Repeats 5
+          if (!$?) { exit 1 }
+
+      - name: Retain benchmark provenance, including failed partial output
+        if: always()
+        run: |
+          if (Test-Path -LiteralPath evidence-ligaze-matrix) {
+            Get-ChildItem -LiteralPath evidence-ligaze-matrix -File |
+              ForEach-Object {
+                $h=(Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+                Write-Host "LIGAZE_MATRIX|EVIDENCE|$($_.Name)|sha256=$h"
+                Get-Content -LiteralPath $_.FullName
+              }
+          } else {
+            Write-Host 'LIGAZE_MATRIX|EVIDENCE_NOT_WRITTEN|check preceding job failure'
+          }
+
+      - name: Upload independent platform benchmark report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ligaze-cor-matrix-${{ matrix.platform }}-${{ github.run_id }}
+          path: evidence-ligaze-matrix/
+          retention-days: 90
+          if-no-files-found: warn
