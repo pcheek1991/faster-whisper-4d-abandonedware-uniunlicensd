@@ -105,3 +105,21 @@ the JAR is portable JVM bytecode and LIGAZE is target-specific
 machine code. Both are retained by GitHub Actions when all
 upstream evidence gates pass. Failed runs and mismatch reports
 remain retained as evidence and do not rewrite canonical source.
+
+
+### COR witness threat model and three-platform benchmark
+
+The [COR STRIDE-style threat model and benchmark protocol](docs/COR_WITNESS_THREAT_MODEL_BENCHMARK.md)
+documents the attacker-controlled expected-reference counterexample,
+unprotected replay/clock signals, duplicated ligand views, and external
+attestation requirements. A clean COR comparison **does not** prove
+authenticated provenance.
+
+The [parallel LIGAZE benchmark workflow](.github/workflows/ligaze-cor-threat-benchmark.yml)
+compares native C++20 against Java 17 on Windows Server, macOS and
+an openSUSE Tumbleweed userspace container. It verifies an identical
+COR input stream, output checksum and local negative fixtures
+before reporting per-platform median nanoseconds per call. The
+openSUSE container uses the Linux host kernel and is not an
+openSUSE-kernel performance measurement. No cross-OS absolute
+speed ranking or GxP certification is asserted.
