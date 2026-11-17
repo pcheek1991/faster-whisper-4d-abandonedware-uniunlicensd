@@ -13,6 +13,22 @@
 #include <stdexcept>
 #include <vector>
 
+#if defined(_WIN32) && defined(SWE_LIGAZE_WINDOWS_FULL_HEADER_EXPERIMENT)
+#  include "windows_ligaze_user_header_experiment.hpp"
+#elif defined(_WIN32) && defined(SWE_LIGAZE_WINDOWS_SAFE_HEADER_EXPERIMENT)
+// Only header-size/type-safety switches, NOT code generation optimizers.
+#  ifndef STRICT
+#    define STRICT
+#  endif
+#  ifndef WIN32_LEAN_AND_MEAN
+#    define WIN32_LEAN_AND_MEAN
+#  endif
+#  ifndef NOMINMAX
+#    define NOMINMAX
+#  endif
+#  include <windows.h>
+#endif
+
 namespace {
 constexpr std::uint32_t seed=0x0badf00du;
 constexpr unsigned intended=0x15u, required=0x1fu;
