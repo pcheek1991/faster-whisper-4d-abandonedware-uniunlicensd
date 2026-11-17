@@ -1,0 +1,115 @@
+name: LIGAZE Windows Header Optimizer AB and Cross-Platform Repeat
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ligaze-win-ab-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cross-platform-repeat:
+    name: Repeat COR benchmark / ${{ matrix.platform }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: Windows
+            runner: windows-2025
+          - platform: openSUSE
+            runner: ubuntu-24.04
+          - platform: macOS
+            runner: macos-15
+    defaults:
+      run:
+        shell: pwsh
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact source and pinned submodule
+        run: |
+          $ErrorActionPreference='Stop'
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin "https://github.com/$env:GITHUB_REPOSITORY.git"
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git fetch --no-tags --depth 1 origin $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'git fetch failed' }
+          & git checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $sha=((& git rev-parse HEAD)|Out-String).Trim()
+          if ($sha -cne $env:GITHUB_SHA) { throw 'Source commit mismatch' }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned submodule unavailable' }
+
+      - name: Set up JDK 17 on Windows/macOS
+        if: matrix.platform != 'openSUSE'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Retest native versus Java using five repetitions
+        env:
+          TARGET_${{ matrix.platform }}: ${{ matrix.platform }}
+        run: |
+          & ./ci/Invoke-LigazeBenchmarkMatrix.ps1 -Platform $env:TARGET_${{ matrix.platform }} -BuildDir build-ligaze-repeat -EvidenceDir evidence-ligaze-repeat -Iterations 500000 -Warmup 50000 -Repeats 5
+          if (!$?) { exit 1 }
+
+      - name: Preserve repeated benchmark evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ligaze-repeat-${{ matrix.platform }}-${{ github.run_id }}
+          path: evidence-ligaze-repeat/
+          retention-days: 90
+          if-no-files-found: warn
+
+  windows-ab:
+    name: Windows paired MSVC header vs LTCG experiment
+    runs-on: windows-2025
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout exact source and pinned submodule
+        run: |
+          $ErrorActionPreference='Stop'
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin "https://github.com/$env:GITHUB_REPOSITORY.git"
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git fetch --no-tags --depth 1 origin $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'git fetch failed' }
+          & git checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $sha=((& git rev-parse HEAD)|Out-String).Trim()
+          if ($sha -cne $env:GITHUB_SHA) { throw 'Source commit mismatch' }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned submodule unavailable' }
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Run paired Windows compiler/header experiments
+        run: |
+          & ./ci/Invoke-LigazeWindowsAB.ps1 -Iterations 500000 -Warmup 50000 -Repeats 5 -Trials 3
+          if (!$?) { exit 1 }
+
+      - name: Preserve all baseline and rejected-candidate evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-ligaze-optimizer-ab-${{ github.run_id }}
+          path: evidence-ligaze-windows-ab/
+          retention-days: 90
+          if-no-files-found: warn
