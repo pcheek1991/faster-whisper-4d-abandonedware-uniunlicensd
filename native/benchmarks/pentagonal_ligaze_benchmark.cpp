@@ -13,7 +13,11 @@
 #include <stdexcept>
 #include <vector>
 
-#if defined(_WIN32) && defined(SWE_LIGAZE_WINDOWS_FULL_HEADER_EXPERIMENT)
+#if defined(_WIN32) && defined(SWE_LIGAZE_WINDOWS_FULL_HEADER_V2_EXPERIMENT)
+#  include "windows_ligaze_user_header_v2_experiment.hpp"
+#elif defined(_WIN32) && defined(SWE_LIGAZE_WINDOWS_PLATFORM_V2_EXPERIMENT)
+#  include "../pentagonal_platform_windows_v2.hpp"
+#elif defined(_WIN32) && defined(SWE_LIGAZE_WINDOWS_FULL_HEADER_EXPERIMENT)
 #  include "windows_ligaze_user_header_experiment.hpp"
 #elif defined(_WIN32) && defined(SWE_LIGAZE_WINDOWS_SAFE_HEADER_EXPERIMENT)
 // Only header-size/type-safety switches, NOT code generation optimizers.
