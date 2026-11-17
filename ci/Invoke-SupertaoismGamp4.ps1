@@ -233,6 +233,16 @@ if($Stage -eq 'YangRun'){
 }
 $yangRun=RequireWitness 'yang-run.json'
 Check ($yangRun.elapsed_seconds -ge 60 -and $yangRun.hotspot_jit_method_compilation_observed -eq $true) 'YANG run or JIT evidence missing'
+$ying=RequireWitness 'ying.json'
+$zing=RequireWitness 'zing.json'
+$decompiled=RequireWitness 'decompiled.json'
+$ligaze=Load 'ligaze-native.json'
+Check ($ying.unhandled_application_exception -eq $true -and $ying.os_kernel_panicked -eq $false) 'YING negative case invalid'
+Check ($zing.observed_jit_events -gt 0 -and $zing.numeric_input_count -eq 5 -and $zing.numeric_output_count -eq 3) 'ZING incomplete'
+Check ($decompiled.pentagonal_nop_is_identity -eq $true -and $decompiled.failed_scenarios_remain_failed -eq $true) 'DECOMPILED did not preserve failure status'
+Check ($ligaze.commit -ceq $commit -and $ligaze.held_cor.qualification -ceq 'PASS' -and $ligaze.held_cor.cor_rupture_flags -eq 0) 'Native LIGAZE binding failed'
+Check ($ligaze.injected_fault_test.cor_rupture_flags -eq 17) 'Native LIGAZE negative fault missing'
+
 $report=[ordered]@{
   schema='SUPERTAOISM-GAMP4-EXECUTION-v1'
   commit=$commit;jar_sha256=$build.jar_sha256
@@ -241,6 +251,10 @@ $report=[ordered]@{
   yin=$yinRun
   yan=$yan
   yang=$yangRun
+  ying=$ying
+  zing=$zing
+  decompiled=$decompiled
+  ligaze=$ligaze
   qa_status='NOT_APPROVED'
   pq_status='NOT_PERFORMED'
   externally_signed_witness=$false
@@ -251,4 +265,4 @@ $report=[ordered]@{
   })
 }
 Save 'supertaoism-final.json' $report
-Summary "SUPERTAOISM|AUDIT|PASS|yin_seconds=$($yinRun.elapsed_seconds)|yan_expected_error=true|yang_seconds=$($yangRun.elapsed_seconds)|jar_sha256=$($build.jar_sha256)"
+Summary "SUPERTAOISM|AUDIT|PASS|yin_seconds=$($yinRun.elapsed_seconds)|yan_expected_error=true|yang_seconds=$($yangRun.elapsed_seconds)|ying_expected_error=true|zing=true|ligaze_native=true|jar_sha256=$($build.jar_sha256)"
