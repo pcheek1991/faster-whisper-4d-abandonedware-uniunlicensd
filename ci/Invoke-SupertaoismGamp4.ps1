@@ -169,14 +169,14 @@ if($Stage -eq 'Yan'){
   Save 'yan.json' ([ordered]@{
     stage='YAN_EXPECTED_FAILURE';passed=$true;commit=$commit
     runtime_exit_code=$process.ExitCode;error_observed=$true
-    60_second_run_started=$false;poison_class_unchanged=$true
+    timed_run_started=$false;poison_class_unchanged=$true
     stdout_sha256=SHA $out;stderr_sha256=SHA $err
   })
   Summary "SUPERTAOISM|YAN|EXPECTED_FAILURE_CONFIRMED|exit=$($process.ExitCode)|no_run=true"
   return
 }
 $yan=RequireWitness 'yan.json'
-Check ($yan.error_observed -eq $true -and $yan.60_second_run_started -eq $false) 'YAN runtime-failure record invalid'
+Check ($yan.error_observed -eq $true -and $yan.timed_run_started -eq $false) 'YAN runtime-failure record invalid'
 if($Stage -eq 'YangPreflight'){
   $lines=JavaCommand @('-jar',$jar,'--yang-preflight')
   $line=MatchesLine $lines '^SUPERTAOISM_YANG_PREFLIGHT[|]PASS[|].*runtime_compiled=true[|]relinked=true[|]'
