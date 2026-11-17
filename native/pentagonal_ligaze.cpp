@@ -51,15 +51,15 @@ int main(int argc,char** argv) {
                  <<"\"externally_authenticated\":false,"
                  <<"\"five_ligands\":[\"YIN\",\"YAN\",\"ZING\",\"YING\",\"YANG\"],"
                  <<"\"observed_outcomes\":";
-        printHex(actual,2);
-        std::cout<<",\"expected_outcomes\":";
-        printHex(intended,2);
-        std::cout<<",\"observed_conformance\":";
-        printHex(checks,2);
-        std::cout<<",\"required_conformance\":";
-        printHex(required,2);
-        std::cout<<",\"nop_held_outcomes\":";
-        printHex(preserve_nop(actual),2);
+        printHex(actual,2);std::cout<<'"';
+        std::cout<<",\"expected_outcomes\":\"";
+        printHex(intended,2);std::cout<<'"';
+        std::cout<<",\"observed_conformance\":\"";
+        printHex(checks,2);std::cout<<'"';
+        std::cout<<",\"required_conformance\":\"";
+        printHex(required,2);std::cout<<'"';
+        std::cout<<",\"nop_held_outcomes\":\"";
+        printHex(preserve_nop(actual),2);std::cout<<'"';
         std::cout<<",\"cor_register\":";
         std::cout<<'"';printHex(held.witness.operand,16);std::cout<<'"';
         std::cout<<",\"cor_rupture_flags\":"<<held.witness.rupture
