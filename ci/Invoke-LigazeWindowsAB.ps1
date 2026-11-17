@@ -46,7 +46,7 @@ function InvokeBuild([string]$variant) {
     $logs+=@($out)
     if($configCode -ne 0) { return [ordered]@{status='REJECTED_COMPILE';stage='configure';exit=$configCode;log=$logs} }
     $args=@('--build',$dir,'--config','Release','--parallel','2','--target',
-       'pentagonal_ligaze_benchmark','pentagonal_ligaze_test','pentagonal_ligaze')
+       'pentagonal_ligaze_benchmark','pentagonal_ligaze_test','pentagonal_ligaze','pentagonal_platform_v2_contract_test')
     $out=@(& cmake @args 2>&1 | ForEach-Object { [string]$_ })
     $compileCode=$LASTEXITCODE
     $logs+=@($out)
@@ -66,7 +66,7 @@ $compiler=((& cmake --version)|Select-Object -First 1)
 $jvm=((& javac -version 2>&1)|Out-String).Trim()
 Require ($LASTEXITCODE -eq 0 -and $jvm -match 'javac 17[.]') 'Requires JDK 17'
 New-Item -ItemType Directory -Path $Evidence -Force | Out-Null
-$variants=@('baseline','safe_header','full_header','ltcg','safe_header_ltcg')
+$variants=@('baseline','safe_header','full_header','ltcg','safe_header_ltcg','platform_v2','platform_v2_ltcg','full_header_v2')
 $builds=[ordered]@{}
 foreach($variant in $variants) {
     Write-Host "WINDOWS_AB|BUILD|$variant"
@@ -77,7 +77,13 @@ foreach($variant in $variants) {
         status=$status.status;stage=$status.stage;exit=$status.exit
         log_sha256=Hash $path
     }
-    if($variant -eq 'baseline') { Require ($status.status -ceq 'COMPILED_TESTED') 'Baseline must pass' }
+    if($variant -eq 'baseline' -or $variant -eq 'ltcg') {
+      Require ($status.status -ceq 'COMPILED_TESTED') 'Canonical native control must compile and pass'
+    }
+    # V2 no-op functions MUST fail the real Win32 API contract.
+    if($variant -eq 'full_header_v2') {
+      Require ($status.status -ceq 'REJECTED_COMPILE') 'Dangerous full v2 header unexpectedly passed the strict Win32 contract'
+    }
     Write-Host "WINDOWS_AB|BUILD_RESULT|$variant|$($status.status)"
 }
 $javaDir=Join-Path $Root 'java'
@@ -89,15 +95,18 @@ $paired=[ordered]@{}
 foreach($variant in $variants) {
     if($variant -ceq 'baseline') {continue}
     $pairs=@()
+    # Isolate the *incremental* effect of safe metadata from the
+    # already-promoted LTCG optimization. Never credit LTCG to macros.
+    $reference=if($variant -ceq 'platform_v2_ltcg') {'ltcg'} else {'baseline'}
     if($builds[$variant].status -ceq 'COMPILED_TESTED') {
         for($t=0;$t -lt $Trials;$t++) {
             # Alternate the run order within each paired experiment.
             if(($t%2) -eq 0) {
-                $a=Sample (Program 'baseline')
+                $a=Sample (Program $reference)
                 $b=Sample (Program $variant)
             } else {
                 $b=Sample (Program $variant)
-                $a=Sample (Program 'baseline')
+                $a=Sample (Program $reference)
             }
             Require ([string]$a.checksum -ceq [string]$b.checksum) "Different native checksum in $variant trial $t"
             $joutput=@(& java -cp $javaDir LigazeJavaBenchmark ([string]$Iterations) ([string]$Warmup) ([string]$Repeats))
@@ -122,10 +131,11 @@ foreach($variant in $variants) {
     foreach($r in $ratios){if($r -le 0.95){$faster++}}
     $tested=($pairs.Count -eq $Trials)
     $acceptable=($tested -and $faster -eq $Trials -and $builds[$variant].status -ceq 'COMPILED_TESTED')
-    # No-op API shadows are unsafe even if this microbenchmark appears faster.
-    $safety=($variant -ne 'full_header')
+    # Full user-supplied Win32 no-op API shadows are NOT safe, even if fast.
+    $safety=($variant -ne 'full_header' -and $variant -ne 'full_header_v2')
     $paired[$variant]=[ordered]@{
       compile_status=$builds[$variant].status
+      comparison_reference=$reference
       pairs=$pairs
       speed_threshold='at least 5% faster in all 3 paired trials'
       speed_pass=($acceptable)
@@ -134,7 +144,7 @@ foreach($variant in $variants) {
     }
 }
 $report=[ordered]@{
- schema='SWE-LIGAZE-WINDOWS-AB-v1'
+ schema='SWE-LIGAZE-WINDOWS-AB-v2'
  source_commit=$commit
  host_os='Windows Server MSVC hosted runner'
  cmake_version=$compiler
@@ -144,6 +154,7 @@ $report=[ordered]@{
  candidates=$builds
  paired_comparison=$paired
  java_control_samples=$javaRuns
+ v2_header_api_contract_expected_rejection=($builds['full_header_v2'].status -ceq 'REJECTED_COMPILE')
  no_op_shadows_prohibited_in_production=$true
  promoted_automatically=$false
  original_source_mutated=$false
