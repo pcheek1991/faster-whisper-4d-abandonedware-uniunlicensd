@@ -79,3 +79,29 @@ See [the SUPERTAOISM-GAMP4 technical guide](docs/SUPERTAOISM_GAMP4_JAVA_JAR.md)
 and [the dedicated Java → JAR workflow](.github/workflows/supertaoism-gamp4-java-jar.yml).
 Original Pentagonal XOR source and source-history identity are preserved.
 GAMP4-style supplier tests do not constitute regulated-use validation.
+
+
+## Five-ligand native LIGAZE binding
+
+The native C++20 `pentagonal_ligaze` executable binds the observed
+outcomes of **YIN, YAN, ZING, YING, YANG** through the original 64-bit
+PENTAGONAL-COR holder. Its raw program-result mask is `0x15` because
+YAN and YING intentionally throw; its all-correct behavioral
+conformance mask is `0x1f`. Six named COR five-bit blocks preserve
+the original and NOP-pass-through views without manufacturing six
+independent observations.
+
+The workflow explicitly verifies the YING expected unhandled **Java**
+exception and associated hot-method JIT record. No operating-system
+kernel panic is produced. ZING separately tests inverse-square numeric
+input and output transformation, zero/NaN rejection, and the actual JIT
+trace. DECOMPILED preserves the existing four original scenario
+statuses with PENTAGONAL-NOP, rather than suppressing errors.
+
+The native source, CMake test and exact evidence rules are in
+[PENTAGONAL_LIGAZE_NATIVE.md](PENTAGONAL_LIGAZE_NATIVE.md).
+The Java JAR and native binary are separate compiled artifacts:
+the JAR is portable JVM bytecode and LIGAZE is target-specific
+machine code. Both are retained by GitHub Actions when all
+upstream evidence gates pass. Failed runs and mismatch reports
+remain retained as evidence and do not rewrite canonical source.
