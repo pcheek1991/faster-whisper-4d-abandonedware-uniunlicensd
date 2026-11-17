@@ -1,13 +1,15 @@
 name: PENTAGONAL TEST TILT VALIDATE RUN 60s
 on:
-  push:
-    branches: [feature/pentagonal-gates-cor-vista-20261116]
   pull_request:
     branches: [master]
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: pentagonal-ttvr-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   pentagonal-ttvr:
