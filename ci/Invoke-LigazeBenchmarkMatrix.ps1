@@ -51,7 +51,7 @@ if($Platform -eq 'openSUSE') {
     InvokeChecked 'docker' ($base+@('cmake','-S','.','-B',$BuildDir,
                                     '-DCMAKE_BUILD_TYPE=Release','-DBUILD_TESTING=ON'))
     InvokeChecked 'docker' ($base+@('cmake','--build',$BuildDir,'--config','Release',
-           '--parallel','2','--target','pentagonal_ligaze_benchmark','pentagonal_ligaze_test','pentagonal_ligaze'))
+           '--parallel','2','--target','pentagonal_ligaze_benchmark','pentagonal_ligaze_test','pentagonal_ligaze','pentagonal_platform_v2_contract_test'))
     InvokeChecked 'docker' ($base+@('ctest','--test-dir',$BuildDir,'-C','Release',
            '-R','ligaze','--output-on-failure'))
     InvokeChecked 'docker' ($base+@('javac','--release','17','-encoding','UTF-8','-d',$javaClassPath,
@@ -66,7 +66,7 @@ if($Platform -eq 'openSUSE') {
     # JDK 17 selection occurs in the GitHub Actions job before this script.
     InvokeChecked 'cmake' @('-S','.','-B',$BuildDir,'-DCMAKE_BUILD_TYPE=Release','-DBUILD_TESTING=ON')
     InvokeChecked 'cmake' @('--build',$BuildDir,'--config','Release','--parallel','2',
-             '--target','pentagonal_ligaze_benchmark','pentagonal_ligaze_test','pentagonal_ligaze')
+             '--target','pentagonal_ligaze_benchmark','pentagonal_ligaze_test','pentagonal_ligaze','pentagonal_platform_v2_contract_test')
     InvokeChecked 'ctest' @('--test-dir',$BuildDir,'-C','Release','-R','ligaze','--output-on-failure')
     InvokeChecked 'javac' @('--release','17','-encoding','UTF-8','-d',$javaClassPath,
                              'java/PentagonalControl.java','java/LigazeJavaBenchmark.java')
