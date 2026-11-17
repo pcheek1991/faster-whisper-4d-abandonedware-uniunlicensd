@@ -1,0 +1,66 @@
+name: PENTAGONAL TEST TILT VALIDATE RUN 60s
+on:
+  push:
+    branches: [feature/pentagonal-gates-cor-vista-20261116]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pentagonal-ttvr:
+    name: TEST to TILT(error) to VALIDATE to RUN(60s)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Source checkout at exact SHA, preserving pinned submodules
+        run: |
+          $ErrorActionPreference='Stop'
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin "https://github.com/$env:GITHUB_REPOSITORY.git"
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git fetch --no-tags --depth 1 origin $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'git fetch failed' }
+          & git checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'git checkout failed' }
+          $sha=((& git rev-parse HEAD)|Out-String).Trim()
+          if ($sha -cne $env:GITHUB_SHA) { throw 'Checked out different source commit' }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned submodule fetch failed' }
+          Write-Host "PENTAGONAL|SOURCE|$sha"
+      - name: TEST - native C++20 CTest and Java 17 reference
+        run: |
+          & ./ci/Invoke-PentagonalTTVR.ps1 -Phase TEST -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+      - name: TILT with error - detect intentional one-bit ligand rupture
+        run: |
+          & ./ci/Invoke-PentagonalTTVR.ps1 -Phase TILT -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+      - name: VALIDATE - 12 GAMP 4-style URS, SHA-256 and source custody
+        run: |
+          & ./ci/Invoke-PentagonalTTVR.ps1 -Phase VALIDATE -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+      - name: RUN - sixty seconds of active Java six-stage execution
+        run: |
+          & ./ci/Invoke-PentagonalTTVR.ps1 -Phase RUN -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+      - name: Retain pass or failure evidence in job log
+        if: always()
+        run: |
+          if (Test-Path -LiteralPath evidence-ttvr) {
+            foreach ($file in @(Get-ChildItem -LiteralPath evidence-ttvr -File | Sort-Object Name)) {
+              $digest=(Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+              Write-Host "PENTAGONAL|EVIDENCE|$digest|$($file.Name)"
+            }
+            if (Test-Path -LiteralPath evidence-ttvr/run.json) {
+              Get-Content -LiteralPath evidence-ttvr/run.json
+            }
+          } else {
+            Write-Host 'PENTAGONAL|EVIDENCE|NOT_CREATED'
+          }
