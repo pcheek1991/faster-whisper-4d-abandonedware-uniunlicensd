@@ -226,11 +226,15 @@ endif()
 
 # Explicit, opt-in Windows LIGAZE benchmark AB variants.
 # Isolated to benchmark target; no default shipping or Win32 API replacement.
-set(SWE_LIGAZE_WINDOWS_AB_VARIANT "baseline" CACHE STRING
-    "Windows LIGAZE benchmark experiment: baseline|safe_header|full_header|ltcg|safe_header_ltcg")
+set(SWE_LIGAZE_WINDOWS_AB_VARIANT "promoted" CACHE STRING
+    "Windows LIGAZE benchmark experiment: promoted|baseline|safe_header|full_header|ltcg|safe_header_ltcg")
 set_property(CACHE SWE_LIGAZE_WINDOWS_AB_VARIANT PROPERTY STRINGS
-    baseline safe_header full_header ltcg safe_header_ltcg)
+    promoted baseline safe_header full_header ltcg safe_header_ltcg)
 if(MSVC)
+  # Actual measured optimization: /GL + /LTCG, enabled in Release only.
+  # The default benchmark is promoted; explicit baseline stays unoptimized
+  # so later AB runs remain comparable against a real pre-promotion control.
+  set_property(TARGET pentagonal_ligaze PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
   if(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header" OR
      SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header_ltcg")
     target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
@@ -239,10 +243,12 @@ if(MSVC)
     target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
       SWE_LIGAZE_WINDOWS_FULL_HEADER_EXPERIMENT=1)
   elseif(NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "baseline" AND
+         NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "promoted" AND
          NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg")
     message(FATAL_ERROR "Unknown Windows AB experiment variant: ${SWE_LIGAZE_WINDOWS_AB_VARIANT}")
   endif()
-  if(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg" OR
+  if(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "promoted" OR
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg" OR
      SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header_ltcg")
     # MSVC Release already enables /O2; test additional /GL and /LTCG.
     set_property(TARGET pentagonal_ligaze_benchmark PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
