@@ -140,3 +140,143 @@ if(ANDROID)
   target_compile_features(diamond_android PRIVATE cxx_std_20)
   target_link_libraries(diamond_android PRIVATE android log)
 endif()
+
+
+# Experimental controller complements, but does not replace, the pinned
+# upstream submodule or the default DIAMOND executable.
+if(BUILD_TESTING)
+  add_executable(pentagonal_gates_integration_test native/tests/pentagonal_gates_test.cpp)
+  target_include_directories(pentagonal_gates_integration_test PRIVATE
+    native external/pentagonal-xor-cpp20/shared)
+  target_compile_features(pentagonal_gates_integration_test PRIVATE cxx_std_20)
+  add_test(NAME diamond_pentagonal_gates_cor_vista_flop
+           COMMAND pentagonal_gates_integration_test)
+  add_executable(pentagonal_gates_integration_benchmark
+                 native/tests/pentagonal_gates_benchmark.cpp)
+  target_include_directories(pentagonal_gates_integration_benchmark PRIVATE
+    native external/pentagonal-xor-cpp20/shared)
+  target_compile_features(pentagonal_gates_integration_benchmark PRIVATE cxx_std_20)
+endif()
+install(FILES native/pentagonal_gates.hpp DESTINATION include/swe)
+install(FILES docs/PENTAGONAL_GATE_CASCADE.md DESTINATION share/doc/diamond)
+
+
+# Separate research CLI. Native DIAMOND default path is untouched.
+add_executable(pentagonal_control native/pentagonal_control.cpp)
+target_include_directories(pentagonal_control PRIVATE
+  native external/pentagonal-xor-cpp20/shared)
+target_compile_features(pentagonal_control PRIVATE cxx_std_20)
+install(TARGETS pentagonal_control RUNTIME DESTINATION bin)
+if(BUILD_TESTING)
+  add_test(NAME diamond_pentagonal_control_json COMMAND pentagonal_control 0x3fffffff 0x3fffffff or)
+  set_tests_properties(diamond_pentagonal_control_json PROPERTIES
+    PASS_REGULAR_EXPRESSION "logical_evaluations")
+  add_test(NAME diamond_depth_three_benchmark COMMAND pentagonal_gates_integration_benchmark)
+  set_tests_properties(diamond_depth_three_benchmark PROPERTIES
+    PASS_REGULAR_EXPRESSION "Interpretation")
+endif()
+
+
+# Supplier-side GAMP 4-style verification, preserving the pinned gitlink.
+if(BUILD_TESTING)
+  add_executable(pentagonal_gamp4_integration_test
+                 native/tests/pentagonal_gamp4_validation_test.cpp)
+  target_include_directories(pentagonal_gamp4_integration_test PRIVATE
+    native external/pentagonal-xor-cpp20/shared)
+  target_compile_features(pentagonal_gamp4_integration_test PRIVATE cxx_std_20)
+  add_test(NAME diamond_gamp4_pentagonal_urs_11_to_22
+           COMMAND pentagonal_gamp4_integration_test)
+endif()
+install(FILES docs/PENTAGONAL_GAMP4_VALIDATION.md
+        DESTINATION share/doc/diamond)
+
+
+# LIGAZE: real native C++20 executable distinct from the Java JAR.
+add_executable(pentagonal_ligaze native/pentagonal_ligaze.cpp)
+target_include_directories(pentagonal_ligaze PRIVATE
+  native external/pentagonal-xor-cpp20/shared)
+target_compile_features(pentagonal_ligaze PRIVATE cxx_std_20)
+install(TARGETS pentagonal_ligaze RUNTIME DESTINATION bin)
+install(FILES native/pentagonal_ligaze.hpp DESTINATION include/swe)
+if(BUILD_TESTING)
+  add_executable(pentagonal_ligaze_test native/tests/pentagonal_ligaze_test.cpp)
+  target_include_directories(pentagonal_ligaze_test PRIVATE
+    native external/pentagonal-xor-cpp20/shared)
+  target_compile_features(pentagonal_ligaze_test PRIVATE cxx_std_20)
+  add_test(NAME diamond_pentagonal_ligaze_exhaustive_cor_witness COMMAND pentagonal_ligaze_test)
+  add_test(NAME diamond_pentagonal_ligaze_native_cli COMMAND pentagonal_ligaze 0x15 0x15 0x1f 0x1f)
+  set_tests_properties(diamond_pentagonal_ligaze_native_cli PROPERTIES
+    PASS_REGULAR_EXPRESSION "native-cxx20")
+endif()
+install(FILES docs/PENTAGONAL_LIGAZE_NATIVE.md DESTINATION share/doc/diamond)
+
+
+# Platform-matrix LIGAZE COR workload: independent native C++20 benchmark.
+add_executable(pentagonal_ligaze_benchmark native/benchmarks/pentagonal_ligaze_benchmark.cpp)
+target_include_directories(pentagonal_ligaze_benchmark PRIVATE
+  native external/pentagonal-xor-cpp20/shared)
+target_compile_features(pentagonal_ligaze_benchmark PRIVATE cxx_std_20)
+if(BUILD_TESTING)
+  add_test(NAME diamond_pentagonal_ligaze_benchmark_smoke
+    COMMAND pentagonal_ligaze_benchmark 1000 100 1)
+  set_tests_properties(diamond_pentagonal_ligaze_benchmark_smoke PROPERTIES
+    PASS_REGULAR_EXPRESSION "SWE-LIGAZE-BENCH-v1")
+endif()
+
+
+# Explicit, opt-in Windows LIGAZE benchmark AB variants.
+# Isolated to benchmark target; no default shipping or Win32 API replacement.
+set(SWE_LIGAZE_WINDOWS_AB_VARIANT "promoted" CACHE STRING
+    "Windows LIGAZE benchmark experiment: promoted|baseline|safe_header|full_header|ltcg|safe_header_ltcg|platform_v2|platform_v2_ltcg|full_header_v2")
+set_property(CACHE SWE_LIGAZE_WINDOWS_AB_VARIANT PROPERTY STRINGS
+    promoted baseline safe_header full_header ltcg safe_header_ltcg platform_v2 platform_v2_ltcg full_header_v2)
+if(MSVC)
+  # Actual measured optimization: /GL + /LTCG, enabled in Release only.
+  # The default benchmark is promoted; explicit baseline stays unoptimized
+  # so later AB runs remain comparable against a real pre-promotion control.
+  set_property(TARGET pentagonal_ligaze PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
+  if(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header" OR
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header_ltcg")
+    target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
+      SWE_LIGAZE_WINDOWS_SAFE_HEADER_EXPERIMENT=1)
+  elseif(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "full_header")
+    target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
+      SWE_LIGAZE_WINDOWS_FULL_HEADER_EXPERIMENT=1)
+  elseif(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "platform_v2" OR
+         SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "platform_v2_ltcg")
+    target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
+      SWE_LIGAZE_WINDOWS_PLATFORM_V2_EXPERIMENT=1)
+  elseif(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "full_header_v2")
+    target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
+      SWE_LIGAZE_WINDOWS_FULL_HEADER_V2_EXPERIMENT=1)
+  elseif(NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "baseline" AND
+         NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "promoted" AND
+         NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg")
+    message(FATAL_ERROR "Unknown Windows AB experiment variant: ${SWE_LIGAZE_WINDOWS_AB_VARIANT}")
+  endif()
+  if(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "promoted" OR
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg" OR
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header_ltcg" OR
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "platform_v2_ltcg")
+    # MSVC Release already enables /O2; test additional /GL and /LTCG.
+    set_property(TARGET pentagonal_ligaze_benchmark PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+  endif()
+else()
+  if(NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "baseline" AND
+     NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "promoted")
+    message(FATAL_ERROR "Windows-specific AB variant selected on non-MSVC compiler")
+  endif()
+endif()
+
+# Version-2 safe platform metadata and API integrity, including negative
+# compile-only test of the user's do-nothing Win32 API replacement header.
+add_executable(pentagonal_platform_v2_contract_test native/tests/pentagonal_platform_v2_contract.cpp)
+target_compile_features(pentagonal_platform_v2_contract_test PRIVATE cxx_std_20)
+if(MSVC AND SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "full_header_v2")
+  target_compile_definitions(pentagonal_platform_v2_contract_test PRIVATE
+    SWE_LIGAZE_WINDOWS_FULL_HEADER_V2_EXPERIMENT=1)
+endif()
+if(BUILD_TESTING)
+  add_test(NAME pentagonal_ligaze_platform_v2_api_contract
+    COMMAND pentagonal_platform_v2_contract_test)
+endif()

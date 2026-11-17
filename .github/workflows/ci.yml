@@ -74,3 +74,9 @@ jobs:
         run: |
           ctest --test-dir build-native -C Release --output-on-failure
           exit $LASTEXITCODE
+      - name: GAMP 4-style Pentagonal supplier validation and SHA-256 evidence
+        shell: pwsh
+        run: |
+          ./ci/Invoke-PentagonalGamp4.ps1 -BuildDir build-native -EvidenceDir evidence-gamp4 -ExecutableName pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
