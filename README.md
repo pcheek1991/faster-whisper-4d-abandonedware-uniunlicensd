@@ -52,3 +52,13 @@ Build and run the separate `pentagonal_control` executable for a
 structured VISTA JSON report; the pre-existing command remains unchanged.
 Missing independently authenticated witnesses are identified, never
 silently presumed valid.
+
+
+### GAMP 4-style Pentagonal operator verification
+
+The new [12-requirement GAMP4-style validation plan](docs/PENTAGONAL_GAMP4_VALIDATION.md),
+`native/tests/pentagonal_gamp4_validation_test.cpp` and
+`ci/Invoke-PentagonalGamp4.ps1` provide source-preserving,
+test-to-requirement evidence for COR/VISTA/FLOP. The pinned
+Pentagonal XOR submodule stays unchanged. Automated supplier OQ is
+not a regulated-user PQ or QA release approval.
