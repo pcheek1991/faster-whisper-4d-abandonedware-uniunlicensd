@@ -52,7 +52,7 @@ if($Phase -eq 'TEST'){
   Guard ($LASTEXITCODE -eq 0) 'CMake configure'
   & cmake --build $BuildDir --config Release --parallel 2
   Guard ($LASTEXITCODE -eq 0) 'C++20 compile'
-  $xml=Join-Path $EvidenceDir 'ctest-results.xml'
+  $xml=Join-Path ([IO.Path]::GetFullPath($EvidenceDir)) 'ctest-results.xml'
   & ctest --test-dir $BuildDir -C Release --output-on-failure --output-junit $xml
   Guard ($LASTEXITCODE -eq 0) 'C++ CTest'
   & javac -version
