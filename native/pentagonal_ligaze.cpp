@@ -50,7 +50,7 @@ int main(int argc,char** argv) {
                  <<"\"source_mutated\":false,"
                  <<"\"externally_authenticated\":false,"
                  <<"\"five_ligands\":[\"YIN\",\"YAN\",\"ZING\",\"YING\",\"YANG\"],"
-                 <<"\"observed_outcomes\":";
+                 <<"\"observed_outcomes\":\"";
         printHex(actual,2);std::cout<<'"';
         std::cout<<",\"expected_outcomes\":\"";
         printHex(intended,2);std::cout<<'"';
