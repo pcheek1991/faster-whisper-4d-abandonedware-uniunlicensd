@@ -227,9 +227,9 @@ endif()
 # Explicit, opt-in Windows LIGAZE benchmark AB variants.
 # Isolated to benchmark target; no default shipping or Win32 API replacement.
 set(SWE_LIGAZE_WINDOWS_AB_VARIANT "promoted" CACHE STRING
-    "Windows LIGAZE benchmark experiment: promoted|baseline|safe_header|full_header|ltcg|safe_header_ltcg")
+    "Windows LIGAZE benchmark experiment: promoted|baseline|safe_header|full_header|ltcg|safe_header_ltcg|platform_v2|platform_v2_ltcg|full_header_v2")
 set_property(CACHE SWE_LIGAZE_WINDOWS_AB_VARIANT PROPERTY STRINGS
-    promoted baseline safe_header full_header ltcg safe_header_ltcg)
+    promoted baseline safe_header full_header ltcg safe_header_ltcg platform_v2 platform_v2_ltcg full_header_v2)
 if(MSVC)
   # Actual measured optimization: /GL + /LTCG, enabled in Release only.
   # The default benchmark is promoted; explicit baseline stays unoptimized
@@ -242,6 +242,13 @@ if(MSVC)
   elseif(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "full_header")
     target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
       SWE_LIGAZE_WINDOWS_FULL_HEADER_EXPERIMENT=1)
+  elseif(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "platform_v2" OR
+         SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "platform_v2_ltcg")
+    target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
+      SWE_LIGAZE_WINDOWS_PLATFORM_V2_EXPERIMENT=1)
+  elseif(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "full_header_v2")
+    target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
+      SWE_LIGAZE_WINDOWS_FULL_HEADER_V2_EXPERIMENT=1)
   elseif(NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "baseline" AND
          NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "promoted" AND
          NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg")
@@ -249,7 +256,8 @@ if(MSVC)
   endif()
   if(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "promoted" OR
      SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg" OR
-     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header_ltcg")
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header_ltcg" OR
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "platform_v2_ltcg")
     # MSVC Release already enables /O2; test additional /GL and /LTCG.
     set_property(TARGET pentagonal_ligaze_benchmark PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
   endif()
@@ -258,4 +266,17 @@ else()
      NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "promoted")
     message(FATAL_ERROR "Windows-specific AB variant selected on non-MSVC compiler")
   endif()
+endif()
+
+# Version-2 safe platform metadata and API integrity, including negative
+# compile-only test of the user's do-nothing Win32 API replacement header.
+add_executable(pentagonal_platform_v2_contract_test native/tests/pentagonal_platform_v2_contract.cpp)
+target_compile_features(pentagonal_platform_v2_contract_test PRIVATE cxx_std_20)
+if(MSVC AND SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "full_header_v2")
+  target_compile_definitions(pentagonal_platform_v2_contract_test PRIVATE
+    SWE_LIGAZE_WINDOWS_FULL_HEADER_V2_EXPERIMENT=1)
+endif()
+if(BUILD_TESTING)
+  add_test(NAME pentagonal_ligaze_platform_v2_api_contract
+    COMMAND pentagonal_platform_v2_contract_test)
 endif()
