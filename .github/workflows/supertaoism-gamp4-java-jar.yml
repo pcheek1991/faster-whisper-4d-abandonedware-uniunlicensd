@@ -1,0 +1,117 @@
+name: SUPERTAOISM-GAMP4 Java to JAR YIN YAN YANG
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supertaoism-gamp4-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  java-jar-yin-yan-yang:
+    name: Java 17 JAR | YIN 60s | YAN runtime fault | YANG JIT 60s
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout exact immutable source and pinned submodule
+        run: |
+          $ErrorActionPreference='Stop'
+          & git init .
+          if ($LASTEXITCODE -ne 0) { throw 'git init failed' }
+          & git remote add origin "https://github.com/$env:GITHUB_REPOSITORY.git"
+          if ($LASTEXITCODE -ne 0) { throw 'git remote failed' }
+          & git fetch --no-tags --depth 1 origin $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'git fetch failed' }
+          & git checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'checkout failed' }
+          $sha = ((& git rev-parse HEAD) | Out-String).Trim()
+          if ($LASTEXITCODE -ne 0 -or $sha -cne $env:GITHUB_SHA) { throw "Unreviewed checkout SHA $sha" }
+          & git -c protocol.file.allow=never submodule update --init --recursive
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned submodule checkout failed' }
+          Write-Host "SUPERTAOISM|SOURCE|PASS|$sha"
+
+      - name: BUILD Java 17 into executable JAR with SHA-256
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Build -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: YIN TEST native C++20 and Java reference
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Test -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: YIN TILT expected ligand error must be detected
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Tilt -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: YIN VALIDATE all 12 supplier URS and original source witness
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Validate -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: YIN RUN for 60 seconds of verified work
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage YinRun -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: YAN poison must fail at runtime and never enter timed run
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Yan -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: YANG detect poison then compile verified replacement and relink
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage YangPreflight -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: YANG RUN for 60 seconds and observe HotSpot JIT compilation
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage YangRun -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: AUDIT original SHA JAR fault record and two 60-second runs
+        run: |
+          & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Audit -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: Retain failure evidence and exact file fingerprints
+        if: always()
+        run: |
+          if (Test-Path -LiteralPath evidence-supertaoism) {
+            foreach ($file in @(Get-ChildItem -LiteralPath evidence-supertaoism -File | Sort-Object Name)) {
+              $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+              Write-Host "SUPERTAOISM|EVIDENCE|sha256=$hash|filename=$($file.Name)"
+            }
+            if (Test-Path -LiteralPath evidence-supertaoism/supertaoism-final.json) {
+              Get-Content -LiteralPath evidence-supertaoism/supertaoism-final.json
+            }
+          } else {
+            Write-Host 'SUPERTAOISM|EVIDENCE|NO_EVIDENCE_CREATED'
+          }
+
+      - name: Publish reviewed executable JAR to workflow artifacts
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pentagonal-supertaoism-java17-${{ github.run_id }}
+          path: build-supertaoism/pentagonal-supertaoism.jar
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Preserve supplier test evidence even after failure
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: supertaoism-gamp4-evidence-${{ github.run_id }}
+          path: evidence-supertaoism/
+          if-no-files-found: warn
+          retention-days: 90
