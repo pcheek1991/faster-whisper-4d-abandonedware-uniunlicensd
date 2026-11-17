@@ -12,7 +12,7 @@ param(
 )
 $ErrorActionPreference='Stop'
 Set-StrictMode -Version Latest
-function Check([bool]$ok,[string]$why){if(-not $ok){throw "SUPERTAOISM $Stage: $why"}}
+function Check([bool]$ok,[string]$why){if(-not $ok){throw "SUPERTAOISM $($Stage): $why"}}
 function SHA([string]$file){
   Check (Test-Path -LiteralPath $file -PathType Leaf) "Missing file: $file"
   return (Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant()
