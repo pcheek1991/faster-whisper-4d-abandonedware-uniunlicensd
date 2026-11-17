@@ -39,7 +39,7 @@ function InvokeBuild([string]$variant) {
     $dir=Join-Path $Root $variant
     $logs=@()
     $configure=@('-S','.','-B',$dir,
-      '-DSWE_LIGAZE_WINDOWS_AB_VARIANT='+$variant,
+      ("-DSWE_LIGAZE_WINDOWS_AB_VARIANT=$variant"),
       '-DBUILD_TESTING=ON')
     $out=@(& cmake @configure 2>&1 | ForEach-Object { [string]$_ })
     $configCode=$LASTEXITCODE
