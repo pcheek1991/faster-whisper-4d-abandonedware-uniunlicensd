@@ -74,7 +74,7 @@ if ($Stage -eq 'Ying') {
     runtime_exit_code=$p.ExitCode
     unhandled_application_exception=$true
     os_kernel_panicked=$false
-    60_second_run_started=$false
+    timed_run_started=$false
     source_mutated=$false
     stdout_sha256=SHA $stdout
     stderr_sha256=SHA $stderr
