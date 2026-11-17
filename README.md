@@ -62,3 +62,20 @@ The new [12-requirement GAMP4-style validation plan](docs/PENTAGONAL_GAMP4_VALID
 test-to-requirement evidence for COR/VISTA/FLOP. The pinned
 Pentagonal XOR submodule stays unchanged. Automated supplier OQ is
 not a regulated-user PQ or QA release approval.
+
+
+## SUPERTAOISM-GAMP4 Java 17 JAR: YIN, YAN and YANG
+
+A self-contained Java JAR demonstrates three separately audited outcomes:
+**YIN** runs TEST → TILT(expected error) → VALIDATE → active RUN for 60 seconds;
+**YAN** deliberately fails at runtime with an expected exception and never
+enters the 60-second run; **YANG** detects that known failure, compiles a pinned
+reviewed replacement on demand, checks all 32 parity states and 30 bit-flip
+cases, relinks the validated implementation, and runs actively for 60 seconds.
+HotSpot JIT compilation of the replacement is recorded separately from
+the application-level JavaCompiler operation.
+
+See [the SUPERTAOISM-GAMP4 technical guide](docs/SUPERTAOISM_GAMP4_JAVA_JAR.md)
+and [the dedicated Java → JAR workflow](.github/workflows/supertaoism-gamp4-java-jar.yml).
+Original Pentagonal XOR source and source-history identity are preserved.
+GAMP4-style supplier tests do not constitute regulated-use validation.
