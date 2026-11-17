@@ -222,3 +222,33 @@ if(BUILD_TESTING)
   set_tests_properties(diamond_pentagonal_ligaze_benchmark_smoke PROPERTIES
     PASS_REGULAR_EXPRESSION "SWE-LIGAZE-BENCH-v1")
 endif()
+
+
+# Explicit, opt-in Windows LIGAZE benchmark AB variants.
+# Isolated to benchmark target; no default shipping or Win32 API replacement.
+set(SWE_LIGAZE_WINDOWS_AB_VARIANT "baseline" CACHE STRING
+    "Windows LIGAZE benchmark experiment: baseline|safe_header|full_header|ltcg|safe_header_ltcg")
+set_property(CACHE SWE_LIGAZE_WINDOWS_AB_VARIANT PROPERTY STRINGS
+    baseline safe_header full_header ltcg safe_header_ltcg)
+if(MSVC)
+  if(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header" OR
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header_ltcg")
+    target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
+      SWE_LIGAZE_WINDOWS_SAFE_HEADER_EXPERIMENT=1)
+  elseif(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "full_header")
+    target_compile_definitions(pentagonal_ligaze_benchmark PRIVATE
+      SWE_LIGAZE_WINDOWS_FULL_HEADER_EXPERIMENT=1)
+  elseif(NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "baseline" AND
+         NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg")
+    message(FATAL_ERROR "Unknown Windows AB experiment variant: ${SWE_LIGAZE_WINDOWS_AB_VARIANT}")
+  endif()
+  if(SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "ltcg" OR
+     SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "safe_header_ltcg")
+    # MSVC Release already enables /O2; test additional /GL and /LTCG.
+    set_property(TARGET pentagonal_ligaze_benchmark PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+  endif()
+else()
+  if(NOT SWE_LIGAZE_WINDOWS_AB_VARIANT STREQUAL "baseline")
+    message(FATAL_ERROR "Windows-specific AB variant selected on non-MSVC compiler")
+  endif()
+endif()
