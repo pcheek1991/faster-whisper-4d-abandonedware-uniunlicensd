@@ -58,6 +58,7 @@ if($env:GITHUB_SHA){Check ($commit -ceq $env:GITHUB_SHA) 'Wrong checked-out Git 
 New-Item -ItemType Directory -Force -Path $EvidenceDir|Out-Null
 $jar=Join-Path $BuildDir 'pentagonal-supertaoism.jar'
 $source='java/SupertaoismGamp4.java'
+$extension='java/PentagonalExtensions.java'
 $original='java/PentagonalControl.java'
 $recovery='dd57ce6e8bbeeaad4af14cb06a08ec83c38d2deab16e814f97e963f5a94b0114'
 
@@ -66,13 +67,13 @@ if($Stage -eq 'Build'){
   Check ($LASTEXITCODE -eq 0 -and $javaVersion -match 'javac 17[.]') 'Requires JDK 17 for portable reproducible builds'
   $classes=Join-Path $BuildDir 'java-classes'
   New-Item -ItemType Directory -Force -Path $classes|Out-Null
-  & javac --release 17 -encoding UTF-8 -d $classes $original $source
+  & javac --release 17 -encoding UTF-8 -d $classes $original $source $extension
   Check ($LASTEXITCODE -eq 0) 'Java sources failed compilation'
   & jar --create --file $jar --main-class SupertaoismGamp4 -C $classes .
   Check ($LASTEXITCODE -eq 0) 'JAR packaging failed'
   $members=@(& jar --list --file $jar)
   Check ($LASTEXITCODE -eq 0) 'Cannot inspect JAR'
-  foreach($entry in @('META-INF/MANIFEST.MF','PentagonalControl.class','SupertaoismGamp4.class','SupertaoismGamp4$PoisonedCycle.class')){
+  foreach($entry in @('META-INF/MANIFEST.MF','PentagonalControl.class','SupertaoismGamp4.class','SupertaoismGamp4$PoisonedCycle.class','PentagonalExtensions.class')){
     Check ($members -contains $entry) "Missing JAR entry $entry"
   }
   Save 'build.json' ([ordered]@{
@@ -83,6 +84,7 @@ if($Stage -eq 'Build'){
     jar_sha256=SHA $jar
     original_source_sha256=SHA $original
     supertaoism_source_sha256=SHA $source
+    extension_source_sha256=SHA $extension
     recovery_embedded_source_sha256=$recovery
     packaging='executable-jar'
     gxp_certified=$false
@@ -93,6 +95,7 @@ if($Stage -eq 'Build'){
 $build=RequireWitness 'build.json'
 Check ((SHA $jar) -ceq $build.jar_sha256) 'JAR changed after build'
 Check ((SHA $source) -ceq $build.supertaoism_source_sha256) 'Supertaoism source changed after build'
+Check ((SHA $extension) -ceq $build.extension_source_sha256) 'Extension source changed after build'
 Check ((SHA $original) -ceq $build.original_source_sha256) 'Original Pentagonal class changed after build'
 
 if($Stage -eq 'Test'){
