@@ -5,9 +5,10 @@
 #  include "../../native/benchmarks/windows_ligaze_user_header_v2_experiment.hpp"
 #elif defined(SWE_LIGAZE_WINDOWS_FULL_HEADER_EXPERIMENT)
 #  include "../../native/benchmarks/windows_ligaze_user_header_experiment.hpp"
-#else
-#  include "../pentagonal_platform_windows_v2.hpp"
 #endif
+// Safe metadata remains available so unsafe header failures can be audited
+// as contract violations, not unrelated missing-name diagnostics.
+#include "../pentagonal_platform_windows_v2.hpp"
 #include <type_traits>
 
 static_assert(swe::ligaze::platform_v2::architecture_name()!=nullptr);
