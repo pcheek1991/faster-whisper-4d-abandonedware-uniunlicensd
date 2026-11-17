@@ -123,3 +123,17 @@ before reporting per-platform median nanoseconds per call. The
 openSUSE container uses the Linux host kernel and is not an
 openSUSE-kernel performance measurement. No cross-OS absolute
 speed ranking or GxP certification is asserted.
+
+
+### Measured Windows LIGAZE optimization
+
+The [Windows header A/B and MSVC LTCG report](docs/LIGAZE_WINDOWS_OPTIMIZER_AB.md)
+preserves the requested full Windows API-shadow experiment as an
+isolated, non-shipping header. It documents three paired same-runner
+trials in each repository: plain Windows header switches did not
+produce a repeatable speedup, whereas MSVC Release /GL + /LTCG
+reduced the tested native COR workload latency by about 6% upstream
+and 7-11% downstream. Both repositories now enable Release-only
+IPO on the native LIGAZE executable and default native benchmark;
+the opt-in baseline remains available for future comparisons.
+The no-op Win32 overloads are never enabled in normal builds.
