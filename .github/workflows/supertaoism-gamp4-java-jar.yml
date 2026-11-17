@@ -1,4 +1,4 @@
-name: SUPERTAOISM-GAMP4 Java to JAR YIN YAN YANG
+name: SUPERTAOISM-GAMP4 Java JAR YIN YAN YANG YING ZING DECOMPILED
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   java-jar-yin-yan-yang:
-    name: Java 17 JAR | YIN 60s | YAN runtime fault | YANG JIT 60s
+    name: Java 17 JAR | YIN/YANG 60s | YAN/YING faults | ZING/DECOMPILED
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     defaults:
@@ -81,6 +81,21 @@ jobs:
       - name: AUDIT original SHA JAR fault record and two 60-second runs
         run: |
           & ./ci/Invoke-SupertaoismGamp4.ps1 -Stage Audit -Validator pentagonal_gamp4_integration_test
+          if (!$?) { exit 1 }
+
+      - name: YING validate correct hot method then inject unhandled runtime error
+        run: |
+          & ./ci/Invoke-PentagonalExtensions.ps1 -Stage Ying
+          if (!$?) { exit 1 }
+
+      - name: ZING inverse-square five inputs and three outputs under JVM JIT
+        run: |
+          & ./ci/Invoke-PentagonalExtensions.ps1 -Stage Zing
+          if (!$?) { exit 1 }
+
+      - name: DECOMPILED four-path PENTAGONAL NOP without suppressing failure
+        run: |
+          & ./ci/Invoke-PentagonalExtensions.ps1 -Stage Decompiled
           if (!$?) { exit 1 }
 
       - name: Retain failure evidence and exact file fingerprints
